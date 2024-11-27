@@ -142,3 +142,7 @@ app.*.symbols
 
 # Keystore files
 *.keystore
+
+
+# API keys
+assets/env/.env
