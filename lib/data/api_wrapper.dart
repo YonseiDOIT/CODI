@@ -2,34 +2,37 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-// import 'package:app/globals.dart' as globals;
+import 'globals.dart' as globals;
 
 Map<String, String> _headers = {
   'accept': 'application/json',
   'Content-Type': 'application/json',
+  'api-key': globals.backendKey,
 };
 
 class User {
   static Future<Map<String, dynamic>> addUser({
+    String? username,
+    String? password,
+    String? email,
+    String? social_type,
     String? kakao_id,
-    String? student_number,
-    String? department,
-    int? grade,
-    String? name,
-    String? Position,
+    String? facebook_id,
     String? nickname,
+    String? position,
     String? profile_picture,
     String? career,
     String? portfolio_link,
   }) async {
     Map<String, dynamic> body = {
+      "username": username,
+      "password": password,
+      "email": email,
+      "social_type": social_type,
       "kakao_id": kakao_id,
-      "student_number": student_number,
-      "department": department,
-      "grade": grade,
-      "name": name,
-      "position": Position,
+      "facebook_id": facebook_id,
       "nickname": nickname,
+      "position": position,
       "profile_picture": profile_picture,
       "career": career,
       "portfolio_link": portfolio_link,
@@ -46,12 +49,12 @@ class User {
     int? user_id,
     String? kakao_id,
   }) async {
-    Map<String, dynamic> queryParameters = {
-      "user_id": user_id,
-      "kakao_id": kakao_id,
+    Map<String, String> queryParameters = {
+      if (user_id != null) 'user_id': user_id.toString(),
+      if (kakao_id != null) 'kakao_id': kakao_id,
     };
 
-    var uri = Uri.https("api.0john-hong0.com", "/codi/users", queryParameters);
+    var uri = Uri.https("api.0john-hong0.com", "/codi/users/by-id", queryParameters);
     var response = await http.get(uri, headers: _headers);
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
