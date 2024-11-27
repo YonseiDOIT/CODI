@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+// data
+import 'package:codi/data/theme.dart';
+import 'package:codi/data/custom_icons.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,7 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      // theme: ThemeData(),
+      theme: mainTheme,
       home: const Main(),
       debugShowCheckedModeBanner: false,
     );
@@ -23,6 +28,6 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold();
   }
 }
