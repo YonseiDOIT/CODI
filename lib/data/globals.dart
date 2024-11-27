@@ -1,0 +1,4 @@
+library globals;
+
+// String backendKey = "0000000000000000000000000000000000000000000000000000000000000000";
+late String backendKey;
