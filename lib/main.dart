@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+import 'data/globals.dart' as globals;
+
+Future<void> main() async {
+  await dotenv.load(fileName: 'assets/env/.env');
+  globals.backendKey = dotenv.get("backendKey");
+
   runApp(const MyApp());
 }
 
