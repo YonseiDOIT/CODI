@@ -5,6 +5,11 @@ import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/size_config.dart';
 
+import 'package:codi/home_screen.dart';
+import 'package:codi/chat_screen.dart';
+import 'package:codi/contest_screen.dart';
+import 'package:codi/profile_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -34,149 +39,85 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   int _currentIndex = 0;
 
-  double animatedPositionedLeftValue(int currentIndex) {
-    switch (currentIndex) {
-      case 0:
-        return Appsizes.blockSizeHorizontal * 14.0;
-      case 1:
-        return Appsizes.blockSizeHorizontal * 36.5;
-      case 2:
-        return Appsizes.blockSizeHorizontal * 59.5;
-      case 3:
-        return Appsizes.blockSizeHorizontal * 82.0;
-      default:
-        return 0;
-    }
-  }
+  List<Widget> screens = [
+    const HomeScreen(),
+    const ChatScreen(),
+    const ContestScreen(),
+    const ProfileScreen(),
+  ];
+
+  List<IconData> navBarIcons = [
+    CustomIcons.home,
+    CustomIcons.chatbubbles,
+    CustomIcons.award_1,
+    CustomIcons.profile_1,
+  ];
 
   @override
   Widget build(BuildContext context) {
     Appsizes().initSizes(context);
     return Scaffold(
-      body: Placeholder(),
+      body: screens.elementAt(_currentIndex),
       bottomNavigationBar: _buildBottomNavBar(context),
     );
   }
 
-  Positioned _buildBottomNavBar(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        width: Appsizes.screenWidth,
-        height: Appsizes.screenHeight * 0.1,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              top: 0,
-              left: Appsizes.blockSizeHorizontal * 3,
-              right: Appsizes.blockSizeVertical * 3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  BottomNavButtons(
-                    icon: CustomIcons.home,
-                    currentIndex: _currentIndex,
-                    index: 0,
-                    onPressed: (val) {
-                      setState(() {
-                        _currentIndex = val;
-                      });
-                    },
-                  ),
-                  BottomNavButtons(
-                    icon: CustomIcons.chatbubbles,
-                    currentIndex: _currentIndex,
-                    index: 1,
-                    onPressed: (val) {
-                      setState(() {
-                        _currentIndex = val;
-                      });
-                    },
-                  ),
-                  BottomNavButtons(
-                    icon: CustomIcons.award_1,
-                    currentIndex: _currentIndex,
-                    index: 2,
-                    onPressed: (val) {
-                      setState(() {
-                        _currentIndex = val;
-                      });
-                    },
-                  ),
-                  BottomNavButtons(
-                    icon: CustomIcons.profile_1,
-                    currentIndex: _currentIndex,
-                    index: 3,
-                    onPressed: (val) {
-                      setState(() {
-                        _currentIndex = val;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.decelerate,
-              left: animatedPositionedLeftValue(_currentIndex),
-              bottom: 25,
-              child: Container(
-                height: Appsizes.blockSizeHorizontal * 1.0,
-                width: Appsizes.blockSizeVertical * 0.5,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-          ],
-        ),
+  Widget _buildBottomNavBar(BuildContext context) {
+    return Container(
+      height: 75,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFAEAEAE).withOpacity(0.3),
+            spreadRadius: 5,
+            blurRadius: 70,
+            offset: const Offset(0, -20),
+          ),
+        ],
+        color: Theme.of(context).colorScheme.background,
       ),
-    );
-  }
-}
-
-class BottomNavButtons extends StatelessWidget {
-  const BottomNavButtons({
-    super.key,
-    required this.icon,
-    required this.index,
-    required this.currentIndex,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final int index;
-  final int currentIndex;
-  final Function(int) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        onPressed(index);
-      },
-      child: SizedBox(
-        height: Appsizes.blockSizeVertical * 5,
-        width: Appsizes.blockSizeHorizontal * 6,
-        child: Stack(
-          children: [
-            Icon(
-              icon,
-              color: currentIndex == index
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.secondary,
-              size: Appsizes.blockSizeHorizontal * 6,
+      child: Stack(
+        children: [
+          Row(
+            children: List.generate(
+              4,
+              (index) => Expanded(
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 15),
+                    alignment: Alignment.topCenter,
+                    child: Icon(
+                      navBarIcons[index],
+                      color: _currentIndex == index
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.decelerate,
+            left: (2 * _currentIndex + 1) * Appsizes.screenWidth / 8 - 2.5,
+            bottom: 25,
+            child: Container(
+              width: 5,
+              height: 5,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
