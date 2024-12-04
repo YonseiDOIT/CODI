@@ -1,3 +1,4 @@
+import 'package:codi/widgets/contest.dart';
 import 'package:flutter/material.dart';
 
 class ContestScreen extends StatefulWidget {
@@ -12,7 +13,13 @@ class _ContestScreenState extends State<ContestScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("contest"),
+        child: Column(
+          children: [
+            // Text("Contests"),
+            ContestWidget(),
+            ContestWidget(),
+          ],
+        ),
       ),
     );
   }
