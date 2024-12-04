@@ -145,4 +145,4 @@ app.*.symbols
 
 
 # API keys
-assets/env/.env
+# assets/env/.env
