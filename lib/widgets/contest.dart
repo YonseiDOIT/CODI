@@ -8,12 +8,12 @@ class ContestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 236,
+      // height: 236,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-            width: 1,
+            // width: 1,
           ),
         ),
       ),
@@ -51,7 +51,14 @@ class ContestWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(100),
                               color: const Color.fromRGBO(48, 52, 55, 0.2),
                             ),
-                            child: const Text("tag1"),
+                            child: Text(
+                              "tag1",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 10,
+                              ),
+                            ),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -60,36 +67,85 @@ class ContestWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(100),
                               color: const Color.fromRGBO(48, 52, 55, 0.2),
                             ),
-                            child: const Text("길이 다른 tag2"),
+                            child: Text(
+                              "길이 다른 tag2",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 10,
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Contest Title"),
-                          Text("hosting_organization"),
+                          Text(
+                            "Contest Title",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            "hosting_organization",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 10,
+                            ),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 5),
-                            child: Text("참가대상"),
+                            margin: const EdgeInsets.only(right: 5),
+                            child: const Text(
+                              "참가대상",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                              ),
+                            ),
                           ),
-                          Text("참가대상 data"),
+                          const Text(
+                            "참가대상 data",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 5),
-                            child: Text("접수기간"),
+                            margin: const EdgeInsets.only(right: 5),
+                            child: const Text(
+                              "접수기간",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                              ),
+                            ),
                           ),
-                          Text("접수기간 data"),
+                          const Text(
+                            "접수기간 data",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+                          ),
                         ],
                       ),
-                      Text("D-00")
+                      const Text(
+                        "D-00",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      )
                     ],
                   ),
                 )
@@ -109,7 +165,13 @@ class ContestWidget extends StatelessWidget {
                       right: BorderSide(color: Theme.of(context).colorScheme.secondary.withOpacity(0.1), width: 0.5),
                     ),
                   ),
-                  child: const Text("접수하기"),
+                  child: const Text(
+                    "접수하기",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
                 Container(
                   width: globals.ScreenSize.width / 2,
@@ -120,7 +182,13 @@ class ContestWidget extends StatelessWidget {
                       left: BorderSide(color: Theme.of(context).colorScheme.secondary.withOpacity(0.1), width: 0.5),
                     ),
                   ),
-                  child: const Text("팀 찾기"),
+                  child: const Text(
+                    "팀 찾기",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ],
             ),
