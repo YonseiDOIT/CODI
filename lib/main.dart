@@ -5,10 +5,10 @@ import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/size_config.dart';
 
-import 'package:codi/home_screen.dart';
-import 'package:codi/chat_screen.dart';
-import 'package:codi/contest_screen.dart';
-import 'package:codi/profile_screen.dart';
+import 'package:codi/screens/home_screen.dart';
+import 'package:codi/screens/chat_screen.dart';
+import 'package:codi/screens/contest_screen.dart';
+import 'package:codi/screens/profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,7 +57,9 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     Appsizes().initSizes(context);
     return Scaffold(
-      body: screens.elementAt(_currentIndex),
+      body: SafeArea(
+        child: screens.elementAt(_currentIndex),
+      ),
       bottomNavigationBar: _buildBottomNavBar(context),
     );
   }
@@ -93,9 +95,7 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.secondary,
+                      color: _currentIndex == index ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,
                       size: 24,
                     ),
                   ),
