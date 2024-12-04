@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:codi/widgets/post.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,7 +14,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("Home"),
+        child: Column(
+          children: [
+            // Text("Home"),
+            PostWidget(),
+            PostWidget(),
+          ],
+        ),
       ),
     );
   }
