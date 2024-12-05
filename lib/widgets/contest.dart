@@ -3,12 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:codi/data/globals.dart' as globals;
 
 class ContestWidget extends StatelessWidget {
-  const ContestWidget({super.key});
+  final Map item;
+
+  ContestWidget({
+    super.key,
+    required this.item,
+  });
+
+  late List tags;
+  late int dDay;
 
   @override
   Widget build(BuildContext context) {
+    tags = item["tags"].toString().split(", ");
+    dDay = DateTime.now().difference(DateTime.parse(item["registration_end_date"])).inDays;
+
     return Container(
       // height: 236,
+      width: globals.ScreenSize.width,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -31,66 +43,58 @@ class ContestWidget extends StatelessWidget {
                     ),
                   ),
                   child: Image.network(
-                    "https://allforyoung-homepage-maycan.s3.ap-northeast-2.amazonaws.com/uploads/post_photos/2023/04/11/3428258a320942e59137252d83c95ec2.jpg",
+                    item["poster_image_link"],
                     height: 168,
+                    width: 119,
                     fit: BoxFit.contain,
                   ),
                 ),
                 Container(
+                  width: globals.ScreenSize.width - 119 - 16 - 12,
                   padding: const EdgeInsets.only(left: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                            margin: const EdgeInsets.only(right: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: const Color.fromRGBO(48, 52, 55, 0.2),
-                            ),
-                            child: Text(
-                              "tag1",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontSize: 10,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(
+                          children: List.generate(tags.length, (index) {
+                            return Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                              margin: const EdgeInsets.only(right: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: const Color.fromRGBO(48, 52, 55, 0.2),
                               ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                            margin: const EdgeInsets.only(right: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: const Color.fromRGBO(48, 52, 55, 0.2),
-                            ),
-                            child: Text(
-                              "길이 다른 tag2",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontSize: 10,
+                              child: Text(
+                                tags[index],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Theme.of(context).colorScheme.secondary,
+                                  fontSize: 10,
+                                ),
                               ),
-                            ),
-                          ),
-                        ],
+                            );
+                          }),
+                        ),
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Contest Title",
-                            style: TextStyle(
+                            item["name"],
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
                             ),
                           ),
                           Text(
-                            "hosting_organization",
-                            style: TextStyle(
+                            item["hosting_organization"],
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 10,
                             ),
@@ -109,9 +113,10 @@ class ContestWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Text(
-                            "참가대상 data",
-                            style: TextStyle(
+                          Text(
+                            item["entry_requirements"],
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
                             ),
@@ -130,22 +135,42 @@ class ContestWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Text(
-                            "접수기간 data",
-                            style: TextStyle(
+                          Text(
+                            "${item["registration_start_date"]} ~ ${item["registration_end_date"]}",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
                             ),
                           ),
                         ],
                       ),
-                      const Text(
-                        "D-00",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                        ),
-                      )
+                      if (dDay > 10)
+                        Text(
+                          "D-$dDay",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Colors.black,
+                          ),
+                        )
+                      else if (10 >= dDay && dDay >= 0)
+                        Text(
+                          "D-$dDay",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        )
+                      else
+                        Text(
+                          "접수 종료됨",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                          ),
+                        )
                     ],
                   ),
                 )
