@@ -65,15 +65,15 @@ class User {
 class Contest {
   static Future<List<dynamic>> getContests({
     String? keyword,
-    String? sort,
-    int? limit,
-    int? offset,
+    String sort = "registration_end_date",
+    int limit = 20,
+    int offset = 0,
   }) async {
     Map<String, String> queryParameters = {
       if (keyword != null) 'keyword': keyword,
-      if (sort != null) 'sort': sort,
-      if (limit != null) 'limit': limit.toString(),
-      if (offset != null) 'offset': offset.toString(),
+      'sort': sort,
+      'limit': limit.toString(),
+      'offset': offset.toString(),
     };
 
     var uri = Uri.https("api.0john-hong0.com", "/codi/contests", queryParameters);
