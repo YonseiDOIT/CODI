@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // data
 import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
-import 'package:codi/data/size_config.dart';
 
 import 'package:codi/screens/home_screen.dart';
 import 'package:codi/screens/chat_screen.dart';
@@ -11,7 +10,7 @@ import 'package:codi/screens/contest_screen.dart';
 import 'package:codi/screens/profile_screen.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'data/globals.dart' as globals;
+import 'package:codi/data/globals.dart' as globals;
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
@@ -61,7 +60,7 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
-    Appsizes().initSizes(context);
+    globals.ScreenSize().initSizes(context);
     return Scaffold(
       body: SafeArea(
         child: screens.elementAt(_currentIndex),
@@ -112,7 +111,7 @@ class _MainState extends State<Main> {
           AnimatedPositioned(
             duration: const Duration(milliseconds: 300),
             curve: Curves.decelerate,
-            left: (2 * _currentIndex + 1) * Appsizes.screenWidth / 8 - 2.5,
+            left: (2 * _currentIndex + 1) * globals.ScreenSize.width / 8 - 2.5,
             bottom: 25,
             child: Container(
               width: 5,
