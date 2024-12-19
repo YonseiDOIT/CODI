@@ -47,6 +47,7 @@ class _PostWidgetState extends State<PostWidget> {
                       return Image.network(
                         item,
                         fit: BoxFit.cover,
+                        // Todo: change height to Global variable
                         height: MediaQuery.of(context).size.height,
                       );
                     },
