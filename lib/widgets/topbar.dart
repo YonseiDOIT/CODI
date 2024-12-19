@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
 
-import 'package:codi/widgets/segmented_button_slide.dart';
-
 class CustomTopBar extends StatefulWidget {
   const CustomTopBar({super.key});
 
