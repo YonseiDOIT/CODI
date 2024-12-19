@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:codi/widgets/topbar.dart';
+
 class ContestScreen extends StatefulWidget {
   const ContestScreen({super.key});
 
@@ -11,8 +13,13 @@ class _ContestScreenState extends State<ContestScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("contest"),
+      child: Column(
+        children: [
+          CustomTopBar(),
+          Center(
+            child: Text("contest"),
+          ),
+        ],
       ),
     );
   }
