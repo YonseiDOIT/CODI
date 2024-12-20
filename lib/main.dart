@@ -62,6 +62,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: screens.elementAt(_currentIndex),
       ),
