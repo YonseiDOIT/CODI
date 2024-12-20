@@ -1,3 +1,4 @@
+import 'package:codi/widgets/chat_room.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -11,8 +12,12 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("Chat"),
+      child: Column(
+        children: [
+          ChatRoom(),
+          ChatRoom(),
+          ChatRoom(),
+        ],
       ),
     );
   }

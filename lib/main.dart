@@ -1,3 +1,4 @@
+import 'package:codi/screens/chat_room_screen.dart';
 import 'package:flutter/material.dart';
 
 // data
@@ -47,7 +48,8 @@ class _MainState extends State<Main> {
   List<Widget> screens = [
     const HomeScreen(),
     const ChatScreen(),
-    const ContestScreen(),
+    // const ContestScreen(),
+    const ChatRoomScreen(),
     const ProfileScreen(),
   ];
 
