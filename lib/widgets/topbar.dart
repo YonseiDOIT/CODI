@@ -4,7 +4,8 @@ import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
 
 class CustomTopBar extends StatefulWidget {
-  const CustomTopBar({super.key});
+  final int tabIndex;
+  const CustomTopBar({super.key, required this.tabIndex});
 
   @override
   State<CustomTopBar> createState() => _CustomTopBarState();
@@ -12,12 +13,71 @@ class CustomTopBar extends StatefulWidget {
 
 class _CustomTopBarState extends State<CustomTopBar> {
   int selectedOption = 0;
+  static const int animateDuration = 200;
+  bool showSortOptions = false;
+  late String selectedSortOption;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSortOption = displayText[widget.tabIndex][0]["sort"][0];
+  }
+
+  void setShowSort(bool value) {
+    setState(() {
+      showSortOptions = value;
+    });
+  }
+
+  List<List<Map>> displayText = [
+    [
+      {
+        "option": "개발자",
+        "sort": ["추천순", "최신순", "조회순", "평가순"],
+      },
+      {
+        "option": "디자이너",
+        "sort": ["추천순", "최신순", "조회순", "평가순"],
+      },
+    ],
+    [
+      {"option": "채팅"},
+    ],
+    [
+      {
+        "option": "리스트",
+        "sort": ["최신순", "조회순", "관심순", "마감순"],
+      },
+      {
+        "option": "팀 모집",
+        "sort": ["최신순", "조회순", "관심순", "마감순"],
+      },
+    ],
+    []
+  ];
+
+  List<Map> displayIcon = [
+    {
+      "left": CustomIcons.search,
+      "right": [CustomIcons.notification, CustomIcons.notificationNew],
+    },
+    {
+      "left": CustomIcons.filter,
+      "right": CustomIcons.send,
+    },
+    {
+      "left": CustomIcons.search,
+      "right": CustomIcons.bookmark,
+    },
+    {},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: animateDuration),
       // height: 72,
-      height: 112,
+      height: showSortOptions ? 112 : 72,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,19 +86,24 @@ class _CustomTopBarState extends State<CustomTopBar> {
               top: 24,
               left: 20,
             ),
-            child: const Icon(
-              CustomIcons.search,
+            child: Icon(
+              displayIcon[widget.tabIndex]["left"],
               size: 24,
             ),
           ),
-          ToggleDropdown(entries: ["리스트", "팀 모집"]),
+          widget.tabIndex != 1
+              ? ToggleDropdown(
+                  entries: displayText[widget.tabIndex],
+                  setShowSort: setShowSort,
+                )
+              : Text(displayText[widget.tabIndex][0]["option"]),
           Container(
             margin: const EdgeInsets.only(
               top: 24,
               right: 20,
             ),
-            child: const Icon(
-              CustomIcons.notification,
+            child: Icon(
+              widget.tabIndex != 0 ? displayIcon[widget.tabIndex]["right"] : displayIcon[widget.tabIndex]["right"][0],
               size: 24,
             ),
           ),
@@ -49,24 +114,23 @@ class _CustomTopBarState extends State<CustomTopBar> {
 }
 
 class ToggleDropdown extends StatefulWidget {
-  final List<String> entries;
-  const ToggleDropdown({super.key, required this.entries});
+  final List<Map> entries;
+  Function setShowSort;
+  ToggleDropdown({super.key, required this.entries, required this.setShowSort});
 
   @override
-  State<ToggleDropdown> createState() => _ToggleDropdownState(entries: entries);
+  State<ToggleDropdown> createState() => _ToggleDropdownState();
 }
 
 class _ToggleDropdownState extends State<ToggleDropdown> {
-  final List<String> entries;
   static const int animateDuration = 200;
   int selectedIndex = 0;
+  int selectedSortIndex = 0;
   bool isDropdownOpen = false;
-
-  _ToggleDropdownState({required this.entries});
-
   @override
   void initState() {
     super.initState();
+    // debugPrint("coditest${widget.entries}");
   }
 
   @override
@@ -85,14 +149,32 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
               height: 52,
               width: globals.ScreenSize.width - 88,
               // color: Theme.of(context).colorScheme.secondary,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("추천순"),
-                  Text("최신순"),
-                  Text("조회순"),
-                  Text("평가순"),
-                ],
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  widget.entries[selectedIndex]["sort"].length,
+                  (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedSortIndex = index;
+                        });
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Text(
+                          widget.entries[selectedIndex]["sort"][index],
+                          style: selectedSortIndex == index
+                              ? TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w700)
+                              : TextStyle(color: Theme.of(context).colorScheme.secondary.withOpacity(0.3), fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -112,12 +194,12 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                 child: Stack(
                   children: [
                     AnimatedPositioned(
-                      left: selectedIndex * ((constraints.maxWidth - 72) / entries.length),
+                      left: selectedIndex * ((constraints.maxWidth - 72) / widget.entries.length),
                       duration: const Duration(milliseconds: animateDuration),
                       curve: Curves.decelerate,
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                        width: (constraints.maxWidth - 72) / entries.length - 12,
+                        width: (constraints.maxWidth - 72) / widget.entries.length - 12,
                         height: 34,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.secondary,
@@ -127,49 +209,53 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                     ),
                     Row(
                       children: List.generate(
-                        entries.length,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            if (selectedIndex != index) {
-                              setState(() {
-                                selectedIndex = index;
-                                isDropdownOpen = false;
-                              });
-                            } else {
-                              setState(() {
-                                isDropdownOpen = true;
-                              });
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: const BoxDecoration(color: Colors.transparent),
-                            width: (constraints.maxWidth - 72) / entries.length - 1,
-                            child: Row(
-                              children: [
-                                Container(
-                                  // margin: EdgeInsets.only(left: constraints.maxWidth / entries.length / 4),
-                                  width: (constraints.maxWidth - 72) / entries.length / 2,
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    entries[index],
-                                    style: selectedIndex == index ? TextStyle(color: Theme.of(context).colorScheme.onSecondary) : null,
+                        widget.entries.length,
+                        (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (selectedIndex != index) {
+                                setState(() {
+                                  selectedIndex = index;
+                                  isDropdownOpen = false;
+                                  widget.setShowSort(false);
+                                });
+                              } else {
+                                setState(() {
+                                  isDropdownOpen = true;
+                                  widget.setShowSort(true);
+                                });
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: const BoxDecoration(color: Colors.transparent),
+                              width: (constraints.maxWidth - 72) / widget.entries.length - 1,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    // margin: EdgeInsets.only(left: constraints.maxWidth / entries.length / 4),
+                                    width: (constraints.maxWidth - 72) / widget.entries.length / 2,
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      widget.entries[index]["option"],
+                                      style: selectedIndex == index ? TextStyle(color: Theme.of(context).colorScheme.onSecondary) : null,
+                                    ),
                                   ),
-                                ),
-                                selectedIndex == index
-                                    ? Container(
-                                        margin: const EdgeInsets.only(left: 5),
-                                        child: Icon(
-                                          CustomIcons.chevronDown,
-                                          size: 10,
-                                          color: Theme.of(context).colorScheme.onSecondary,
-                                        ),
-                                      )
-                                    : const SizedBox.shrink(),
-                              ],
+                                  selectedIndex == index
+                                      ? Container(
+                                          margin: const EdgeInsets.only(left: 5),
+                                          child: Icon(
+                                            CustomIcons.chevronDown,
+                                            size: 10,
+                                            color: Theme.of(context).colorScheme.onSecondary,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ),
                   ],

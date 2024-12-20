@@ -15,7 +15,7 @@ class _ContestScreenState extends State<ContestScreen> {
     return Container(
       child: Column(
         children: [
-          CustomTopBar(),
+          CustomTopBar(tabIndex: 2),
           Center(
             child: Text("contest"),
           ),
