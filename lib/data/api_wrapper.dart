@@ -61,3 +61,25 @@ class User {
     return decodedResponse;
   }
 }
+
+class Contest {
+  static Future<List<dynamic>> getContests({
+    String? keyword,
+    String sort = "registration_end_date",
+    int limit = 20,
+    int offset = 0,
+  }) async {
+    Map<String, String> queryParameters = {
+      if (keyword != null) 'keyword': keyword,
+      'sort': sort,
+      'limit': limit.toString(),
+      'offset': offset.toString(),
+    };
+
+    var uri = Uri.https("api.0john-hong0.com", "/codi/contests", queryParameters);
+    var response = await http.get(uri, headers: _headers);
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    return decodedResponse;
+  }
+}

@@ -18,9 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             CustomTopBar(tabIndex: 0),
-            Text("Home"),
-            // PostWidget(),
-            // PostWidget(),
+            // Text("Home"),
+            PostWidget(),
+            PostWidget(),
           ],
         ),
       ),
