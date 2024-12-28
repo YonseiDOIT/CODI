@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/login_screen.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:flutter/material.dart';
+
+import 'package:codi/data/globals.dart' as globals;
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -17,13 +20,13 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startAnimation();
   }
 
   @override
   Widget build(BuildContext context) {
+    globals.ScreenSize().initSizes(context);
     return Scaffold(
       body: Container(
         width: double.maxFinite,
@@ -39,8 +42,10 @@ class _IntroScreenState extends State<IntroScreen> {
           fit: StackFit.expand,
           children: [
             Positioned(
-              left: 250,
-              top: -50,
+              // left: 250,
+              // top: -50,
+              left: globals.ScreenSize.width * 0.6,
+              top: -globals.ScreenSize.height * 0.0625,
               child: Container(
                 width: 450,
                 height: 514,
@@ -51,8 +56,10 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
             Positioned(
-              left: -172,
-              top: 500,
+              // left: -172,
+              // top: 500,
+              top: globals.ScreenSize.height * 0.625,
+              left: -globals.ScreenSize.width * 0.47,
               child: Container(
                 width: 333,
                 height: 376,
@@ -67,19 +74,31 @@ class _IntroScreenState extends State<IntroScreen> {
               filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 60.0),
               child: Stack(
                 children: [
-                  AnimatedPositioned(
-                    child: Image.asset('assets/icon/logo.png'),
-                    duration: Duration(milliseconds: 600),
-                    width: animated ? 65 : 109,
-                    height: animated ? 36 : 60,
-                    top: animated ? 60 : 350,
-                    left: animated ? 20 : 150,
+                  // AnimatedPositioned(
+                  //   child: Image.asset('assets/icon/logo.png'),
+                  //   duration: Duration(milliseconds: 600),
+                  //   width: animated ? 65 : 109,
+                  //   height: animated ? 36 : 60,
+                  //   top: animated ? 60 : 350,
+                  //   left: animated ? 20 : 150,
+                  // ),
+                  Positioned(
+                    width: 65,
+                    height: 36,
+                    // top: 66,
+                    top: globals.ScreenSize.height * 0.0825,
+                    left: 20,
+                    child: Hero(
+                      tag: "logo",
+                      child: Image.asset('assets/icon/logo.png'),
+                    ),
                   ),
                   Positioned(
                     left: 20,
-                    top: 150,
+                    // top: 180,
+                    top: globals.ScreenSize.height * 0.225,
                     child: AnimatedOpacity(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
                       opacity: animated ? 1 : 0,
                       child: Text(
                         'Code your\ndesign,\ndesign your\ncode:',
@@ -95,9 +114,10 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                   Positioned(
                     left: 20,
-                    top: 390,
+                    // top: 420,
+                    top: globals.ScreenSize.height * 0.525,
                     child: AnimatedOpacity(
-                      duration: Duration(milliseconds: 1200),
+                      duration: const Duration(milliseconds: 1200),
                       opacity: animated ? 1 : 0,
                       child: Text(
                         '개발자와 디자이너를 위한 최초의 팀빌딩\n서비스 CODI',
@@ -125,12 +145,12 @@ class _IntroScreenState extends State<IntroScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LogInScreen(),
+                              builder: (context) => const LogInScreen(),
                             ),
                           );
                         },
                         child: AnimatedOpacity(
-                          duration: Duration(milliseconds: 1200),
+                          duration: const Duration(milliseconds: 1200),
                           opacity: animated ? 1 : 0,
                           child: Container(
                             width: 328,
@@ -195,7 +215,7 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   Future startAnimation() async {
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 100));
     setState(() => animated = true);
     // await Future.delayed(Duration(milliseconds: 3000));
   }
