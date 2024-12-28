@@ -17,9 +17,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    super.initState();
     startAnimation();
   }
 
+  @override
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
@@ -69,13 +71,13 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Center(
                 child: AnimatedOpacity(
                   opacity: animated ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: SizedBox(
                     width: 109,
                     height: 60,
                     child: Hero(
-                      child: Image.asset('assets/icon/logo.png'),
                       tag: "logo",
+                      child: Image.asset('assets/icon/logo.png'),
                     ),
                   ),
                 ),
@@ -88,18 +90,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future startAnimation() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() => animated = true);
-    await Future.delayed(Duration(milliseconds: 3000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     Navigator.pushReplacement(
       context,
       // MaterialPageRoute(
       //   builder: (context) => IntroScreen(),
       // ),
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => IntroScreen(),
+        pageBuilder: (context, animation1, animation2) => const IntroScreen(),
         // transitionDuration: Duration.zero,
-        transitionDuration: Duration(milliseconds: 1800),
+        transitionDuration: const Duration(milliseconds: 1800),
         // reverseTransitionDuration: Duration.zero,
       ),
     );

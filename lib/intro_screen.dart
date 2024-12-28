@@ -64,8 +64,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 width: 333,
                 height: 376,
                 decoration: ShapeDecoration(
-                  color:
-                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6),
                   shape: const OvalBorder(),
                 ),
               ),
@@ -122,10 +121,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       child: Text(
                         '개발자와 디자이너를 위한 최초의 팀빌딩\n서비스 CODI',
                         style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary
-                              .withOpacity(0.7),
+                          color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
                           fontSize: 16,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w400,
@@ -155,25 +151,18 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: Container(
                             width: 328,
                             height: 54,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 120, vertical: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
                             decoration: BoxDecoration(
                               border: const GradientBoxBorder(
                                 width: 2,
                                 gradient: LinearGradient(
                                   begin: Alignment(-1.0, 0.5),
                                   end: Alignment(-0.9, 2.5),
-                                  colors: [
-                                    Color(0xB1FFFFFF),
-                                    Color(0x33A18AF6)
-                                  ],
+                                  colors: [Color(0xB1FFFFFF), Color(0x33A18AF6)],
                                 ),
                               ),
                               borderRadius: BorderRadius.circular(45),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary
-                                  .withOpacity(0.2),
+                              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.2),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -184,8 +173,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                   '시작하기',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                                    color: Theme.of(context).colorScheme.onPrimary,
                                     fontSize: 16,
                                     fontFamily: 'Pretendard',
                                     fontWeight: FontWeight.w700,
@@ -193,10 +181,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  child: Icon(CustomIcons.right,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
+                                  child: Icon(CustomIcons.right, color: Theme.of(context).colorScheme.onPrimary),
                                 )
                               ],
                             ),
