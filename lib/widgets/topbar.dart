@@ -5,7 +5,8 @@ import 'package:codi/data/globals.dart' as globals;
 
 class CustomTopBar extends StatefulWidget {
   final int tabIndex;
-  const CustomTopBar({super.key, required this.tabIndex});
+  final TabController? controller;
+  const CustomTopBar({super.key, required this.tabIndex, this.controller});
 
   @override
   State<CustomTopBar> createState() => _CustomTopBarState();
@@ -95,6 +96,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
               ? ToggleDropdown(
                   entries: displayText[widget.tabIndex],
                   setShowSort: setShowSort,
+                  controller: widget.controller,
                 )
               : Text(displayText[widget.tabIndex][0]["option"]),
           Container(
@@ -116,7 +118,8 @@ class _CustomTopBarState extends State<CustomTopBar> {
 class ToggleDropdown extends StatefulWidget {
   final List<Map> entries;
   Function setShowSort;
-  ToggleDropdown({super.key, required this.entries, required this.setShowSort});
+  final TabController? controller;
+  ToggleDropdown({super.key, required this.entries, required this.setShowSort, this.controller});
 
   @override
   State<ToggleDropdown> createState() => _ToggleDropdownState();
@@ -127,6 +130,7 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
   int selectedIndex = 0;
   int selectedSortIndex = 0;
   bool isDropdownOpen = false;
+
   @override
   void initState() {
     super.initState();
@@ -137,18 +141,17 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: animateDuration),
-      height: !isDropdownOpen ? 72 : 112,
+      height: isDropdownOpen ? 112 : 72,
       width: globals.ScreenSize.width - 88,
       child: Stack(
         children: [
           AnimatedPositioned(
-            top: !isDropdownOpen ? 0 : 60,
+            top: isDropdownOpen ? 60 : 0,
             duration: const Duration(milliseconds: animateDuration),
             curve: Curves.decelerate,
             child: SizedBox(
               height: 52,
               width: globals.ScreenSize.width - 88,
-              // color: Theme.of(context).colorScheme.secondary,
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -218,11 +221,12 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                                   selectedIndex = index;
                                   isDropdownOpen = false;
                                   widget.setShowSort(false);
+                                  widget.controller!.animateTo(index);
                                 });
                               } else {
                                 setState(() {
-                                  isDropdownOpen = true;
-                                  widget.setShowSort(true);
+                                  isDropdownOpen = !isDropdownOpen;
+                                  widget.setShowSort(isDropdownOpen);
                                 });
                               }
                             },
