@@ -63,7 +63,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: AnimatedOpacity(
                     opacity: animated ? 1.0 : 0.0,
                     duration: Duration(milliseconds: 500),
-                    child: Image.asset('assets/icon/logo.png')),
+                    child: SizedBox(
+                        width: 109,
+                        height: 60,
+                        child: Image.asset('assets/icon/logo.png'))),
               ),
             ),
           ],
