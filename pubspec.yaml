@@ -1,5 +1,5 @@
 name: codi
-description: A new Flutter project.
+description: Code your design, design your code
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -56,10 +56,30 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  flutter_native_splash: ^2.3.11
+  flutter_native_splash: ^2.3.7
 
 flutter_native_splash:
-    color: "#FFFFFFFF"
+  color: "#826CF9"
+  android_12:
+    # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+    # the app's launcher icon will be used instead.
+    # Please note that the splash screen will be clipped to a circle on the center of the screen.
+    # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+    # 640 pixels in diameter.
+    # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply 
+    # ensure that the most important design elements of your image are placed within a circular area
+    # with a 768 diameter at the center of the 1152x1152 canvas.
+    image: assets/icon/logo_372.png
+
+
+    # Splash screen background color.
+    color: "#826CF9"
+
+    # App icon background color.
+    icon_background_color: "#826CF9"
+
+
 
 
 # For information on the generic Dart part of this file, see the
