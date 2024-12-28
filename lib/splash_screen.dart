@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:codi/intro_screen.dart';
 
+import 'package:codi/data/globals.dart' as globals;
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -19,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget build(BuildContext context) {
+    globals.ScreenSize().initSizes(context);
     return Scaffold(
       body: Container(
         width: double.maxFinite,
@@ -34,8 +37,10 @@ class _SplashScreenState extends State<SplashScreen> {
           fit: StackFit.expand,
           children: [
             Positioned(
-              left: 250,
-              top: -50,
+              // left: 250,
+              // top: -50,
+              left: globals.ScreenSize.width * 0.6,
+              top: -globals.ScreenSize.height * 0.0625,
               child: Container(
                 width: 450,
                 height: 514,
@@ -46,8 +51,10 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Positioned(
-              left: -172,
-              top: 500,
+              // left: -172,
+              // top: 500,
+              top: globals.ScreenSize.height * 0.625,
+              left: -globals.ScreenSize.width * 0.47,
               child: Container(
                 width: 333,
                 height: 376,
@@ -61,12 +68,17 @@ class _SplashScreenState extends State<SplashScreen> {
               filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 60.0),
               child: Center(
                 child: AnimatedOpacity(
-                    opacity: animated ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 500),
-                    child: SizedBox(
-                        width: 109,
-                        height: 60,
-                        child: Image.asset('assets/icon/logo.png'))),
+                  opacity: animated ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 500),
+                  child: SizedBox(
+                    width: 109,
+                    height: 60,
+                    child: Hero(
+                      child: Image.asset('assets/icon/logo.png'),
+                      tag: "logo",
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -86,8 +98,9 @@ class _SplashScreenState extends State<SplashScreen> {
       // ),
       PageRouteBuilder(
         pageBuilder: (context, animation1, animation2) => IntroScreen(),
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
+        // transitionDuration: Duration.zero,
+        transitionDuration: Duration(milliseconds: 1800),
+        // reverseTransitionDuration: Duration.zero,
       ),
     );
   }
