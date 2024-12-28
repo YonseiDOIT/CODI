@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 
+import 'package:codi/splash_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-      home: const Main(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
