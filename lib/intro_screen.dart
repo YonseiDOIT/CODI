@@ -13,6 +13,15 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
+  bool animated = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startAnimation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,43 +67,50 @@ class _IntroScreenState extends State<IntroScreen> {
               filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 60.0),
               child: Stack(
                 children: [
-                  Positioned(
-                    left: 20,
-                    top: 60,
-                    child: SizedBox(
-                      width: 65,
-                      height: 36,
-                      child: Image.asset('assets/icon/logo.png'),
-                    ),
+                  AnimatedPositioned(
+                    child: Image.asset('assets/icon/logo.png'),
+                    duration: Duration(milliseconds: 600),
+                    width: animated ? 65 : 109,
+                    height: animated ? 36 : 60,
+                    top: animated ? 60 : 350,
+                    left: animated ? 20 : 150,
                   ),
                   Positioned(
                     left: 20,
                     top: 150,
-                    child: Text(
-                      'Code your\ndesign,\ndesign your\ncode:',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 48,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 1.20,
+                    child: AnimatedOpacity(
+                      duration: Duration(milliseconds: 1200),
+                      opacity: animated ? 1 : 0,
+                      child: Text(
+                        'Code your\ndesign,\ndesign your\ncode:',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 48,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 1.20,
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
                     left: 20,
                     top: 390,
-                    child: Text(
-                      '개발자와 디자이너를 위한 최초의 팀빌딩\n서비스 CODI',
-                      style: TextStyle(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.7),
-                        fontSize: 16,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        height: 1.40,
+                    child: AnimatedOpacity(
+                      duration: Duration(milliseconds: 1200),
+                      opacity: animated ? 1 : 0,
+                      child: Text(
+                        '개발자와 디자이너를 위한 최초의 팀빌딩\n서비스 CODI',
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.7),
+                          fontSize: 16,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          height: 1.40,
+                        ),
                       ),
                     ),
                   ),
@@ -113,50 +129,57 @@ class _IntroScreenState extends State<IntroScreen> {
                             ),
                           );
                         },
-                        child: Container(
-                          width: 328,
-                          height: 54,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 120, vertical: 15),
-                          decoration: BoxDecoration(
-                            border: const GradientBoxBorder(
-                              width: 2,
-                              gradient: LinearGradient(
-                                begin: Alignment(-1.0, 0.5),
-                                end: Alignment(-0.9, 2.5),
-                                colors: [Color(0xB1FFFFFF), Color(0x33A18AF6)],
-                              ),
-                            ),
-                            borderRadius: BorderRadius.circular(45),
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary
-                                .withOpacity(0.2),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                '시작하기',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontSize: 16,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.40,
+                        child: AnimatedOpacity(
+                          duration: Duration(milliseconds: 1200),
+                          opacity: animated ? 1 : 0,
+                          child: Container(
+                            width: 328,
+                            height: 54,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 120, vertical: 15),
+                            decoration: BoxDecoration(
+                              border: const GradientBoxBorder(
+                                width: 2,
+                                gradient: LinearGradient(
+                                  begin: Alignment(-1.0, 0.5),
+                                  end: Alignment(-0.9, 2.5),
+                                  colors: [
+                                    Color(0xB1FFFFFF),
+                                    Color(0x33A18AF6)
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                child: Icon(CustomIcons.right,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                              )
-                            ],
+                              borderRadius: BorderRadius.circular(45),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimary
+                                  .withOpacity(0.2),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '시작하기',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    fontSize: 16,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.40,
+                                  ),
+                                ),
+                                SizedBox(
+                                  child: Icon(CustomIcons.right,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -169,5 +192,11 @@ class _IntroScreenState extends State<IntroScreen> {
         ),
       ),
     );
+  }
+
+  Future startAnimation() async {
+    await Future.delayed(Duration(milliseconds: 100));
+    setState(() => animated = true);
+    // await Future.delayed(Duration(milliseconds: 3000));
   }
 }
