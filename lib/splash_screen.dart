@@ -25,16 +25,26 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
-      body: Container(
+      body: AnimatedContainer(
         width: double.maxFinite,
         height: double.maxFinite,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment(-0.00, -1.00),
             end: Alignment(0, 1),
-            colors: [Color(0xFF6923FE), Color(0xFF876EF1)],
+            colors: animated
+                ? [
+                    Color(0xFF6923FE),
+                    Color(0xFF876EF1),
+                  ]
+                : [
+                    Color(0xff826CF9),
+                    Color(0xff826CF9),
+                  ],
           ),
+          // color: Color(0xff826CF9),
         ),
+        duration: const Duration(milliseconds: 500),
         child: Stack(
           fit: StackFit.expand,
           children: [
