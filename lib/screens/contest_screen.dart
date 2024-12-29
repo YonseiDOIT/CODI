@@ -82,7 +82,12 @@ class _ContestListState extends State<ContestList> with AutomaticKeepAliveClient
   // Function to simulate loading more items
   Future<void> _loadMoreItems() async {
     if (items.isEmpty) {
-      items.addAll(await api.Contest.getContests(limit: limit, offset: offset));
+      // items.addAll(await api.Contest.getContests(limit: limit, offset: offset));
+      List moredata = await api.Contest.getContests(limit: limit, offset: offset);
+      setState(() {
+        items.addAll(moredata);
+      });
+      return;
     }
     // Trigger loading more items when reaching the end of the list
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
