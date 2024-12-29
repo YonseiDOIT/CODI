@@ -30,16 +30,16 @@ class _SplashScreenState extends State<SplashScreen> {
         height: double.maxFinite,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment(-0.00, -1.00),
-            end: Alignment(0, 1),
+            begin: const Alignment(-0.00, -1.00),
+            end: const Alignment(0, 1),
             colors: animated
                 ? [
-                    Color(0xFF6923FE),
-                    Color(0xFF876EF1),
+                    const Color(0xFF6923FE),
+                    const Color(0xFF876EF1),
                   ]
                 : [
-                    Color(0xff826CF9),
-                    Color(0xff826CF9),
+                    const Color(0xff826CF9),
+                    const Color(0xff826CF9),
                   ],
           ),
           // color: Color(0xff826CF9),
