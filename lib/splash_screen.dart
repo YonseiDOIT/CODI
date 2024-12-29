@@ -43,12 +43,16 @@ class _SplashScreenState extends State<SplashScreen> {
               // top: -50,
               left: globals.ScreenSize.width * 0.6,
               top: -globals.ScreenSize.height * 0.0625,
-              child: Container(
-                width: 450,
-                height: 514,
-                decoration: const ShapeDecoration(
-                  color: Color(0xFF8C92FF),
-                  shape: OvalBorder(),
+              child: AnimatedOpacity(
+                opacity: animated ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Container(
+                  width: 450,
+                  height: 514,
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFF8C92FF),
+                    shape: OvalBorder(),
+                  ),
                 ),
               ),
             ),
@@ -57,12 +61,16 @@ class _SplashScreenState extends State<SplashScreen> {
               // top: 500,
               top: globals.ScreenSize.height * 0.625,
               left: -globals.ScreenSize.width * 0.47,
-              child: Container(
-                width: 333,
-                height: 376,
-                decoration: ShapeDecoration(
-                  color: Colors.white.withOpacity(0.6),
-                  shape: const OvalBorder(),
+              child: AnimatedOpacity(
+                opacity: animated ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Container(
+                  width: 333,
+                  height: 376,
+                  decoration: ShapeDecoration(
+                    color: Colors.white.withOpacity(0.6),
+                    shape: const OvalBorder(),
+                  ),
                 ),
               ),
             ),
@@ -71,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Center(
                 child: AnimatedOpacity(
                   opacity: animated ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 1000),
                   child: SizedBox(
                     width: 109,
                     height: 60,
