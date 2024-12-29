@@ -65,7 +65,7 @@ class User {
 class Contest {
   static Future<List<dynamic>> getContests({
     String? keyword,
-    String sort = "registration_end_date",
+    String sort = "created_at",
     int limit = 20,
     int offset = 0,
   }) async {
