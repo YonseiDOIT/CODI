@@ -1,8 +1,10 @@
-import 'package:codi/widgets/contest.dart';
-import 'package:codi/widgets/topbar.dart';
 import 'package:flutter/material.dart';
 
+import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/data/api_wrapper.dart' as api;
+
+import 'package:codi/widgets/contest.dart';
+import 'package:codi/widgets/topbar.dart';
 
 class ContestScreen extends StatefulWidget {
   const ContestScreen({super.key});
@@ -15,6 +17,8 @@ class _ContestScreenState extends State<ContestScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).colorScheme.background,
+      padding: EdgeInsets.only(top: globals.ScreenSize.topPadding),
       child: const Column(
         children: [
           CustomTopBar(tabIndex: 2),
