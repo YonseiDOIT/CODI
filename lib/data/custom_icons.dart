@@ -51,6 +51,8 @@ class CustomIcons {
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData filter =
       IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData up =
+      IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
   // 이동 아이콘
   static const IconData right =
