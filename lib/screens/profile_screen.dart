@@ -267,6 +267,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+            Positioned(
+              bottom: 20,
+              right: 0,
+              left: 0,
+              child: FloatingActionButton(
+                  onPressed: () {},
+                  shape: const CircleBorder(),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  elevation: 10.0,
+                  child: const Icon(CustomIcons.add)),
+            ),
           ],
         ),
       ),
