@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // data
 import 'package:codi/data/theme.dart';
@@ -9,12 +11,15 @@ import 'package:codi/screens/chat_screen.dart';
 import 'package:codi/screens/contest_screen.dart';
 import 'package:codi/screens/profile_screen.dart';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:codi/data/globals.dart' as globals;
+
+import 'package:codi/screens/login_screen.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
   globals.backendKey = dotenv.get("backendKey");
+
+  globals.localData = await SharedPreferences.getInstance();
 
   runApp(const MyApp());
 }
@@ -47,7 +52,8 @@ class _MainState extends State<Main> {
   List<Widget> screens = [
     const HomeScreen(),
     const ChatScreen(),
-    const ContestScreen(),
+    // const ContestScreen(),
+    LoginScreen(),
     const ProfileScreen(),
   ];
 
