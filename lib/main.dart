@@ -107,7 +107,9 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,
+                      color: _currentIndex == index
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                       size: 24,
                     ),
                   ),
