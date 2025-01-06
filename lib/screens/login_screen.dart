@@ -394,14 +394,13 @@ class NewAccountScreen extends StatelessWidget {
                   ),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 22, right: 12),
-                    child: Image.asset(
-                      'assets/images/Email.png',
-                      width: 24,
-                      height: 24,
+                    child: Icon(
+                      CustomIcons.message,
                       color: Theme.of(context)
                           .colorScheme
-                          .onBackground
-                          .withOpacity(0.7),
+                          .secondary
+                          .withOpacity(0.3),
+                      size: 24,
                     ),
                   ),
                   border: OutlineInputBorder(
@@ -432,11 +431,13 @@ class NewAccountScreen extends StatelessWidget {
                   ),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 22, right: 12),
-                    child: Image.asset(
-                      'assets/images/Password.png',
-                      width: 24,
-                      height: 24,
-                      color: Theme.of(context).colorScheme.onBackground,
+                    child: Icon(
+                      CustomIcons.message,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.3),
+                      size: 24,
                     ),
                   ),
                   border: OutlineInputBorder(
@@ -467,11 +468,13 @@ class NewAccountScreen extends StatelessWidget {
                   ),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 22, right: 12),
-                    child: Image.asset(
-                      'assets/images/Password.png',
-                      width: 24,
-                      height: 24,
-                      color: Theme.of(context).colorScheme.onBackground,
+                    child: Icon(
+                      CustomIcons.lock,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.3),
+                      size: 24,
                     ),
                   ),
                   border: OutlineInputBorder(
@@ -502,11 +505,13 @@ class NewAccountScreen extends StatelessWidget {
                   ),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 22, right: 12),
-                    child: Image.asset(
-                      'assets/images/Password.png',
-                      width: 24,
-                      height: 24,
-                      color: Theme.of(context).colorScheme.onBackground,
+                    child: Icon(
+                      CustomIcons.lock,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.3),
+                      size: 24,
                     ),
                   ),
                   border: OutlineInputBorder(
