@@ -51,9 +51,9 @@ class _MainState extends State<Main> {
 
   List<Widget> screens = [
     const HomeScreen(),
-    const ChatScreen(),
-    // const ContestScreen(),
-    LoginScreen(),
+    // const ChatScreen(),
+    const LoginScreen(),
+    const ContestScreen(),
     const ProfileScreen(),
   ];
 
