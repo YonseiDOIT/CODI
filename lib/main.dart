@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 
+import 'package:codi/screens/splash_screen.dart';
 import 'package:codi/screens/home_screen.dart';
 import 'package:codi/screens/chat_screen.dart';
 import 'package:codi/screens/contest_screen.dart';
@@ -33,8 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-      // home: Main(),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
