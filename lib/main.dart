@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-      // home: Main(),
-      home: LoginScreen(),
+      home: Main(),
       debugShowCheckedModeBanner: false,
     );
   }
