@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: globals.ScreenSize.width * 0.88,
                   height: globals.ScreenSize.height * 0.065,
                   child: TextField(
@@ -72,13 +72,6 @@ class LoginScreen extends StatelessWidget {
                           width: 1.5,
                         ),
                       ),
-                      // border: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(30.0),
-                      //   borderSide: BorderSide(
-                      //     color: Theme.of(context).colorScheme.onSurface,
-                      //     width: 1.5,
-                      //   ),
-                      // ),
                     ),
                   ),
                 ),
@@ -108,19 +101,12 @@ class LoginScreen extends StatelessWidget {
                           width: 1.5,
                         ),
                       ),
-                      // border: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(30.0),
-                      //   borderSide: BorderSide(
-                      //     color: Theme.of(context).colorScheme.onSurface,
-                      //     width: 1.5,
-                      //   ),
-                      // ),
                     ),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 28),
-                  width: globals.ScreenSize.width * 0.83,
+                  width: globals.ScreenSize.width * 0.88,
                   height: globals.ScreenSize.height * 0.0425,
                   child: Text(
                     "계속하기를 클릭하면 이용 약관과 개인정보 처리방침에 동의하게 됩니다.",
@@ -160,10 +146,6 @@ class LoginScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: Divider(
-                        // color: Theme.of(context)
-                        //     .colorScheme
-                        //     .onBackground
-                        //     .withOpacity(0.7),
                         color: Theme.of(context).colorScheme.onSurface,
                         thickness: 1,
                         indent: 10,
@@ -182,10 +164,6 @@ class LoginScreen extends StatelessWidget {
                         height: globals.ScreenSize.height * 0.065,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            // color: Theme.of(context)
-                            //     .colorScheme
-                            //     .onBackground
-                            //     .withOpacity(0.7),
                             color: Theme.of(context).colorScheme.onSurface,
                             width: 1.5,
                           ),
@@ -209,15 +187,10 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        // margin: const EdgeInsets.only(left: 17),
                         width: globals.ScreenSize.width * 0.26,
                         height: globals.ScreenSize.height * 0.065,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            // color: Theme.of(context)
-                            //     .colorScheme
-                            //     .onBackground
-                            //     .withOpacity(0.7),
                             color: Theme.of(context).colorScheme.onSurface,
                             width: 1.5,
                           ),
@@ -231,7 +204,7 @@ class LoginScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
                             child: Image.asset(
-                              'assets/images/facebook.png',
+                              'assets/images/face_book.png',
                               width: 32,
                               height: 32,
                             ),
@@ -239,15 +212,10 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        // margin: const EdgeInsets.only(left: 17),
                         width: globals.ScreenSize.width * 0.26,
                         height: globals.ScreenSize.height * 0.065,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            // color: Theme.of(context)
-                            //     .colorScheme
-                            //     .onBackground
-                            //     .withOpacity(0.7),
                             color: Theme.of(context).colorScheme.onSurface,
                             width: 1.5,
                           ),
@@ -276,7 +244,6 @@ class LoginScreen extends StatelessWidget {
           ),
           Positioned(
             bottom: globals.ScreenSize.height * 0.05,
-            // bottom: 40,
             left: 0,
             right: 0,
             child: Column(
@@ -317,24 +284,25 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NewAccountScreen(),
-                          ),
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          "새 계정 생성",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 14,
-                          ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NewAccountScreen(),
                         ),
-                      )),
+                      );
+                    },
+                    child: Center(
+                      child: Text(
+                        "새 계정 생성",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -387,7 +355,7 @@ class NewAccountScreen extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: globals.ScreenSize.width * 0.88,
                   height: globals.ScreenSize.height * 0.065,
                   child: TextField(
@@ -474,7 +442,6 @@ class NewAccountScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  // color: Colors.amber,
                   margin: const EdgeInsets.only(top: 22),
                   width: globals.ScreenSize.width * 0.88,
                   child: Column(
@@ -516,7 +483,7 @@ class NewAccountScreen extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 28),
-                  width: globals.ScreenSize.width * 0.83,
+                  width: globals.ScreenSize.width * 0.88,
                   height: globals.ScreenSize.height * 0.0425,
                   child: Text(
                     "아래 다음을 클릭하면 이용 약관과 개인정보 처리방침에 동의하게 됩니다.",
@@ -614,7 +581,7 @@ class NewAccountScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
                             child: Image.asset(
-                              'assets/images/facebook.png',
+                              'assets/images/face_book.png',
                               width: 32,
                               height: 32,
                             ),
@@ -654,7 +621,6 @@ class NewAccountScreen extends StatelessWidget {
           ),
           Positioned(
             bottom: globals.ScreenSize.height * 0.05,
-            // bottom: 40,
             left: 0,
             right: 0,
             child: Column(
