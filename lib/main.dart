@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-      home: Main(),
+      // home: Main(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -51,8 +52,7 @@ class _MainState extends State<Main> {
 
   List<Widget> screens = [
     const HomeScreen(),
-    // const ChatScreen(),
-    const LoginScreen(),
+    const ChatScreen(),
     const ContestScreen(),
     const ProfileScreen(),
   ];
