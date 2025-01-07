@@ -1,3 +1,4 @@
+import 'package:codi/main.dart';
 import 'package:flutter/material.dart';
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
@@ -258,7 +259,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: GestureDetector(
                       onTap: () {
-                        //누르면 실행될 동작
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Main(),
+                          ),
+                        );
                       },
                       child: Center(
                         child: Text(
@@ -659,7 +665,9 @@ class NewAccountScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Center(
                       child: Text(
                         "로그인",

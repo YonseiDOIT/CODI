@@ -55,35 +55,54 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(5)),
+                    borderRadius:
+                        const BorderRadius.vertical(bottom: Radius.circular(5)),
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.1),
                       // color: Colors.amberAccent,
                     ),
                   ),
                   height: 37,
                   padding: const EdgeInsets.only(left: 63, right: 11),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("username"),
+                      Text(
+                        "username",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
                       Row(
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(right: 4),
                             child: Icon(Icons.favorite_rounded),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text("123"),
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              "123",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(right: 4),
                             child: Icon(Icons.remove_red_eye_rounded),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 11),
-                            child: Text("456"),
+                            padding: const EdgeInsets.only(right: 11),
+                            child: Text(
+                              "456",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -107,7 +126,9 @@ class _PostWidgetState extends State<PostWidget> {
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _current == index ? Theme.of(context).colorScheme.secondary : Theme.of(context).colorScheme.background,
+                        color: _current == index
+                            ? Theme.of(context).colorScheme.secondary
+                            : Theme.of(context).colorScheme.background,
                       ),
                     );
                   },
@@ -128,7 +149,8 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                   //set border radius to 50% of square height and width
                   image: const DecorationImage(
-                    image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                    image: NetworkImage(
+                        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
                     fit: BoxFit.cover, //change image fill type
                   ),
                 ),
