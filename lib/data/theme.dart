@@ -12,7 +12,7 @@ ThemeData mainTheme = ThemeData(
     background: Color(0xFFFFFFFF),
     onBackground: Color(0xFF2E2E35),
     surface: Color(0xFFFFFFFF),
-    onSurface: Color(0xFF2E2E35),
+    onSurface: Color(0xFFC1C1C3),
   ),
   fontFamily: "Pretendard",
 );
