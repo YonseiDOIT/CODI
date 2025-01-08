@@ -54,13 +54,13 @@ class TeamWidget extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.only(left: 12),
-            width: globals.ScreenSize.width - 103 - 61,
+            width: globals.ScreenSize.width - 103 - 62,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 4),
+                  // margin: const EdgeInsets.only(top: 4),
                   child: const Text(
                     "recruitment text",
                     overflow: TextOverflow.ellipsis,
@@ -71,7 +71,7 @@ class TeamWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 4, bottom: 17),
+                  margin: const EdgeInsets.only(top: 4),
                   child: const Text(
                     "recruitment details recruitment details recruitment details",
                     overflow: TextOverflow.ellipsis,
@@ -82,6 +82,7 @@ class TeamWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  margin: const EdgeInsets.only(top: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
