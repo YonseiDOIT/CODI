@@ -86,19 +86,39 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 60.0),
-              child: Center(
-                child: AnimatedOpacity(
-                  opacity: animated ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 1000),
-                  child: SizedBox(
-                    width: 109,
-                    height: 60,
-                    child: Hero(
-                      tag: "logo",
-                      child: Image.asset('assets/icon/logo.png'),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: globals.ScreenSize.height * 0.175,
+                    bottom: globals.ScreenSize.height * 0.16,
+                    left: 0,
+                    right: 0,
+                    child: AnimatedOpacity(
+                      opacity: animated ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 1000),
+                      child: SizedBox(
+                        child: Image.asset(
+                          'assets/images/background_splash.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Center(
+                    child: AnimatedOpacity(
+                      opacity: animated ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 1000),
+                      child: SizedBox(
+                        width: 109,
+                        height: 60,
+                        child: Hero(
+                          tag: "logo",
+                          child: Image.asset('assets/icon/logo.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

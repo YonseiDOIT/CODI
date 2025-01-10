@@ -160,20 +160,18 @@ class LoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Container(
-                        width: globals.ScreenSize.width * 0.26,
-                        height: globals.ScreenSize.height * 0.065,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            width: 1.5,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: globals.ScreenSize.width * 0.26,
+                          height: globals.ScreenSize.height * 0.065,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            //누르면 실행될 동작
-                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 30,
@@ -187,20 +185,18 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width: globals.ScreenSize.width * 0.26,
-                        height: globals.ScreenSize.height * 0.065,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            width: 1.5,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: globals.ScreenSize.width * 0.26,
+                          height: globals.ScreenSize.height * 0.065,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            //누르면 실행될 동작
-                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
@@ -212,20 +208,18 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width: globals.ScreenSize.width * 0.26,
-                        height: globals.ScreenSize.height * 0.065,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            width: 1.5,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: globals.ScreenSize.width * 0.26,
+                          height: globals.ScreenSize.height * 0.065,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            //누르면 실행될 동작
-                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
@@ -250,54 +244,55 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: globals.ScreenSize.width * 0.88,
-                  height: globals.ScreenSize.height * 0.075,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Main(),
-                          ),
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          "로그인",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontSize: 14,
-                          ),
-                        ),
-                      )),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 14),
-                  width: globals.ScreenSize.width * 0.88,
-                  height: globals.ScreenSize.height * 0.075,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    border: Border.all(
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Main(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: globals.ScreenSize.width * 0.88,
+                    height: globals.ScreenSize.height * 0.075,
+                    decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
-                      width: 1.5,
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NewAccountScreen(),
+                    child: Center(
+                      child: Text(
+                        "로그인",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 14,
                         ),
-                      );
-                    },
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NewAccountScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 14),
+                    width: globals.ScreenSize.width * 0.88,
+                    height: globals.ScreenSize.height * 0.075,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                     child: Center(
                       child: Text(
                         "새 계정 생성",
@@ -542,20 +537,18 @@ class NewAccountScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Container(
-                        width: globals.ScreenSize.width * 0.26,
-                        height: globals.ScreenSize.height * 0.065,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            width: 1.5,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: globals.ScreenSize.width * 0.26,
+                          height: globals.ScreenSize.height * 0.065,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            //누르면 실행될 동작
-                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 30,
@@ -569,20 +562,18 @@ class NewAccountScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width: globals.ScreenSize.width * 0.26,
-                        height: globals.ScreenSize.height * 0.065,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            width: 1.5,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: globals.ScreenSize.width * 0.26,
+                          height: globals.ScreenSize.height * 0.065,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            //누르면 실행될 동작
-                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
@@ -594,20 +585,18 @@ class NewAccountScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width: globals.ScreenSize.width * 0.26,
-                        height: globals.ScreenSize.height * 0.065,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            width: 1.5,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: globals.ScreenSize.width * 0.26,
+                          height: globals.ScreenSize.height * 0.065,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.onSurface,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            //누르면 실행될 동작
-                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
@@ -632,42 +621,43 @@ class NewAccountScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: globals.ScreenSize.width * 0.88,
-                  height: globals.ScreenSize.height * 0.075,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: GestureDetector(
-                      onTap: () {},
-                      child: Center(
-                        child: Text(
-                          "다음",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontSize: 14,
-                          ),
-                        ),
-                      )),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 14),
-                  width: globals.ScreenSize.width * 0.88,
-                  height: globals.ScreenSize.height * 0.075,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    border: Border.all(
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: globals.ScreenSize.width * 0.88,
+                    height: globals.ScreenSize.height * 0.075,
+                    decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
-                      width: 1.5,
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
-                    borderRadius: BorderRadius.circular(30.0),
+                    child: Center(
+                      child: Text(
+                        "다음",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 14),
+                    width: globals.ScreenSize.width * 0.88,
+                    height: globals.ScreenSize.height * 0.075,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                     child: Center(
                       child: Text(
                         "로그인",

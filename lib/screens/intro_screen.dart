@@ -42,8 +42,6 @@ class _IntroScreenState extends State<IntroScreen> {
           fit: StackFit.expand,
           children: [
             Positioned(
-              // left: 250,
-              // top: -50,
               left: globals.ScreenSize.width * 0.6,
               top: -globals.ScreenSize.height * 0.0625,
               child: Container(
@@ -56,8 +54,6 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
             Positioned(
-              // left: -172,
-              // top: 500,
               top: globals.ScreenSize.height * 0.625,
               left: -globals.ScreenSize.width * 0.47,
               child: Container(
@@ -74,14 +70,18 @@ class _IntroScreenState extends State<IntroScreen> {
               filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 60.0),
               child: Stack(
                 children: [
-                  // AnimatedPositioned(
-                  //   child: Image.asset('assets/icon/logo.png'),
-                  //   duration: Duration(milliseconds: 600),
-                  //   width: animated ? 65 : 109,
-                  //   height: animated ? 36 : 60,
-                  //   top: animated ? 60 : 350,
-                  //   left: animated ? 20 : 150,
-                  // ),
+                  Positioned(
+                    top: globals.ScreenSize.height * 0.175,
+                    bottom: globals.ScreenSize.height * 0.16,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      child: Image.asset(
+                        'assets/images/background_splash.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
                   Positioned(
                     width: 65,
                     height: 36,
