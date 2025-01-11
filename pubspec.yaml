@@ -37,12 +37,15 @@ dependencies:
 
   # api requests
   http: ^1.1.0
+
   flutter_dotenv: ^5.2.1
+
   # post images
   carousel_slider: ^5.0.0
-  # state management
-  flutter_riverpod: ^2.6.1
-  riverpod_annotation: ^2.6.1
+
+
+  # local save
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -54,9 +57,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
-  riverpod_generator: ^2.4.0
-  
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -72,6 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   - assets/env/.env
+  - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

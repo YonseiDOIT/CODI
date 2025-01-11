@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'globals.dart' as globals;
+import 'package:codi/models/models.dart';
 
 Map<String, String> _headers = {
   'accept': 'application/json',
@@ -80,6 +81,32 @@ class Contest {
     var response = await http.get(uri, headers: _headers);
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    return decodedResponse;
+  }
+}
+
+class RecruitmentPost {
+  static Future<List<dynamic>> getPosts({
+    String? keyword,
+    String sort = "created_at",
+    int limit = 20,
+    int offset = 0,
+  }) async {
+    Map<String, String> queryParameters = {
+      if (keyword != null) 'keyword': keyword,
+      'sort': sort,
+      'limit': limit.toString(),
+      'offset': offset.toString(),
+    };
+
+    var uri = Uri.https("api.0john-hong0.com", "/codi/recruits", queryParameters);
+    var response = await http.get(uri, headers: _headers);
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+
+    List<TeamRecruitmentPost> posts = decodedResponse.map<TeamRecruitmentPost>((post) => TeamRecruitmentPost.fromJson(post)).toList();
+    return posts;
+
     return decodedResponse;
   }
 }
