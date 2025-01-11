@@ -5,6 +5,6 @@ void main() async {
   // await dotenv.load(fileName: 'assets/env/.env');
   // globals.backendKey = dotenv.get("backendKey");
 
-  Map result = await api.User.getUser(user_id: 1);
+  List result = await api.RecruitmentPost.getPosts();
   print(result);
 }
