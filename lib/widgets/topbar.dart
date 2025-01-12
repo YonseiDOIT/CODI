@@ -171,14 +171,11 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                         child: Text(
                           widget.entries[selectedIndex]["sort"][index],
                           style: selectedSortIndex == index
-                              ? TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
+                              ? const TextStyle(
+                                  color: globals.Colors.point1,
                                   fontWeight: FontWeight.w700)
                               : TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondary
-                                      .withOpacity(0.3),
+                                  color: globals.Colors.point2.withOpacity(0.3),
                                   fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -191,19 +188,16 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
           LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
+              color: globals.Colors.sub3,
               child: Container(
                 margin: const EdgeInsets.only(left: 36, right: 36, top: 12),
                 height: 48,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.3),
+                    color: globals.Colors.point2.withOpacity(0.3),
                   ),
                   borderRadius: BorderRadius.circular(30),
-                  color: Theme.of(context).colorScheme.background,
+                  color: globals.Colors.sub3,
                 ),
                 child: Stack(
                   children: [
@@ -220,7 +214,7 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                             12,
                         height: 34,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: globals.Colors.point2,
                           borderRadius: BorderRadius.circular(48),
                         ),
                       ),
@@ -263,10 +257,8 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                                     child: Text(
                                       widget.entries[index]["option"],
                                       style: selectedIndex == index
-                                          ? TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSecondary)
+                                          ? const TextStyle(
+                                              color: globals.Colors.sub3)
                                           : null,
                                     ),
                                   ),
@@ -274,12 +266,10 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                                       ? Container(
                                           margin:
                                               const EdgeInsets.only(left: 5),
-                                          child: Icon(
+                                          child: const Icon(
                                             CustomIcons.chevronDown,
                                             size: 10,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onSecondary,
+                                            color: globals.Colors.sub3,
                                           ),
                                         )
                                       : const SizedBox.shrink(),
