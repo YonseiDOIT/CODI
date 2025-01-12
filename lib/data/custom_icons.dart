@@ -51,12 +51,37 @@ class CustomIcons {
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData filter =
       IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
+  static const IconData attachment =
+      IconData(0xe824, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData heart =
+      IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData show =
+      IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData star =
+      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData notification_2 =
+      IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData closeCircle =
+      IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData tickCircle =
+      IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData tick =
+      IconData(0xe81f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData down =
+      IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData left =
+      IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData up =
+      IconData(0xe823, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData right =
+      IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData checkCircle =
       IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 
   // 이동 아이콘
-  static const IconData right =
+  static const IconData rightArrow =
       IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData left =
+  static const IconData leftArrow =
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
