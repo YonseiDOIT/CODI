@@ -32,11 +32,11 @@ class LoginScreen extends StatelessWidget {
             right: 0,
             child: Container(
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 "로그인",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: globals.Colors.point2,
                   fontSize: 20,
                 ),
               ),
@@ -54,22 +54,22 @@ class LoginScreen extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "이메일 *",
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
+                      hintStyle: const TextStyle(
+                        color: globals.Colors.sub2,
                         fontWeight: FontWeight.w400,
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 22, right: 12),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(left: 22, right: 12),
                         child: Icon(
                           CustomIcons.message,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: globals.Colors.sub2,
                           size: 24,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface,
+                        borderSide: const BorderSide(
+                          color: globals.Colors.sub2,
                           width: 1.5,
                         ),
                       ),
@@ -83,22 +83,22 @@ class LoginScreen extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "비밀번호 *",
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
+                      hintStyle: const TextStyle(
+                        color: globals.Colors.sub2,
                         fontWeight: FontWeight.w400,
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 22, right: 12),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(left: 22, right: 12),
                         child: Icon(
                           CustomIcons.lock,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: globals.Colors.sub2,
                           size: 24,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface,
+                        borderSide: const BorderSide(
+                          color: globals.Colors.sub2,
                           width: 1.5,
                         ),
                       ),
@@ -109,11 +109,11 @@ class LoginScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 28),
                   width: globals.ScreenSize.width * 0.88,
                   height: globals.ScreenSize.height * 0.0425,
-                  child: Text(
+                  child: const Text(
                     "계속하기를 클릭하면 이용 약관과 개인정보 처리방침에 동의하게 됩니다.",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: globals.Colors.sub2,
                       fontSize: 12,
                     ),
                   ),
@@ -127,11 +127,11 @@ class LoginScreen extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-                Row(
+                const Row(
                   children: <Widget>[
                     Expanded(
                       child: Divider(
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: globals.Colors.sub2,
                         thickness: 1,
                         indent: 20,
                         endIndent: 10,
@@ -141,13 +141,13 @@ class LoginScreen extends StatelessWidget {
                       "Or Sign In With",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: globals.Colors.point2,
                         fontSize: 14,
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: globals.Colors.sub2,
                         thickness: 1,
                         indent: 10,
                         endIndent: 20,
@@ -167,7 +167,7 @@ class LoginScreen extends StatelessWidget {
                           height: globals.ScreenSize.height * 0.065,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: globals.Colors.sub2,
                               width: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -192,7 +192,7 @@ class LoginScreen extends StatelessWidget {
                           height: globals.ScreenSize.height * 0.065,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: globals.Colors.sub2,
                               width: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -215,7 +215,7 @@ class LoginScreen extends StatelessWidget {
                           height: globals.ScreenSize.height * 0.065,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: globals.Colors.sub2,
                               width: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -246,7 +246,13 @@ class LoginScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => Main(),
+                    //   ),
+                    // );
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Main(),
@@ -257,15 +263,15 @@ class LoginScreen extends StatelessWidget {
                     width: globals.ScreenSize.width * 0.88,
                     height: globals.ScreenSize.height * 0.075,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: globals.Colors.point1,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "로그인",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: globals.Colors.sub3,
                           fontSize: 14,
                         ),
                       ),
@@ -286,19 +292,19 @@ class LoginScreen extends StatelessWidget {
                     width: globals.ScreenSize.width * 0.88,
                     height: globals.ScreenSize.height * 0.075,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: globals.Colors.sub3,
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: globals.Colors.point1,
                         width: 1.5,
                       ),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "새 계정 생성",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: globals.Colors.point1,
                           fontSize: 14,
                         ),
                       ),
@@ -340,11 +346,11 @@ class NewAccountScreen extends StatelessWidget {
             right: 0,
             child: Container(
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 "계정 생성",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: globals.Colors.point2,
                   fontSize: 20,
                 ),
               ),
@@ -362,22 +368,22 @@ class NewAccountScreen extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "이메일 *",
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
+                      hintStyle: const TextStyle(
+                        color: globals.Colors.sub2,
                         fontWeight: FontWeight.w400,
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 22, right: 12),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(left: 22, right: 12),
                         child: Icon(
                           CustomIcons.message,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: globals.Colors.sub2,
                           size: 24,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface,
+                        borderSide: const BorderSide(
+                          color: globals.Colors.sub2,
                           width: 1.5,
                         ),
                       ),
@@ -391,22 +397,22 @@ class NewAccountScreen extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "비밀번호 *",
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
+                      hintStyle: const TextStyle(
+                        color: globals.Colors.sub2,
                         fontWeight: FontWeight.w400,
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 22, right: 12),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(left: 22, right: 12),
                         child: Icon(
                           CustomIcons.lock,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: globals.Colors.sub2,
                           size: 24,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface,
+                        borderSide: const BorderSide(
+                          color: globals.Colors.sub2,
                           width: 1.5,
                         ),
                       ),
@@ -420,22 +426,22 @@ class NewAccountScreen extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "비밀번호 확인 *",
-                      hintStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
+                      hintStyle: const TextStyle(
+                        color: globals.Colors.sub2,
                         fontWeight: FontWeight.w400,
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 22, right: 12),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(left: 22, right: 12),
                         child: Icon(
                           CustomIcons.lock,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: globals.Colors.sub2,
                           size: 24,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface,
+                        borderSide: const BorderSide(
+                          color: globals.Colors.sub2,
                           width: 1.5,
                         ),
                       ),
@@ -445,20 +451,20 @@ class NewAccountScreen extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 22),
                   width: globals.ScreenSize.width * 0.88,
-                  child: Column(
+                  child: const Column(
                     children: [
                       Row(
                         children: [
                           Icon(
-                            Icons.check_circle_outline_rounded,
-                            color: Theme.of(context).colorScheme.primary,
+                            CustomIcons.tickCircle,
+                            color: globals.Colors.point1,
                             size: 12,
                           ),
                           Text(
                             "  8~20자",
                             style: TextStyle(
                               fontSize: 12,
-                              color: Theme.of(context).colorScheme.onBackground,
+                              color: globals.Colors.point2,
                             ),
                           ),
                         ],
@@ -466,15 +472,15 @@ class NewAccountScreen extends StatelessWidget {
                       Row(
                         children: [
                           Icon(
-                            Icons.check_circle_outline_rounded,
-                            color: Theme.of(context).colorScheme.primary,
+                            CustomIcons.tickCircle,
+                            color: globals.Colors.point1,
                             size: 12,
                           ),
                           Text(
                             "  문자, 숫자, 특수문자",
                             style: TextStyle(
                               fontSize: 12,
-                              color: Theme.of(context).colorScheme.onBackground,
+                              color: globals.Colors.point2,
                             ),
                           ),
                         ],
@@ -486,11 +492,11 @@ class NewAccountScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 28),
                   width: globals.ScreenSize.width * 0.88,
                   height: globals.ScreenSize.height * 0.0425,
-                  child: Text(
+                  child: const Text(
                     "아래 다음을 클릭하면 이용 약관과 개인정보 처리방침에 동의하게 됩니다.",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: globals.Colors.sub2,
                       fontSize: 12,
                     ),
                   ),
@@ -504,11 +510,11 @@ class NewAccountScreen extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-                Row(
+                const Row(
                   children: <Widget>[
                     Expanded(
                       child: Divider(
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: globals.Colors.sub2,
                         thickness: 1,
                         indent: 20,
                         endIndent: 10,
@@ -518,13 +524,13 @@ class NewAccountScreen extends StatelessWidget {
                       "Or Sign In With",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: globals.Colors.point2,
                         fontSize: 14,
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: globals.Colors.sub2,
                         thickness: 1,
                         indent: 10,
                         endIndent: 20,
@@ -544,7 +550,7 @@ class NewAccountScreen extends StatelessWidget {
                           height: globals.ScreenSize.height * 0.065,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: globals.Colors.sub2,
                               width: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -569,7 +575,7 @@ class NewAccountScreen extends StatelessWidget {
                           height: globals.ScreenSize.height * 0.065,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: globals.Colors.sub2,
                               width: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -592,7 +598,7 @@ class NewAccountScreen extends StatelessWidget {
                           height: globals.ScreenSize.height * 0.065,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: globals.Colors.sub2,
                               width: 1.5,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -627,15 +633,15 @@ class NewAccountScreen extends StatelessWidget {
                     width: globals.ScreenSize.width * 0.88,
                     height: globals.ScreenSize.height * 0.075,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: globals.Colors.point1,
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "다음",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: globals.Colors.sub3,
                           fontSize: 14,
                         ),
                       ),
@@ -651,19 +657,19 @@ class NewAccountScreen extends StatelessWidget {
                     width: globals.ScreenSize.width * 0.88,
                     height: globals.ScreenSize.height * 0.075,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: globals.Colors.sub3,
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: globals.Colors.point1,
                         width: 1.5,
                       ),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "로그인",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: globals.Colors.point1,
                           fontSize: 14,
                         ),
                       ),
