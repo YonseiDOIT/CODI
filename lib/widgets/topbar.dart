@@ -51,7 +51,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
       },
       {
         "option": "팀 모집",
-        "sort": ["최신순", "조회순", "관심순", "마감순"],
+        "sort": ["최신순", "마감순"],
       },
     ],
     []

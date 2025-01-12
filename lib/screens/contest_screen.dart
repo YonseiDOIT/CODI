@@ -182,7 +182,7 @@ class _ContestListState extends State<ContestList> with AutomaticKeepAliveClient
             );
           } else {
             return ContestWidget(
-              item: items[index],
+              contestData: items[index],
             );
           }
         },

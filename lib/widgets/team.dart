@@ -1,4 +1,5 @@
 import 'package:codi/data/custom_icons.dart';
+import 'package:codi/widgets/profile_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:codi/data/globals.dart' as globals;
 
@@ -6,10 +7,12 @@ import 'package:codi/models/models.dart';
 
 class TeamWidget extends StatelessWidget {
   final TeamRecruitmentPost item;
+  final bool showContest;
 
   const TeamWidget({
     super.key,
     required this.item,
+    this.showContest = true,
   });
 
   @override
@@ -34,105 +37,101 @@ class TeamWidget extends StatelessWidget {
           ),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 75,
-              width: 75,
-              child: Stack(
-                children: [
-                  Image.network(
-                    item.contest.poster_image_link ?? '',
-                    height: 68,
-                    width: 68,
-                    fit: BoxFit.cover,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      height: 42,
-                      width: 42,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.primary,
-                          width: 3,
-                        ),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            item.members[0].user.profile_picture ??
-                                "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg",
-                          ),
-                          fit: BoxFit.cover,
-                        ),
+            if (showContest)
+              Container(
+                height: 75,
+                width: 75,
+                child: Stack(
+                  children: [
+                    Image.network(
+                      item.contest!.poster_image_link ?? '',
+                      height: 68,
+                      width: 68,
+                      fit: BoxFit.cover,
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: ProfileCircle(
+                        user: item.members[0].user,
+                        width: 42,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              )
+            else
+              ProfileCircle(
+                user: item.members[0].user,
+                width: 42,
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 12),
-              width: globals.ScreenSize.width - 103 - 62,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    // margin: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      item.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(left: 12),
+                // width: globals.ScreenSize.width - 103 - 62,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      // margin: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        item.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      item.description,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
+                    Container(
+                      margin: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        item.description,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 6),
-                          child: const Text(
-                            "팀장 ",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
+                    Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 6),
+                            child: const Text(
+                              "팀장 ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 6),
-                          child: Text(
-                            item.members[0].user.username,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                          Container(
+                            margin: const EdgeInsets.only(right: 6),
+                            child: Text(
+                              item.members[0].user.username,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -140,9 +139,9 @@ class TeamWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(32),
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  child: const Text(
-                    "1/4",
-                    style: TextStyle(
+                  child: Text(
+                    "${item.members.length}/${item.max_members}",
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
@@ -151,7 +150,8 @@ class TeamWidget extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    "11:18AM",
+                    // "${item.created_at}",
+                    "6:18:AM",
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -187,22 +187,33 @@ class _TeamDetailsState extends State<TeamDetails> {
           left: 16,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
+            SizedBox(
               height: 57,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: const Icon(
                       CustomIcons.left,
                       size: 24,
                     ),
                   ),
-                  const Text("코디 매칭"),
+                  const Text(
+                    "코디 매칭",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: globals.Colors.point2,
+                    ),
+                  ),
                   Container(
-                    width: 48,
+                    width: 24,
                     color: Colors.transparent,
                   )
                 ],
@@ -219,7 +230,13 @@ class _TeamDetailsState extends State<TeamDetails> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("공모전 정보"),
+                          Text(
+                            "공모전 정보",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                           Icon(
                             CustomIcons.right,
                           ),
@@ -230,24 +247,105 @@ class _TeamDetailsState extends State<TeamDetails> {
                   Container(
                     height: 411,
                     width: globals.ScreenSize.width - 32,
+                    margin: const EdgeInsets.only(top: 7),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: const Color(0xFF72777A),
+                        color: globals.Colors.sub1,
                       ),
                     ),
                     child: Image.network(
-                      widget.item.contest.poster_image_link ?? '',
+                      widget.item.contest!.poster_image_link ?? '',
                       height: 411,
                       fit: BoxFit.contain,
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.only(top: 15),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
                           widget.item.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: globals.Colors.point2,
+                          ),
                         ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 4, bottom: 16),
+                          child: Text(
+                            widget.item.description,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            const Text(
+                              "참여 인원",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: globals.Colors.point1,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 9),
+                              child: Text(
+                                "${widget.item.members.length}/${widget.item.max_members}",
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: globals.Colors.point1,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: List.generate(
+                              widget.item.members.length,
+                              (index) {
+                                return Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 7),
+                                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                                  child: ProfileCircle(
+                                    user: widget.item.members[index].user,
+                                    width: 40,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 13),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: globals.Colors.point2,
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "신청하기",
+                              style: TextStyle(
+                                color: globals.Colors.sub3,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   )
