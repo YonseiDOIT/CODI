@@ -7,6 +7,7 @@ late String backendKey;
 class Colors {
   static const Color point1 = Color(0xFF6B27FE);
   static const Color point2 = Color(0xFF2E2E35);
+  static const Color point3 = Color(0xFFFF3333);
   static const Color sub1 = Color(0xFF72777A);
   static const Color sub2 = Color(0xFFC1C1C3);
   static const Color sub3 = Color(0xFFFFFFFF);
