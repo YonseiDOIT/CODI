@@ -49,8 +49,6 @@ class _SplashScreenState extends State<SplashScreen> {
           fit: StackFit.expand,
           children: [
             Positioned(
-              // left: 250,
-              // top: -50,
               left: globals.ScreenSize.width * 0.6,
               top: -globals.ScreenSize.height * 0.0625,
               child: AnimatedOpacity(
@@ -67,8 +65,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Positioned(
-              // left: -172,
-              // top: 500,
               top: globals.ScreenSize.height * 0.625,
               left: -globals.ScreenSize.width * 0.47,
               child: AnimatedOpacity(
