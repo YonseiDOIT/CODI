@@ -127,6 +127,28 @@ class Contest {
     this.deleted_at,
     this.state = 'pending',
   });
+
+  static fromJson(item) {
+    return Contest(
+      contest_id: item['contest_id'],
+      uploader_id: item['uploader_id'],
+      name: item['name'],
+      poster_image_link: item['poster_image_link'],
+      tags: item['tags'],
+      entry_requirements: item['entry_requirements'],
+      hosting_organization: item['hosting_organization'],
+      registration_start_date: item['registration_start_date'] != null ? DateTime.parse(item['registration_start_date']) : null,
+      registration_end_date: item['registration_end_date'] != null ? DateTime.parse(item['registration_end_date']) : null,
+      prizes: item['prizes'],
+      application_method: item['application_method'],
+      details: item['details'],
+      interest_count: item['interest_count'],
+      view_count: item['view_count'],
+      created_at: item['created_at'] != null ? DateTime.parse(item['created_at']) : null,
+      deleted_at: item['deleted_at'] != null ? DateTime.parse(item['deleted_at']) : null,
+      state: item['state'],
+    );
+  }
 }
 
 class Team {
@@ -174,10 +196,13 @@ class TeamRecruitmentPost {
   int recruitment_post_id;
   int team_id;
   int contest_id;
-  Contest contest;
+  Contest? contest;
   String title;
   String description;
   DateTime? created_at;
+  DateTime? end_at;
+  int max_members;
+  bool is_open = true;
   List<TeamMember> members;
 
   TeamRecruitmentPost({
@@ -188,6 +213,9 @@ class TeamRecruitmentPost {
     required this.title,
     required this.description,
     this.created_at,
+    this.end_at,
+    required this.max_members,
+    this.is_open = true,
     required this.members,
   });
 
@@ -196,56 +224,65 @@ class TeamRecruitmentPost {
       recruitment_post_id: post['recruitment_post_id'],
       team_id: post['team_id'],
       contest_id: post['contest_id'],
-      contest: Contest(
-        contest_id: post['contest']['contest_id'],
-        uploader_id: post['contest']['uploader_id'],
-        name: post['contest']['name'],
-        poster_image_link: post['contest']['poster_image_link'],
-        tags: post['contest']['tags'],
-        entry_requirements: post['contest']['entry_requirements'],
-        hosting_organization: post['contest']['hosting_organization'],
-        registration_start_date: DateTime.parse(post['contest']['registration_start_date']),
-        registration_end_date: DateTime.parse(post['contest']['registration_end_date']),
-        prizes: post['contest']['prizes'],
-        application_method: post['contest']['application_method'],
-        details: post['contest']['details'],
-        interest_count: post['contest']['interest_count'],
-        view_count: post['contest']['view_count'],
-        created_at: DateTime.parse(post['contest']['created_at']),
-        deleted_at: post['contest']['deleted_at'] != null ? DateTime.parse(post['contest']['deleted_at']) : null,
-        state: post['contest']['state'],
-      ),
+      contest: post['contest'] != null
+          ? Contest(
+              contest_id: post['contest']['contest_id'],
+              uploader_id: post['contest']['uploader_id'],
+              name: post['contest']['name'],
+              poster_image_link: post['contest']['poster_image_link'],
+              tags: post['contest']['tags'],
+              entry_requirements: post['contest']['entry_requirements'],
+              hosting_organization: post['contest']['hosting_organization'],
+              registration_start_date:
+                  post['contest']['registration_start_date'] != null ? DateTime.parse(post['contest']['registration_start_date']) : null,
+              registration_end_date:
+                  post['contest']['registration_end_date'] != null ? DateTime.parse(post['contest']['registration_end_date']) : null,
+              prizes: post['contest']['prizes'],
+              application_method: post['contest']['application_method'],
+              details: post['contest']['details'],
+              interest_count: post['contest']['interest_count'],
+              view_count: post['contest']['view_count'],
+              created_at: post['contest']['created_at'] != null ? DateTime.parse(post['contest']['created_at']) : null,
+              deleted_at: post['contest']['deleted_at'] != null ? DateTime.parse(post['contest']['deleted_at']) : null,
+              state: post['contest']['state'],
+            )
+          : null,
       title: post['title'],
       description: post['description'],
       created_at: post['created_at'] != null ? DateTime.parse(post['created_at']) : null,
+      end_at: post['end_at'] != null ? DateTime.parse(post['end_at']) : null,
+      is_open: post['is_open'],
+      max_members: post['max_members'],
       members: (post['members'] as List)
-          .map((member) => TeamMember(
-                member_id: member['member_id'],
-                user_id: member['user_id'],
-                team_id: member['team_id'],
-                user: User(
-                  user_id: member['user']['user_id'],
-                  username: member['user']['username'],
-                  email: member['user']['email'],
-                  social_type: member['user']['social_type'],
-                  kakao_id: member['user']['kakao_id'],
-                  facebook_id: member['user']['facebook_id'],
-                  nickname: member['user']['nickname'],
-                  position: member['user']['position'],
-                  profile_picture: member['user']['profile_picture'],
-                  career: member['user']['career'],
-                  portfolio_link: member['user']['portfolio_link'],
-                  created_at: member['user']['created_at'] != null ? DateTime.parse(member['user']['created_at']) : null,
-                  deleted_at: member['user']['deleted_at'] != null ? DateTime.parse(member['user']['deleted_at']) : null,
-                  participation_score: member['user']['participation_score'],
-                  participation_id: member['user']['participation_id'],
-                  skill_score: member['user']['skill_score'],
-                  skill_id: member['user']['skill_id'],
-                ),
-                role: member['role'],
-                state: member['state'],
-                join_date: member['join_date'] != null ? DateTime.parse(member['join_date']) : null,
-              ))
+          .map(
+            (member) => TeamMember(
+              member_id: member['member_id'],
+              user_id: member['user_id'],
+              team_id: member['team_id'],
+              user: User(
+                user_id: member['user']['user_id'],
+                username: member['user']['username'],
+                email: member['user']['email'],
+                social_type: member['user']['social_type'],
+                kakao_id: member['user']['kakao_id'],
+                facebook_id: member['user']['facebook_id'],
+                nickname: member['user']['nickname'],
+                position: member['user']['position'],
+                profile_picture: member['user']['profile_picture'],
+                career: member['user']['career'],
+                portfolio_link: member['user']['portfolio_link'],
+                created_at: member['user']['created_at'] != null ? DateTime.parse(member['user']['created_at']) : null,
+                deleted_at: member['user']['deleted_at'] != null ? DateTime.parse(member['user']['deleted_at']) : null,
+                participation_score: member['user']['participation_score'],
+                participation_id: member['user']['participation_id'],
+                skill_score: member['user']['skill_score'],
+                skill_id: member['user']['skill_id'],
+              ),
+              role: member['role'],
+              state: member['state'],
+              join_date: member['join_date'] != null ? DateTime.parse(member['join_date']) : null,
+            ),
+          )
           .toList(),
     );
   }

@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'globals.dart' as globals;
-import 'package:codi/models/models.dart';
+import 'package:codi/models/models.dart' as models;
 
 Map<String, String> _headers = {
   'accept': 'application/json',
@@ -81,7 +81,9 @@ class Contest {
     var response = await http.get(uri, headers: _headers);
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
-    return decodedResponse;
+
+    List<models.Contest> contests = decodedResponse.map<models.Contest>((contest) => models.Contest.fromJson(contest)).toList();
+    return contests;
   }
 }
 
@@ -104,9 +106,21 @@ class RecruitmentPost {
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
 
-    List<TeamRecruitmentPost> posts = decodedResponse.map<TeamRecruitmentPost>((post) => TeamRecruitmentPost.fromJson(post)).toList();
+    List<models.TeamRecruitmentPost> posts =
+        decodedResponse.map<models.TeamRecruitmentPost>((post) => models.TeamRecruitmentPost.fromJson(post)).toList();
     return posts;
+  }
 
-    return decodedResponse;
+  static Future<List<models.TeamRecruitmentPost>> getPostsByContest({
+    required int contest_id,
+  }) async {
+    var uri = Uri.https("api.0john-hong0.com", "/codi/contests/$contest_id/recruits");
+    var response = await http.get(uri, headers: _headers);
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+
+    List<models.TeamRecruitmentPost> posts =
+        decodedResponse.map<models.TeamRecruitmentPost>((post) => models.TeamRecruitmentPost.fromJson(post)).toList();
+    return posts;
   }
 }
