@@ -242,12 +242,6 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => Main(),
-                        //   ),
-                        // );
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -586,7 +580,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
+                        children: [
                           GestureDetector(
                             onTap: () {},
                             child: Container(
