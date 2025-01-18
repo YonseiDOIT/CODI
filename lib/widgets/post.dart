@@ -71,7 +71,13 @@ class _PostWidgetState extends State<PostWidget> {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("username"),
+                      Text(
+                        "username",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       Row(
                         children: [
                           Padding(
@@ -83,7 +89,10 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
-                            child: Text("123"),
+                            child: Text(
+                              "123",
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 4),
@@ -94,7 +103,10 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 11),
-                            child: Text("456"),
+                            child: Text(
+                              "456",
+                              style: TextStyle(fontSize: 12),
+                            ),
                           ),
                         ],
                       ),

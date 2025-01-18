@@ -44,6 +44,8 @@ dependencies:
   # post images
   carousel_slider: ^5.0.0
 
+  flutter_svg: ^2.0.10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +72,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   - assets/env/.env
+  - assets/vectors/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
