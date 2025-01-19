@@ -28,14 +28,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-      home: Main(),
+      home: const Main(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class Main extends StatefulWidget {
-  Main({super.key});
+  const Main({super.key});
 
   @override
   State<Main> createState() => _MainState();
