@@ -21,7 +21,8 @@ class ContestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     tags = contestData.tags.toString().split(", ");
-    dDay = DateTime.now().difference(contestData.registration_end_date!).inDays;
+
+    int dDay = contestData.registration_end_date!.difference(DateTime.now()).inDays;
 
     return GestureDetector(
       onTap: () {
@@ -74,6 +75,27 @@ class ContestWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        contestData.name!,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        contestData.hosting_organization!,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
@@ -97,27 +119,6 @@ class ContestWidget extends StatelessWidget {
                         );
                       }),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        contestData.name!,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        contestData.hosting_organization!,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
                   ),
                   Row(
                     children: [
@@ -281,6 +282,27 @@ class _ContestDetailsState extends State<ContestDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.contestData.name!,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                widget.contestData.hosting_organization!,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
@@ -304,27 +326,6 @@ class _ContestDetailsState extends State<ContestDetails> {
                                 );
                               }),
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.contestData.name!,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              Text(
-                                widget.contestData.hosting_organization!,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
                           ),
                           Column(
                             children: [
@@ -439,7 +440,16 @@ class _ContestDetailsState extends State<ContestDetails> {
                               color: globals.Colors.point2.withOpacity(0.1),
                             ),
                           ),
-                          child: const Tab(text: "소개"),
+                          child: const Tab(
+                            child: Text(
+                              "소개",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: globals.Colors.point2,
+                              ),
+                            ),
+                          ),
                         ),
                         Container(
                           width: globals.ScreenSize.width / 2,
@@ -448,7 +458,16 @@ class _ContestDetailsState extends State<ContestDetails> {
                               color: globals.Colors.point2.withOpacity(0.1),
                             ),
                           ),
-                          child: const Tab(text: "팀 찾기"),
+                          child: const Tab(
+                            child: Text(
+                              "팀 찾기",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: globals.Colors.point2,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -554,7 +573,6 @@ class _ContestDetailsState extends State<ContestDetails> {
                           FutureBuilder(
                             future: RecruitmentPost.getPostsByContest(contest_id: widget.contestData.contest_id),
                             builder: (BuildContext context, AsyncSnapshot snapshot) {
-                              //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                               if (snapshot.hasData == false) {
                                 return const Center(
                                   child: SizedBox(
@@ -563,9 +581,7 @@ class _ContestDetailsState extends State<ContestDetails> {
                                     child: CircularProgressIndicator(),
                                   ),
                                 );
-                              }
-                              //error가 발생하게 될 경우 반환하게 되는 부분
-                              else if (snapshot.hasError) {
+                              } else if (snapshot.hasError) {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -573,9 +589,7 @@ class _ContestDetailsState extends State<ContestDetails> {
                                     style: const TextStyle(fontSize: 15),
                                   ),
                                 );
-                              }
-                              // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
-                              else {
+                              } else {
                                 return Stack(
                                   alignment: Alignment.topCenter,
                                   children: [
@@ -594,23 +608,35 @@ class _ContestDetailsState extends State<ContestDetails> {
                                     ),
                                     Positioned(
                                       bottom: 30,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                          color: globals.Colors.point2,
-                                          borderRadius: BorderRadius.circular(30),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(0.12),
-                                              offset: const Offset(10, 14),
-                                              blurRadius: 56,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => AddTeam(
+                                                contestData: widget.contestData,
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                        child: const Icon(
-                                          CustomIcons.add,
-                                          size: 24,
-                                          color: globals.Colors.sub3,
+                                          );
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: globals.Colors.point2,
+                                            borderRadius: BorderRadius.circular(30),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(0.12),
+                                                offset: const Offset(10, 14),
+                                                blurRadius: 56,
+                                              ),
+                                            ],
+                                          ),
+                                          child: const Icon(
+                                            CustomIcons.add,
+                                            size: 24,
+                                            color: globals.Colors.sub3,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -640,5 +666,249 @@ class _ContestDetailsState extends State<ContestDetails> {
     } else {
       return "$date";
     }
+  }
+}
+
+class AddTeam extends StatefulWidget {
+  final models.Contest contestData;
+  const AddTeam({
+    super.key,
+    required this.contestData,
+  });
+
+  @override
+  State<AddTeam> createState() => _AddTeamState();
+}
+
+class _AddTeamState extends State<AddTeam> {
+  late List tags;
+
+  @override
+  Widget build(BuildContext context) {
+    tags = widget.contestData.tags.toString().split(", ");
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.only(
+          top: globals.ScreenSize.topPadding,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                height: 57,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        CustomIcons.left,
+                        size: 24,
+                      ),
+                    ),
+                    const Text(
+                      "팀원 모집",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: globals.Colors.point2,
+                      ),
+                    ),
+                    Container(
+                      width: 24,
+                      color: Colors.transparent,
+                    )
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          "공모전",
+                          style: TextStyle(
+                            color: globals.Colors.point1,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 12),
+                          height: 91,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            widget.contestData.name!,
+                                            style: const TextStyle(
+                                              color: globals.Colors.point2,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          Text(
+                                            widget.contestData.hosting_organization!,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        physics: const BouncingScrollPhysics(),
+                                        child: Row(
+                                          children: List.generate(tags.length, (index) {
+                                            return Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                              margin: const EdgeInsets.only(right: 5, bottom: 4),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(100),
+                                                color: const Color.fromRGBO(48, 52, 55, 0.2),
+                                              ),
+                                              child: Text(
+                                                tags[index],
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Theme.of(context).colorScheme.secondary,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Image.network(
+                                widget.contestData.poster_image_link ?? '',
+                                height: 91,
+                                width: 91,
+                                fit: BoxFit.cover,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    color: globals.Colors.sub2,
+                    height: 1,
+                    thickness: 1,
+                  ),
+                  Stack(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 17,
+                        ),
+                        width: globals.ScreenSize.width,
+                        height: globals.ScreenSize.height - globals.ScreenSize.topPadding - 57 - 91 - 36 - 1 - 34 - 20,
+                        child: const Column(
+                          children: [
+                            SizedBox(
+                              height: 43,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "제목",
+                                  hintStyle: TextStyle(
+                                    color: globals.Colors.sub2,
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  color: globals.Colors.point2,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            Divider(color: globals.Colors.sub4, height: 1, thickness: 1),
+                            SizedBox(
+                              height: 420,
+                              child: TextField(
+                                maxLines: null,
+                                expands: true,
+                                maxLength: 100,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "내용을 입력하세요. (최대 100자)",
+                                  hintStyle: TextStyle(
+                                    color: globals.Colors.sub2,
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  color: globals.Colors.point2,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 30,
+                        child: GestureDetector(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 23),
+                            width: globals.ScreenSize.width - 46,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                              // horizontal: 129,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(32),
+                              color: globals.Colors.point2,
+                            ),
+                            child: const Text(
+                              "업로드",
+                              style: TextStyle(
+                                color: globals.Colors.sub3,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
