@@ -4,18 +4,17 @@ import 'package:codi/data/globals.dart' as globals;
 
 class ProfileCircle extends StatelessWidget {
   final User user;
-  final double width;
+  final double size;
 
-  ProfileCircle({
+  const ProfileCircle({
     super.key,
     required this.user,
-    required this.width,
+    required this.size,
   });
-
-  late Color borderColor;
 
   @override
   Widget build(BuildContext context) {
+    Color borderColor;
     if (user.position == "FE" || user.position == "BE") {
       borderColor = globals.Colors.point1;
     } else if (user.position == "PD") {
@@ -29,8 +28,8 @@ class ProfileCircle extends StatelessWidget {
     }
 
     return Container(
-      height: width,
-      width: width,
+      height: size,
+      width: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         border: Border.all(
