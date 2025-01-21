@@ -32,7 +32,7 @@ class ProfileCircle extends StatelessWidget {
       height: width,
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(100),
         border: Border.all(
           color: borderColor,
           width: 2,
