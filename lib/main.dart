@@ -12,11 +12,25 @@ import 'package:codi/screens/profile_screen.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
+
+import 'package:codi/data/api_wrapper.dart' as api;
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
   globals.backendKey = dotenv.get("backendKey");
 
+  Map<String, dynamic> userData = await globals.localData.getMap("user") ?? {};
+
+  userData = await api.User.getUser(user_id: 1);
+  print(userData["username"]);
+
+  if (userData.isNotEmpty) {
+    globals.codiUser = models.User.FromJson(userData);
+    globals.isLoggedIn = true;
+  }
+
+  print(globals.isLoggedIn);
   runApp(const MyApp());
 }
 
@@ -29,14 +43,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-      home: Main(),
+      home: const Main(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class Main extends StatefulWidget {
-  Main({super.key});
+  const Main({super.key});
 
   @override
   State<Main> createState() => _MainState();
@@ -64,6 +78,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: screens.elementAt(_currentIndex),
       ),
