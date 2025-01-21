@@ -66,7 +66,7 @@ class User {
 class Contest {
   static Future<List<dynamic>> getContests({
     String? keyword,
-    String sort = "created_at",
+    String sort = "recent",
     int limit = 20,
     int offset = 0,
   }) async {
@@ -90,7 +90,7 @@ class Contest {
 class RecruitmentPost {
   static Future<List<dynamic>> getPosts({
     String? keyword,
-    String sort = "created_at",
+    String sort = "recent",
     int limit = 20,
     int offset = 0,
   }) async {
@@ -122,5 +122,28 @@ class RecruitmentPost {
     List<models.TeamRecruitmentPost> posts =
         decodedResponse.map<models.TeamRecruitmentPost>((post) => models.TeamRecruitmentPost.fromJson(post)).toList();
     return posts;
+  }
+
+  static Future<Map<String, dynamic>> addPost({
+    required int contest_id,
+    required int user_id,
+    required String title,
+    required String description,
+    int max_members = 4,
+    DateTime? end_at,
+  }) async {
+    Map<String, dynamic> body = {
+      "contest_id": contest_id,
+      "user_id": user_id,
+      "title": title,
+      "description": description,
+      if (end_at != null) "end_at": end_at,
+    };
+
+    var uri = Uri.https("api.0john-hong0.com", "/codi/recruits");
+    var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    return decodedResponse;
   }
 }
