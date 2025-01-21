@@ -68,24 +68,26 @@ class User {
     return data;
   }
 
-  void FromMap(Map<String, dynamic> data) {
-    user_id = data["user_id"];
-    username = data["username"];
-    email = data["email"];
-    social_type = data["social_type"];
-    kakao_id = data["kakao_id"];
-    facebook_id = data["facebook_id"];
-    nickname = data["nickname"];
-    position = data["position"];
-    profile_picture = data["profile_picture"];
-    career = data["career"];
-    portfolio_link = data["portfolio_link"];
-    created_at = data["created_at"];
-    deleted_at = data["deleted_at"];
-    participation_score = data["participation_score"];
-    participation_id = data["participation_id"];
-    skill_score = data["skill_score"];
-    skill_id = data["skill_id"];
+  static User FromJson(Map<String, dynamic> data) {
+    return User(
+      user_id: data["user_id"],
+      username: data["username"],
+      email: data["email"],
+      social_type: data["social_type"],
+      kakao_id: data["kakao_id"],
+      facebook_id: data["facebook_id"],
+      nickname: data["nickname"],
+      position: data["position"],
+      profile_picture: data["profile_picture"],
+      career: data["career"],
+      portfolio_link: data["portfolio_link"],
+      created_at: data["created_at"] != null ? DateTime.parse(data["created_at"]) : null,
+      deleted_at: data["deleted_at"] != null ? DateTime.parse(data["deleted_at"]) : null,
+      participation_score: data["participation_score"],
+      participation_id: data["participation_id"],
+      skill_score: data["skill_score"],
+      skill_id: data["skill_id"],
+    );
   }
 }
 
@@ -285,5 +287,42 @@ class TeamRecruitmentPost {
           )
           .toList(),
     );
+  }
+}
+
+class Title {
+  int title_id;
+
+  String title;
+  String image_name;
+  String type;
+  int count;
+
+  Title({
+    required this.title_id,
+    required this.title,
+    required this.image_name,
+    required this.type,
+    required this.count,
+  });
+
+  static Title fromJson(Map<String, dynamic> json) {
+    return Title(
+      title_id: json['title_id'],
+      title: json['title'],
+      image_name: json['image_name'],
+      type: json['type'],
+      count: json['count'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title_id': title_id,
+      'title': title,
+      'image_name': image_name,
+      'type': type,
+      'count': count,
+    };
   }
 }
