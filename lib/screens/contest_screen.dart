@@ -6,54 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:codi/data/api_wrapper.dart' as api;
 import 'package:codi/models/models.dart';
 
-// List<Contest> contests = [
-//   Contest(
-//     contest_id: 1,
-//     uploader_id: 1,
-//     name: "asdf",
-//     poster_image_link:
-//         "https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80",
-//   ),
-// ];
-// List<Team> teams = [
-//   Team(
-//     team_id: 1,
-//     contest: contests[0],
-//   )
-// ];
-
-// List<TeamRecruitmentPost> posts = [
-//   TeamRecruitmentPost(
-//     recruitment_post_id: 1,
-//     team_id: 1,
-//     contest_id: 1,
-//     contest: contests[0],
-//     title: 'dummy1',
-//     description: 'dummy1dummy1dummy1dummy1',
-//     members: [
-//       TeamMember(
-//         member_id: 1,
-//         user_id: 1,
-//         team_id: 1,
-//         user: User(
-//           user_id: 1,
-//           username: "username",
-//           email: "email",
-//         ),
-//       ),
-//     ],
-//   ),
-//   TeamRecruitmentPost(
-//     recruitment_post_id: 2,
-//     team_id: 2,
-//     contest_id: 2,
-//     contest: contests[0],
-//     title: 'dummy2',
-//     description: 'dummy2dummy2dummy2dummy2',
-//     members: [],
-//   ),
-// ];
-
 class ContestScreen extends StatefulWidget {
   const ContestScreen({super.key});
 
