@@ -41,14 +41,17 @@ dependencies:
   # api requests
   http: ^1.1.0
 
+  # dotenv
   flutter_dotenv: ^5.2.1
 
   # post images
   carousel_slider: ^5.0.0
 
-
   # local save
   shared_preferences: ^2.2.2
+
+  # toast messages
+  fluttertoast: ^8.2.5
 
 dev_dependencies:
   flutter_test:
