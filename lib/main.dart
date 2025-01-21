@@ -11,11 +11,25 @@ import 'package:codi/screens/profile_screen.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
+
+import 'package:codi/data/api_wrapper.dart' as api;
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
   globals.backendKey = dotenv.get("backendKey");
 
+  Map<String, dynamic> userData = await globals.localData.getMap("user") ?? {};
+
+  userData = await api.User.getUser(user_id: 1);
+  print(userData["username"]);
+
+  if (userData.isNotEmpty) {
+    globals.codiUser = models.User.FromJson(userData);
+    globals.isLoggedIn = true;
+  }
+
+  print(globals.isLoggedIn);
   runApp(const MyApp());
 }
 
