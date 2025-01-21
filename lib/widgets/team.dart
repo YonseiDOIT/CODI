@@ -1,4 +1,5 @@
 import 'package:codi/data/custom_icons.dart';
+import 'package:codi/widgets/contest.dart';
 import 'package:codi/widgets/profile_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:codi/data/globals.dart' as globals;
@@ -223,6 +224,17 @@ class _TeamDetailsState extends State<TeamDetails> {
               child: Column(
                 children: [
                   GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContestDetails(
+                            contestData: widget.item.contest!,
+                          ),
+                        ),
+                      );
+                      // ContestDetails
+                    },
                     child: Container(
                       alignment: Alignment.centerRight,
                       // width: globals.ScreenSize.width,
@@ -328,6 +340,94 @@ class _TeamDetailsState extends State<TeamDetails> {
                           ),
                         ),
                         GestureDetector(
+                          onTap: () {
+                            if (!widget.item.members.any((member) => member.user.user_id == globals.codiUser.user_id)) {
+                              // if (true) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Dialog(
+                                    child: Container(
+                                      width: globals.ScreenSize.width - 53 * 2,
+                                      height: 202,
+                                      decoration: BoxDecoration(
+                                        color: globals.Colors.sub3,
+                                        borderRadius: BorderRadius.circular(18),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(height: 27),
+                                          const Text(
+                                            "코디 매칭을 신청하시겠어요?",
+                                            style: TextStyle(
+                                              color: globals.Colors.point2,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          const Text(
+                                            "확인 버튼을 누르면 내 프로필이 전송됩니다.",
+                                            style: TextStyle(
+                                              color: globals.Colors.point2,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 28),
+                                          const Divider(
+                                            height: 0,
+                                            thickness: 1,
+                                            color: globals.Colors.sub4,
+                                          ),
+                                          GestureDetector(
+                                            child: Container(
+                                              width: globals.ScreenSize.width - 53 * 2,
+                                              padding: const EdgeInsets.symmetric(vertical: 15),
+                                              color: Colors.transparent,
+                                              alignment: Alignment.center,
+                                              child: const Text(
+                                                '확인',
+                                                style: TextStyle(
+                                                  color: globals.Colors.point1,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Divider(
+                                            height: 0,
+                                            thickness: 1,
+                                            color: globals.Colors.sub4,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                              width: globals.ScreenSize.width - 53 * 2,
+                                              padding: const EdgeInsets.symmetric(vertical: 15),
+                                              color: Colors.transparent,
+                                              alignment: Alignment.center,
+                                              child: const Text(
+                                                '취소',
+                                                style: TextStyle(
+                                                  color: globals.Colors.point2,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 13),
                             padding: const EdgeInsets.symmetric(vertical: 14),
@@ -336,9 +436,9 @@ class _TeamDetailsState extends State<TeamDetails> {
                               color: globals.Colors.point2,
                             ),
                             alignment: Alignment.center,
-                            child: const Text(
-                              "신청하기",
-                              style: TextStyle(
+                            child: Text(
+                              widget.item.members.any((member) => member.user.user_id == globals.codiUser.user_id) ? "이미 신청이 완료됨" : "신청하기",
+                              style: const TextStyle(
                                 color: globals.Colors.sub3,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
