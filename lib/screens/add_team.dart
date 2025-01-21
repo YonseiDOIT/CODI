@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:codi/data/custom_icons.dart';
+import 'package:codi/widgets/sub_topbar.dart';
 
 import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/models/models.dart' as models;
@@ -38,42 +39,28 @@ class _AddTeamState extends State<AddTeam> {
         margin: EdgeInsets.only(
           top: globals.ScreenSize.topPadding,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 57,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(
-                        CustomIcons.left,
-                        size: 24,
-                      ),
-                    ),
-                    const Text(
-                      "팀원 모집",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: globals.Colors.point2,
-                      ),
-                    ),
-                    Container(
-                      width: 24,
-                      color: Colors.transparent,
-                    )
-                  ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SubCustomTopBar(
+              contents: [
+                Text(
+                  "팀원 모집",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: globals.Colors.point2,
+                  ),
                 ),
-              ),
-              Column(
+              ],
+            ),
+            const Divider(
+              color: globals.Colors.sub4,
+              height: 0,
+              thickness: 1,
+            ),
+            SingleChildScrollView(
+              child: Column(
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -83,16 +70,7 @@ class _AddTeamState extends State<AddTeam> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text(
-                          "공모전",
-                          style: TextStyle(
-                            color: globals.Colors.point1,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
                         Container(
-                          margin: const EdgeInsets.only(top: 12),
                           height: 91,
                           child: Row(
                             children: [
@@ -293,8 +271,8 @@ class _AddTeamState extends State<AddTeam> {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
