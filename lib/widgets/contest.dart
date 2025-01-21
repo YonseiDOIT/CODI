@@ -1,11 +1,13 @@
-import 'package:codi/data/api_wrapper.dart';
-import 'package:codi/data/custom_icons.dart';
-import 'package:codi/models/models.dart' as models;
-import 'package:codi/widgets/team.dart';
-import 'package:flutter/material.dart';
+import 'package:codi/screens/add_team.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+
+import 'package:codi/data/custom_icons.dart';
+import 'package:codi/widgets/team.dart';
 
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
+import 'package:codi/data/api_wrapper.dart' as api;
 
 class ContestWidget extends StatelessWidget {
   final models.Contest contestData;
@@ -571,7 +573,7 @@ class _ContestDetailsState extends State<ContestDetails> {
                             ),
                           ),
                           FutureBuilder(
-                            future: RecruitmentPost.getPostsByContest(contest_id: widget.contestData.contest_id),
+                            future: api.RecruitmentPost.getPostsByContest(contest_id: widget.contestData.contest_id),
                             builder: (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData == false) {
                                 return const Center(
@@ -598,6 +600,7 @@ class _ContestDetailsState extends State<ContestDetails> {
                                         children: List.generate(
                                           snapshot.data.length,
                                           (index) {
+                                            snapshot.data[index].contest = widget.contestData;
                                             return TeamWidget(
                                               item: snapshot.data[index],
                                               showContest: false,
@@ -666,249 +669,5 @@ class _ContestDetailsState extends State<ContestDetails> {
     } else {
       return "$date";
     }
-  }
-}
-
-class AddTeam extends StatefulWidget {
-  final models.Contest contestData;
-  const AddTeam({
-    super.key,
-    required this.contestData,
-  });
-
-  @override
-  State<AddTeam> createState() => _AddTeamState();
-}
-
-class _AddTeamState extends State<AddTeam> {
-  late List tags;
-
-  @override
-  Widget build(BuildContext context) {
-    tags = widget.contestData.tags.toString().split(", ");
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(
-          top: globals.ScreenSize.topPadding,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 57,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(
-                        CustomIcons.left,
-                        size: 24,
-                      ),
-                    ),
-                    const Text(
-                      "팀원 모집",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: globals.Colors.point2,
-                      ),
-                    ),
-                    Container(
-                      width: 24,
-                      color: Colors.transparent,
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text(
-                          "공모전",
-                          style: TextStyle(
-                            color: globals.Colors.point1,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 12),
-                          height: 91,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            widget.contestData.name!,
-                                            style: const TextStyle(
-                                              color: globals.Colors.point2,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Text(
-                                            widget.contestData.hosting_organization!,
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        physics: const BouncingScrollPhysics(),
-                                        child: Row(
-                                          children: List.generate(tags.length, (index) {
-                                            return Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                                              margin: const EdgeInsets.only(right: 5, bottom: 4),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(100),
-                                                color: const Color.fromRGBO(48, 52, 55, 0.2),
-                                              ),
-                                              child: Text(
-                                                tags[index],
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Theme.of(context).colorScheme.secondary,
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Image.network(
-                                widget.contestData.poster_image_link ?? '',
-                                height: 91,
-                                width: 91,
-                                fit: BoxFit.cover,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(
-                    color: globals.Colors.sub2,
-                    height: 1,
-                    thickness: 1,
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 17,
-                        ),
-                        width: globals.ScreenSize.width,
-                        height: globals.ScreenSize.height - globals.ScreenSize.topPadding - 57 - 91 - 36 - 1 - 34 - 20,
-                        child: const Column(
-                          children: [
-                            SizedBox(
-                              height: 43,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "제목",
-                                  hintStyle: TextStyle(
-                                    color: globals.Colors.sub2,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  color: globals.Colors.point2,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                            Divider(color: globals.Colors.sub4, height: 1, thickness: 1),
-                            SizedBox(
-                              height: 420,
-                              child: TextField(
-                                maxLines: null,
-                                expands: true,
-                                maxLength: 100,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "내용을 입력하세요. (최대 100자)",
-                                  hintStyle: TextStyle(
-                                    color: globals.Colors.sub2,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  color: globals.Colors.point2,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 30,
-                        child: GestureDetector(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 23),
-                            width: globals.ScreenSize.width - 46,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 14,
-                              // horizontal: 129,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(32),
-                              color: globals.Colors.point2,
-                            ),
-                            child: const Text(
-                              "업로드",
-                              style: TextStyle(
-                                color: globals.Colors.sub3,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
