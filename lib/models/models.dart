@@ -1,4 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
+library models;
 
 class User {
   int user_id;
@@ -323,6 +324,86 @@ class Title {
       'image_name': image_name,
       'type': type,
       'count': count,
+    };
+  }
+}
+
+class ChatRoom {
+  int chatroom_id;
+  String name;
+  int message_count;
+  DateTime? created_at;
+  DateTime? deleted_at;
+  List<ChatMessage> messages;
+
+  ChatRoom({
+    required this.chatroom_id,
+    required this.name,
+    this.message_count = 0,
+    this.created_at,
+    this.deleted_at,
+    required this.messages,
+  });
+
+  static ChatRoom FromJson(Map<String, dynamic> json) {
+    return ChatRoom(
+      chatroom_id: json['chatroom_id'],
+      name: json['name'],
+      message_count: json['message_count'],
+      created_at: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
+      deleted_at: json['deleted_at'] != null ? DateTime.parse(json['deleted_at']) : null,
+      messages: (json['messages'] as List).map((message) => ChatMessage.FromJson(message)).toList(),
+    );
+  }
+
+  Map<String, dynamic> ToMap() {
+    return {
+      'chatroom_id': chatroom_id,
+      'name': name,
+      'message_count': message_count,
+      'created_at': created_at?.toIso8601String(),
+      'deleted_at': deleted_at?.toIso8601String(),
+      'messages': messages.map((message) => message.toMap()).toList(),
+    };
+  }
+}
+
+class ChatMessage {
+  int message_id;
+  int user_id;
+  User user;
+  int room_id;
+  String? content;
+  DateTime? sent_at;
+
+  ChatMessage({
+    required this.message_id,
+    required this.user_id,
+    required this.room_id,
+    required this.user,
+    this.content,
+    this.sent_at,
+  });
+
+  static ChatMessage FromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+      message_id: json['message_id'],
+      user_id: json['user_id'],
+      room_id: json['room_id'],
+      user: User.FromJson(json['user']),
+      content: json['content'],
+      sent_at: json['sent_at'] != null ? DateTime.parse(json['sent_at']) : null,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'message_id': message_id,
+      'user_id': user_id,
+      'user': user.ToMap(),
+      'room_id': room_id,
+      'content': content,
+      'sent_at': sent_at?.toIso8601String(),
     };
   }
 }
