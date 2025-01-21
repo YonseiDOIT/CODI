@@ -1,3 +1,4 @@
+import 'package:codi/data/custom_icons.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,8 +12,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("profile"),
+      child: const Center(
+        child: Text('profile'),
       ),
     );
   }
