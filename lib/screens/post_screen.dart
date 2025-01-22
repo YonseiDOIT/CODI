@@ -168,7 +168,7 @@ class PostScreen extends StatelessWidget {
                 const Row(
                   children: [
                     Icon(
-                      Icons.text_fields,
+                      CustomIcons.text,
                       size: 24,
                       color: globals.Colors.point2,
                     ),
@@ -176,7 +176,7 @@ class PostScreen extends StatelessWidget {
                       width: 22,
                     ),
                     Icon(
-                      Icons.image_outlined,
+                      CustomIcons.image,
                       size: 24,
                       color: globals.Colors.point2,
                     ),
@@ -184,7 +184,7 @@ class PostScreen extends StatelessWidget {
                       width: 22,
                     ),
                     Icon(
-                      Icons.align_horizontal_left_rounded,
+                      CustomIcons.text_align_left,
                       size: 24,
                       color: globals.Colors.point2,
                     ),
