@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:codi/widgets/post.dart';
-import 'package:flutter/material.dart';
+import 'package:codi/screens/profile_edit_screen.dart';
+import 'package:codi/screens/post_screen.dart';
 
-import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
-
 import 'package:codi/data/globals.dart' as globals;
 
 class ProfileScreen extends StatefulWidget {
@@ -66,6 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           ),
         ),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             Positioned(
               top: globals.ScreenSize.height * 0.08,
@@ -120,106 +121,23 @@ class _ProfileScreenState extends State<ProfileScreen>
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           controller: ScrollController(),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: List.generate(
-                                  4,
-                                  (index) => Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    width: 150,
-                                    height: 203,
-                                    decoration: BoxDecoration(
-                                      color: globals.Colors.point1,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'data',
-                                          style: TextStyle(
-                                            color: globals.Colors.sub3,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        Flexible(
-                                          child: SvgPicture.asset(
-                                            'assets/vectors/Vector${index + 1}.svg',
-                                            alignment: Alignment.center,
-                                            fit: BoxFit.cover,
-                                            // color: Colors.white,
-                                            width: 90,
-                                            height: 90,
-                                          ),
-                                        ),
-                                        Text(
-                                          '2장',
-                                          style: TextStyle(
-                                            color: Color(0xFF3906A6),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                          child: SizedBox(
+                            height: 2 * 203 + 10,
+                            width: 4 * 150 + 3 * 10,
+                            child: GridView.builder(
+                              padding: const EdgeInsets.all(10),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 150 / 203,
                               ),
-                              const SizedBox(height: 10),
-                              Row(
-                                children: List.generate(
-                                  4,
-                                  (index) => Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    width: 150,
-                                    height: 203,
-                                    decoration: BoxDecoration(
-                                      color: globals.Colors.point1,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'data',
-                                          style: TextStyle(
-                                            color: globals.Colors.sub3,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        Flexible(
-                                          child: SvgPicture.asset(
-                                            'assets/vectors/Vector${index + 5}.svg',
-                                            alignment: Alignment.center,
-                                            fit: BoxFit.cover,
-                                            // color: Colors.white,
-                                            width: 90,
-                                            height: 90,
-                                          ),
-                                        ),
-                                        Text(
-                                          '2장',
-                                          style: TextStyle(
-                                            color: Color(0xFF3906A6),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              itemCount: 8,
+                              itemBuilder: (context, index) {
+                                return const TitlesWidget();
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -234,8 +152,110 @@ class _ProfileScreenState extends State<ProfileScreen>
               right: 0,
               child: BottomDraggableSheet(),
             ),
+            Positioned(
+              bottom: 15,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return PostScreen();
+                      },
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: ShapeDecoration(
+                    color: globals.Colors.point2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: globals.Colors.point2.withOpacity(0.3),
+                        blurRadius: 30,
+                        offset: const Offset(0, 0),
+                        spreadRadius: 20,
+                      )
+                    ],
+                  ),
+                  child: const Icon(
+                    CustomIcons.add,
+                    color: globals.Colors.sub3,
+                    size: 24,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TitlesWidget extends StatelessWidget {
+  const TitlesWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 10),
+      width: 150,
+      height: 203,
+      decoration: BoxDecoration(
+        color: globals.Colors.point1,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'data',
+                style: TextStyle(
+                  color: globals.Colors.sub3,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Flexible(
+                child: SvgPicture.asset(
+                  'assets/vectors/Vector1.svg',
+                  alignment: Alignment.center,
+                  fit: BoxFit.cover,
+                  width: 90,
+                  height: 90,
+                ),
+              ),
+              const Text(
+                '2장',
+                style: TextStyle(
+                  color: Color(0xFF3906A6),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: Icon(
+              CustomIcons.checkCircle,
+              color: globals.Colors.sub3.withOpacity(0),
+              size: 24,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -262,7 +282,7 @@ class UserInfoTab extends StatelessWidget {
       child: Column(
         children: [
           _buildOpacityIndicators(),
-          _buildTabBarView(),
+          _buildTabBarView(context),
         ],
       ),
     );
@@ -307,7 +327,7 @@ class UserInfoTab extends StatelessWidget {
     );
   }
 
-  Widget _buildTabBarView() {
+  Widget _buildTabBarView(BuildContext context) {
     return Container(
       width: globals.ScreenSize.width,
       height: globals.ScreenSize.height * 0.16,
@@ -315,25 +335,25 @@ class UserInfoTab extends StatelessWidget {
       child: TabBarView(
         controller: _tabController,
         children: [
-          _buildProfileInfo(),
+          _buildProfileInfo(context),
           _buildStatistics(),
         ],
       ),
     );
   }
 
-  Widget _buildProfileInfo() {
+  Widget _buildProfileInfo(BuildContext context) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   "열정적인 중재자",
                   style: TextStyle(
                     fontSize: 16,
@@ -343,7 +363,7 @@ class UserInfoTab extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       "Jake lee",
                       style: TextStyle(
                         fontSize: 28,
@@ -351,18 +371,10 @@ class UserInfoTab extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Icon(
-                        CustomIcons.edit,
-                        color: globals.Colors.sub3,
-                        size: 20,
-                      ),
-                    ),
+                    SizedBox(width: 4),
                   ],
                 ),
-                const Row(
+                Row(
                   children: [
                     Icon(
                       CustomIcons.attachment,
@@ -396,20 +408,24 @@ class UserInfoTab extends StatelessWidget {
                       "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
                   fit: BoxFit.cover,
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x4C000000),
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
               ),
-              child: const Center(
-                child: Icon(
-                  CustomIcons.edit,
-                  size: 24,
-                  color: globals.Colors.sub3,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const ProfileEditScreen();
+                        },
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    CustomIcons.edit,
+                    size: 24,
+                    color: globals.Colors.sub3,
+                  ),
                 ),
               ),
             ),

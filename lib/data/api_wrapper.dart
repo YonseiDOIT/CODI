@@ -39,9 +39,11 @@ class User {
     };
 
     var uri = Uri.https("api.0john-hong0.com", "/codi/users");
-    var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
+    var response =
+        await http.post(uri, headers: _headers, body: jsonEncode(body));
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     return decodedResponse;
   }
 
@@ -54,10 +56,12 @@ class User {
       if (kakao_id != null) 'kakao_id': kakao_id,
     };
 
-    var uri = Uri.https("api.0john-hong0.com", "/codi/users/by-id", queryParameters);
+    var uri =
+        Uri.https("api.0john-hong0.com", "/codi/users/by-id", queryParameters);
     var response = await http.get(uri, headers: _headers);
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     return decodedResponse;
   }
 }
@@ -76,10 +80,12 @@ class Contest {
       'offset': offset.toString(),
     };
 
-    var uri = Uri.https("api.0john-hong0.com", "/codi/contests", queryParameters);
+    var uri =
+        Uri.https("api.0john-hong0.com", "/codi/contests", queryParameters);
     var response = await http.get(uri, headers: _headers);
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
     return decodedResponse;
   }
 }
