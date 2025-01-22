@@ -88,10 +88,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           height: 45,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            // border: Border.all(
-                            //   width: 3,
-                            //   color: const Color(0xFF6055F5),
-                            // ),
                             image: DecorationImage(
                               image: NetworkImage(
                                   "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
@@ -117,7 +113,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       Row(
                                         children: [
                                           Icon(
-                                            Icons.image_outlined,
+                                            CustomIcons.image,
                                             color: globals.Colors.point2,
                                             size: 24,
                                           ),
@@ -137,7 +133,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       Row(
                                         children: [
                                           Icon(
-                                            Icons.camera_alt_outlined,
+                                            CustomIcons.camera,
                                             color: globals.Colors.point2,
                                             size: 24,
                                           ),
@@ -157,7 +153,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       Row(
                                         children: [
                                           Icon(
-                                            Icons.delete_outline,
+                                            CustomIcons.delete,
                                             color: globals.Colors.point3,
                                             size: 24,
                                           ),
