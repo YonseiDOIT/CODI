@@ -5,11 +5,13 @@ import 'package:codi/data/globals.dart' as globals;
 class ProfileCircle extends StatelessWidget {
   final User user;
   final double size;
+  final bool showBorder;
 
   const ProfileCircle({
     super.key,
     required this.user,
     required this.size,
+    this.showBorder = true,
   });
 
   @override
@@ -32,10 +34,12 @@ class ProfileCircle extends StatelessWidget {
       width: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(
-          color: borderColor,
-          width: 2,
-        ),
+        border: showBorder
+            ? Border.all(
+                color: borderColor,
+                width: 2,
+              )
+            : null,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.30),
