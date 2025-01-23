@@ -60,30 +60,44 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   child: Row(
                     children: [
                       ChatProfiles(
-                        users: [globals.codiUser],
+                        users: [
+                          globals.codiUser,
+                          models.User(
+                            user_id: 2,
+                            username: "username",
+                            email: "email",
+                            profile_picture: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
+                          ),
+                          models.User(
+                            user_id: 3,
+                            username: "username2",
+                            email: "email",
+                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
+                          ),
+                          models.User(
+                            user_id: 3,
+                            username: "username2",
+                            email: "email",
+                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
+                          ),
+                          models.User(
+                            user_id: 3,
+                            username: "username2",
+                            email: "email",
+                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
+                          ),
+                        ],
                         maxSize: 40,
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 12),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.chatRoom.name,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              "${widget.chatRoom.message_count}개의 메시지",
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          widget.chatRoom.name,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ],
@@ -105,6 +119,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     itemBuilder: (context, index) {
                       return ChatBubble(
                         message: widget.chatRoom.messages[index],
+                        previousMessage: index < widget.chatRoom.messages.length - 1 ? widget.chatRoom.messages[index + 1] : null,
+                        // previousMessage: index > 0 ? widget.chatRoom.messages[index - 1] : null,
                       );
                     },
                   ),
@@ -146,14 +162,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                           vertical: 10,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(25),
                           borderSide: const BorderSide(
                             color: globals.Colors.sub1,
                             width: 1.5,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(25),
                           borderSide: const BorderSide(
                             color: globals.Colors.point2,
                             width: 1.5,
