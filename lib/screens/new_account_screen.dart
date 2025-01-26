@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
 
+import 'package:codi/screens/profile_input_screen.dart';
+
 class NewAccountScreen extends StatefulWidget {
   const NewAccountScreen({Key? key}) : super(key: key);
 
@@ -11,7 +13,13 @@ class NewAccountScreen extends StatefulWidget {
 
 class _NewAccountScreenState extends State<NewAccountScreen> {
   final emailController = TextEditingController();
+  final password1Controller = TextEditingController();
+  final password2Controller = TextEditingController();
+
   bool emailValid = true;
+  bool showPasswordDifferent = false;
+  bool passwordLengthValid = false;
+  bool passwordCharValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,48 +63,16 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                   children: [
                     TextField(
                       controller: emailController,
+                      decoration: textFieldDecoration(CustomIcons.message, "이메일 *"),
                       onChanged: (text) {
-                        setState(() {
-                          emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(text);
-                        });
+                        validateEmail(text);
                       },
                       onEditingComplete: () {
-                        setState(() {
-                          emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailController.text);
-                        });
+                        validateEmail(emailController.text);
                       },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: globals.Colors.sub3,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                        hintText: "이메일 *",
-                        hintStyle: const TextStyle(
-                          color: globals.Colors.sub2,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.only(left: 22, right: 12),
-                          child: Icon(
-                            CustomIcons.message,
-                            color: globals.Colors.sub2,
-                            size: 24,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                            color: globals.Colors.sub2,
-                            width: 1.5,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                            color: globals.Colors.point2,
-                            width: 1.5,
-                          ),
-                        ),
-                      ),
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus();
+                      },
                     ),
                     Container(
                       height: 24,
@@ -113,115 +89,85 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                     ),
                     TextField(
                       obscureText: true,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: globals.Colors.sub3,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                        hintText: "비밀번호 *",
-                        hintStyle: const TextStyle(
-                          color: globals.Colors.sub2,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.only(left: 22, right: 12),
-                          child: Icon(
-                            CustomIcons.lock,
-                            color: globals.Colors.sub2,
-                            size: 24,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                            color: globals.Colors.sub2,
-                            width: 1.5,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                            color: globals.Colors.point2,
-                            width: 1.5,
-                          ),
-                        ),
-                      ),
+                      controller: password1Controller,
+                      decoration: textFieldDecoration(CustomIcons.lock, "비밀번호 *"),
+                      onChanged: (text) {
+                        validatePassword();
+                        passwordDifferent();
+                      },
+                      onEditingComplete: () {
+                        validatePassword();
+                        passwordDifferent();
+                      },
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus();
+                      },
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 14),
                       child: TextField(
                         obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: globals.Colors.sub3,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                          hintText: "비밀번호 확인 *",
-                          hintStyle: const TextStyle(
-                            color: globals.Colors.sub2,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.only(left: 22, right: 12),
-                            child: Icon(
-                              CustomIcons.lock,
-                              color: globals.Colors.sub2,
-                              size: 24,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(
-                              color: globals.Colors.sub2,
-                              width: 1.5,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(
-                              color: globals.Colors.point2,
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
+                        controller: password2Controller,
+                        decoration: textFieldDecoration(CustomIcons.lock, "비밀번호 확인 *"),
+                        onChanged: (text) {
+                          passwordDifferent();
+                        },
+                        onEditingComplete: () {
+                          passwordDifferent();
+                        },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 22),
-                      child: const Column(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                CustomIcons.tickCircle,
-                                color: globals.Colors.point1,
-                                size: 12,
-                              ),
-                              Text(
-                                "  8~20자",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: globals.Colors.point2,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                CustomIcons.tickCircle,
-                                color: globals.Colors.point1,
-                                size: 12,
-                              ),
-                              Text(
-                                "  문자, 숫자, 특수문자",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: globals.Colors.point2,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      height: 24,
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        showPasswordDifferent ? "비밀번호가 일치하지 않습니다" : "",
+                        style: const TextStyle(
+                          color: globals.Colors.point1,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              passwordLengthValid ? CustomIcons.tickCircle : CustomIcons.closeCircle,
+                              color: globals.Colors.point1,
+                              size: 14,
+                            ),
+                            const Text(
+                              "  8~20자",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: globals.Colors.point2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              passwordCharValid ? CustomIcons.tickCircle : CustomIcons.closeCircle,
+                              color: globals.Colors.point1,
+                              size: 14,
+                            ),
+                            const Text(
+                              "  문자, 숫자, 특수문자",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: globals.Colors.point2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 28, bottom: 18),
@@ -344,7 +290,12 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ProfileInputScreen()),
+                        );
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
@@ -363,15 +314,12 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 14),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(
-                          top: 14,
-                          bottom: 39,
-                        ),
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                           color: globals.Colors.sub3,
@@ -393,6 +341,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ],
@@ -401,5 +350,68 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
         ],
       ),
     );
+  }
+
+  InputDecoration textFieldDecoration(IconData prefixIcon, String hintText) {
+    return InputDecoration(
+      filled: true,
+      fillColor: globals.Colors.sub3,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+      hintText: hintText,
+      hintStyle: const TextStyle(
+        color: globals.Colors.sub2,
+        fontWeight: FontWeight.w400,
+      ),
+      prefixIcon: Padding(
+        padding: const EdgeInsets.only(left: 22, right: 12),
+        child: Icon(
+          prefixIcon,
+          color: globals.Colors.sub2,
+          size: 24,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(
+          color: globals.Colors.sub2,
+          width: 1.5,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(
+          color: globals.Colors.point2,
+          width: 1.5,
+        ),
+      ),
+    );
+  }
+
+  void validateEmail(String email) {
+    setState(() {
+      if (email.isEmpty) {
+        emailValid = true;
+        return;
+      }
+      emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+    });
+  }
+
+  void validatePassword() {
+    // Regular expressions for different character types
+    final hasNumber = RegExp(r'\d').hasMatch(password1Controller.text); // Matches at least one digit
+    final hasLetter = RegExp(r'[a-zA-Z]').hasMatch(password1Controller.text); // Matches at least one letter
+    final hasSpecial = RegExp(r'[!@#\$%^&*()_+\-=\[\]{};:]').hasMatch(password1Controller.text); // Matches special characters
+
+    setState(() {
+      passwordLengthValid = password1Controller.text.length >= 8 && password1Controller.text.length <= 20;
+      passwordCharValid = hasNumber && hasLetter && hasSpecial;
+    });
+  }
+
+  void passwordDifferent() {
+    setState(() {
+      showPasswordDifferent = password1Controller.text != password2Controller.text;
+    });
   }
 }
