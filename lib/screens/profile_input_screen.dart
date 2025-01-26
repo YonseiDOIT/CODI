@@ -91,7 +91,7 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                                 height: 24,
                                 color: globals.Colors.sub3,
                                 child: const Icon(
-                                  CustomIcons.attachment,
+                                  CustomIcons.camera,
                                   color: globals.Colors.sub2,
                                   size: 14,
                                 ),
