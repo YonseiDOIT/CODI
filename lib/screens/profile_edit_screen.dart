@@ -11,7 +11,9 @@ class ProfileEditScreen extends StatefulWidget {
 }
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
-  String _selectedRole = 'Developer';
+  String _selectedRole = "개발자";
+  String _selectedGender = "남성";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,134 +67,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           ),
           GestureDetector(
             onTap: () {
-              showModalBottomSheet<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    width: globals.ScreenSize.width,
-                    height: globals.ScreenSize.height * 0.4,
-                    padding: const EdgeInsets.all(20),
-                    decoration: const ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 45,
-                          height: 45,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: globals.Colors.sub4,
-                          thickness: 1,
-                        ),
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            CustomIcons.image,
-                                            color: globals.Colors.point2,
-                                            size: 24,
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text(
-                                            "라이브러리에서 선택",
-                                            style: TextStyle(
-                                              color: globals.Colors.point2,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            CustomIcons.camera,
-                                            color: globals.Colors.point2,
-                                            size: 24,
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text(
-                                            "사진 찍기",
-                                            style: TextStyle(
-                                              color: globals.Colors.point2,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            CustomIcons.delete,
-                                            color: globals.Colors.point3,
-                                            size: 24,
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text(
-                                            "현재 사진 삭제",
-                                            style: TextStyle(
-                                              color: globals.Colors.point3,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const Text(
-                          "회원님의 프로필 사진은 CODI 내외의 모든 사람에게 공개됩니다.",
-                          style: TextStyle(
-                            color: globals.Colors.sub2,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
+              _showProfileImageSelection(context);
             },
             child: const Text(
               "사진 수정",
@@ -252,7 +127,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
-                          // textAlign: TextAlign.center,
                         ),
                       ),
                       Expanded(
@@ -289,25 +163,26 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
-                          // textAlign: TextAlign.center,
                         ),
                       ),
                       Expanded(
                         flex: 4,
                         child: GestureDetector(
-                          onTap: () {},
-                          child: const Row(
+                          onTap: () {
+                            _showGenderSelection();
+                          },
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "남성",
-                                style: TextStyle(
+                                _selectedGender,
+                                style: const TextStyle(
                                   color: globals.Colors.point2,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              Icon(
+                              const Icon(
                                 CustomIcons.right,
                                 color: globals.Colors.sub2,
                                 size: 24,
@@ -339,13 +214,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
-                          // textAlign: TextAlign.center,
                         ),
                       ),
                       Expanded(
                         flex: 4,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LinkEditScreen()),
+                            );
+                          },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
@@ -376,6 +256,307 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 indent: globals.ScreenSize.width / 6,
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showProfileImageSelection(BuildContext context) {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          width: globals.ScreenSize.width,
+          height: globals.ScreenSize.height * 0.4,
+          padding: const EdgeInsets.all(20),
+          decoration: const ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: 45,
+                height: 45,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const Divider(
+                color: globals.Colors.sub4,
+                thickness: 1,
+              ),
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  CustomIcons.image,
+                                  color: globals.Colors.point2,
+                                  size: 24,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "라이브러리에서 선택",
+                                  style: TextStyle(
+                                    color: globals.Colors.point2,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  CustomIcons.camera,
+                                  color: globals.Colors.point2,
+                                  size: 24,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "사진 찍기",
+                                  style: TextStyle(
+                                    color: globals.Colors.point2,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  CustomIcons.delete,
+                                  color: globals.Colors.point3,
+                                  size: 24,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "현재 사진 삭제",
+                                  style: TextStyle(
+                                    color: globals.Colors.point3,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Text(
+                "회원님의 프로필 사진은 CODI 내외의 모든 사람에게 공개됩니다.",
+                style: TextStyle(
+                  color: globals.Colors.sub2,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showGenderSelection() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ListTile(
+                  title: const Text(
+                    "남성",
+                    style: TextStyle(
+                      color: globals.Colors.point2,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _selectedGender = "남성";
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Text(
+                    "여성",
+                    style: TextStyle(
+                      color: globals.Colors.point2,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _selectedGender = "여성";
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class LinkEditScreen extends StatelessWidget {
+  const LinkEditScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "링크",
+          style: TextStyle(
+            color: globals.Colors.point2,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        backgroundColor: globals.Colors.sub3,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            CustomIcons.leftArrow,
+            color: globals.Colors.point2,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Divider(
+            color: globals.Colors.sub4,
+            thickness: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 15),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: const ShapeDecoration(
+                    shape: OvalBorder(
+                      side: BorderSide(
+                        width: 1,
+                        color: globals.Colors.sub4,
+                      ),
+                    ),
+                  ),
+                  child: const Icon(
+                    CustomIcons.add,
+                    color: globals.Colors.point2,
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                const Text(
+                  "외부 링크 추가",
+                  style: TextStyle(
+                    color: globals.Colors.point2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 15),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: const ShapeDecoration(
+                    shape: OvalBorder(
+                      side: BorderSide(
+                        width: 1,
+                        color: globals.Colors.sub4,
+                      ),
+                    ),
+                  ),
+                  child: const Icon(
+                    CustomIcons.attachment,
+                    color: globals.Colors.point2,
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                const Text(
+                  "behance.com",
+                  style: TextStyle(
+                    color: globals.Colors.point2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 20, top: 15),
+            child: Text(
+              "링크가 CODI 내외의 모든 사람에게 공개됩니다.",
+              style: TextStyle(
+                color: globals.Colors.sub2,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ),
         ],
       ),
