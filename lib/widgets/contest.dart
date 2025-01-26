@@ -16,9 +16,7 @@ class ContestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     tags = item["tags"].toString().split(", ");
-    dDay = DateTime.now()
-        .difference(DateTime.parse(item["registration_end_date"]))
-        .inDays;
+    dDay = DateTime.now().difference(DateTime.parse(item["registration_end_date"])).inDays;
 
     return Container(
       // height: 236,
@@ -26,7 +24,7 @@ class ContestWidget extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+            color: globals.Colors.point2.withOpacity(0.1),
             // width: 1,
           ),
         ),
@@ -41,10 +39,7 @@ class ContestWidget extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(0.1),
+                      color: globals.Colors.point2.withOpacity(0.1),
                     ),
                   ),
                   child: Image.network(
@@ -68,7 +63,9 @@ class ContestWidget extends StatelessWidget {
                           children: List.generate(tags.length, (index) {
                             return Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 3),
+                                horizontal: 10,
+                                vertical: 3,
+                              ),
                               margin: const EdgeInsets.only(right: 5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
@@ -76,10 +73,9 @@ class ContestWidget extends StatelessWidget {
                               ),
                               child: Text(
                                 tags[index],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
+                                  color: globals.Colors.point2,
                                   fontSize: 10,
                                 ),
                               ),
@@ -169,10 +165,10 @@ class ContestWidget extends StatelessWidget {
                       else if (10 >= dDay && dDay >= 0)
                         Text(
                           "D-$dDay",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: globals.Colors.point1,
                           ),
                         )
                       else
@@ -181,10 +177,7 @@ class ContestWidget extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.3),
+                            color: globals.Colors.point1.withOpacity(0.3),
                           ),
                         )
                     ],
@@ -202,18 +195,8 @@ class ContestWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     border: Border(
-                      top: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.1),
-                          width: 1),
-                      right: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.1),
-                          width: 0.5),
+                      top: BorderSide(color: globals.Colors.point2.withOpacity(0.1), width: 1),
+                      right: BorderSide(color: globals.Colors.point2.withOpacity(0.1), width: 0.5),
                     ),
                   ),
                   child: Text(
@@ -230,18 +213,8 @@ class ContestWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     border: Border(
-                      top: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.1),
-                          width: 1),
-                      left: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.1),
-                          width: 0.5),
+                      top: BorderSide(color: globals.Colors.point2.withOpacity(0.1), width: 1),
+                      left: BorderSide(color: globals.Colors.point2.withOpacity(0.1), width: 0.5),
                     ),
                   ),
                   child: Text(
