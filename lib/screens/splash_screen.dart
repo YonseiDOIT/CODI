@@ -2,8 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:codi/screens/intro_screen.dart';
+import 'package:codi/screens/login_screen.dart';
+import 'package:codi/main.dart';
 
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
+import 'package:codi/data/api_wrapper.dart' as api;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -127,16 +131,62 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() => animated = true);
     await Future.delayed(const Duration(milliseconds: 3000));
+
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    try {
+      // Attempt to get user data from local storage
+      Map<String, dynamic> userData = await globals.localData.getMap("user") ?? {};
+
+      // userData = await api.User.getUser(user_id: 1);
+      // print(userData);
+
+      if (userData.isNotEmpty) {
+        // User is logged in
+        globals.codiUser = models.User.FromJson(userData); // Assign to global user
+        globals.isLoggedIn = true;
+
+        // Navigate to the main screen
+        _toMain();
+      } else {
+        // User is not logged in
+        globals.isLoggedIn = false;
+
+        // Navigate to the Intro screen
+        _toIntro();
+      }
+    } catch (e) {
+      print("Error checking login status: $e");
+
+      // Navigate to Intro on error
+      _toIntro();
+    }
+  }
+
+  void _toMain() {
     Navigator.pushReplacement(
       context,
-      // MaterialPageRoute(
-      //   builder: (context) => IntroScreen(),
-      // ),
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => const Main(),
+        transitionDuration: const Duration(milliseconds: 1000),
+        transitionsBuilder: (context, animation1, animation2, child) {
+          return FadeTransition(
+            opacity: animation1,
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void _toIntro() {
+    Navigator.pushReplacement(
+      context,
       PageRouteBuilder(
         pageBuilder: (context, animation1, animation2) => const IntroScreen(),
-        // transitionDuration: Duration.zero,
         transitionDuration: const Duration(milliseconds: 1800),
-        // reverseTransitionDuration: Duration.zero,
       ),
     );
   }

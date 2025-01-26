@@ -13,32 +13,16 @@ import 'package:codi/screens/contest_screen.dart';
 import 'package:codi/screens/profile_screen.dart';
 
 import 'package:codi/data/globals.dart' as globals;
+
+import 'package:codi/screens/login_screen.dart';
 import 'package:codi/models/models.dart' as models;
 
 import 'package:codi/data/api_wrapper.dart' as api;
-
-import 'package:codi/screens/login_screen.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
   globals.backendKey = dotenv.get("backendKey");
 
-<<<<<<< HEAD
-  globals.localData = await SharedPreferences.getInstance();
-
-=======
-  Map<String, dynamic> userData = await globals.localData.getMap("user") ?? {};
-
-  userData = await api.User.getUser(user_id: 1);
-  print(userData["username"]);
-
-  if (userData.isNotEmpty) {
-    globals.codiUser = models.User.FromJson(userData);
-    globals.isLoggedIn = true;
-  }
-
-  print(globals.isLoggedIn);
->>>>>>> 06e0358a2797cb0c0c2502b30f2b4810f38fba8e
   runApp(const MyApp());
 }
 
@@ -51,11 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // theme: ThemeData(),
       theme: mainTheme,
-<<<<<<< HEAD
       home: const SplashScreen(),
-=======
-      home: const Main(),
->>>>>>> 06e0358a2797cb0c0c2502b30f2b4810f38fba8e
       debugShowCheckedModeBanner: false,
     );
   }
@@ -128,9 +108,7 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.secondary,
+                      color: _currentIndex == index ? globals.Colors.point1 : globals.Colors.point2,
                       size: 24,
                     ),
                   ),

@@ -1,8 +1,7 @@
-import 'package:codi/main.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/data/custom_icons.dart';
-
+import 'package:codi/main.dart';
 import 'package:codi/data/globals.dart' as globals;
 
 import 'package:codi/screens/new_account_screen.dart';
