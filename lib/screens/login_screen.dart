@@ -216,7 +216,10 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              // new의 값이 true면 프로필 입력 화면으로 이동
+                              // false 면 홈화면으로 이동
+                            },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 31,
