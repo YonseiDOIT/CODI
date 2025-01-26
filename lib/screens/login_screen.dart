@@ -271,6 +271,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 14),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -281,10 +282,6 @@ class LoginScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(
-                          top: 14,
-                          bottom: 39,
-                        ),
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                           color: globals.Colors.sub3,
@@ -306,6 +303,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ],
