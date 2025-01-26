@@ -1,18 +1,14 @@
 library globals;
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codi/data/shared_pref.dart';
 import 'package:codi/models/models.dart';
 
 late String backendKey;
 
 bool isLoggedIn = false;
-
-Preferences preferences = Preferences();
-late SharedPreferences localData;
-
-late User localUser;
+Preferences localData = Preferences();
+late User codiUser;
 
 class Colors {
   static const Color point1 = Color(0xFF6B27FE);

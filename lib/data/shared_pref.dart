@@ -1,53 +1,93 @@
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
-  late SharedPreferences prefs;
-
-  Future<bool> saveLocal(String key, Map value) async {
-    // print("****************set local****************\n");
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // print("$key $value");
-    // printLocal();
-    prefs.setString(key, jsonEncode(value));
-    // printLocal();
-    // print("**************set local end**************\n");
-    return true;
+  // Save a string value to shared preferences
+  Future<void> saveString(String key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
   }
 
-  void printLocal() async {
-    print("***************print local***************\n");
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    Set<String> value = prefs.getKeys();
-    print(value);
-    for (var key in value) {
-      print(prefs.getString(key));
-    }
-
-    print("*************print local end*************\n");
+  // Get a string value from shared preferences
+  Future<String?> getString(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
   }
 
-  Future<Map<String, dynamic>> getLocal(String key) async {
-    // print("****************get local****************\n");
-    // printLocal();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getString(key) != null) {
-      Map<String, dynamic> value = jsonDecode(prefs.getString(key)!);
-      // print("**************get local end**************\n");
-      return value;
-    } else {
-      return {};
-    }
+  // Save an integer value to shared preferences
+  Future<void> saveInt(String key, int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key, value);
   }
 
-  bool deleteLocal(String key) {
-    try {
-      prefs.remove(key);
-      return true;
-    } catch (exception) {
-      return false;
+  // Get an integer value from shared preferences
+  Future<int?> getInt(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key);
+  }
+
+  // Save a boolean value to shared preferences
+  Future<void> saveBool(String key, bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+  }
+
+  // Get a boolean value from shared preferences
+  Future<bool?> getBool(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key);
+  }
+
+  // Save a double value to shared preferences
+  Future<void> saveDouble(String key, double value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble(key, value);
+  }
+
+  // Get a double value from shared preferences
+  Future<double?> getDouble(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble(key);
+  }
+
+  // Save a list of strings to shared preferences
+  Future<void> saveStringList(String key, List<String> value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(key, value);
+  }
+
+  // Get a list of strings from shared preferences
+  Future<List<String>?> getStringList(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(key);
+  }
+
+  // Remove a value from shared preferences
+  Future<void> remove(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
+
+  // Clear all values from shared preferences
+  Future<void> clear() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
+
+  // Save a map value to shared preferences
+  Future<void> saveMap(String key, Map<String, dynamic> value) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = jsonEncode(value);
+    await prefs.setString(key, jsonString);
+  }
+
+  // Get a map value from shared preferences
+  Future<Map<String, dynamic>?> getMap(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(key);
+    if (jsonString != null) {
+      return jsonDecode(jsonString) as Map<String, dynamic>;
     }
+    return null;
   }
 }
