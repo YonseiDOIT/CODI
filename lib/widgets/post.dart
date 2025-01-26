@@ -1,5 +1,9 @@
-import 'package:codi/data/custom_icons.dart';
 import 'package:flutter/material.dart';
+
+import 'package:codi/data/custom_icons.dart';
+
+import 'package:codi/data/globals.dart' as globals;
+
 import 'package:carousel_slider/carousel_slider.dart';
 
 final List<String> imgList = [
@@ -48,16 +52,17 @@ class _PostWidgetState extends State<PostWidget> {
                         item,
                         fit: BoxFit.cover,
                         // Todo: change height to Global variable
-                        height: MediaQuery.of(context).size.height,
+                        height: globals.ScreenSize.height,
                       );
                     },
                   ).toList(),
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(5)),
+                    borderRadius:
+                        const BorderRadius.vertical(bottom: Radius.circular(5)),
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                      color: globals.Colors.point2.withOpacity(0.1),
                       // color: Colors.amberAccent,
                     ),
                   ),
@@ -71,7 +76,10 @@ class _PostWidgetState extends State<PostWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 4),
-                            child: Icon(Icons.favorite_rounded),
+                            child: Icon(
+                              CustomIcons.heart,
+                              size: 12,
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -79,7 +87,10 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 4),
-                            child: Icon(Icons.remove_red_eye_rounded),
+                            child: Icon(
+                              CustomIcons.show,
+                              size: 12,
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 11),
@@ -107,7 +118,9 @@ class _PostWidgetState extends State<PostWidget> {
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _current == index ? Theme.of(context).colorScheme.secondary : Theme.of(context).colorScheme.background,
+                        color: _current == index
+                            ? globals.Colors.point2
+                            : globals.Colors.sub3,
                       ),
                     );
                   },
@@ -123,12 +136,13 @@ class _PostWidgetState extends State<PostWidget> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: globals.Colors.point1,
                     width: 3,
                   ),
                   //set border radius to 50% of square height and width
                   image: const DecorationImage(
-                    image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                    image: NetworkImage(
+                        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
                     fit: BoxFit.cover, //change image fill type
                   ),
                 ),
