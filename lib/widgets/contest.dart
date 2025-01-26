@@ -1,9 +1,10 @@
-import 'package:codi/screens/add_team.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/widgets/team.dart';
+import 'package:codi/screens/add_team.dart';
+import 'package:codi/widgets/sub_topbar.dart';
 
 import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/models/models.dart' as models;
@@ -234,44 +235,21 @@ class _ContestDetailsState extends State<ContestDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 57,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      CustomIcons.left,
-                      size: 24,
-                    ),
+            const SubCustomTopBar(
+              contents: [
+                Text(
+                  "공모전 정보",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: globals.Colors.point2,
                   ),
-                  const Text(
-                    "공모전 정보",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: globals.Colors.point2,
-                    ),
-                  ),
-                  Container(
-                    width: 24,
-                    color: Colors.transparent,
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               height: 180,
               width: globals.ScreenSize.width,
-              padding: const EdgeInsets.only(
-                top: 32,
-                // bottom: 18,
-              ),
               margin: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
