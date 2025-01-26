@@ -1,4 +1,6 @@
+import 'package:codi/widgets/chat_room.dart';
 import 'package:flutter/material.dart';
+import 'package:codi/widgets/topbar.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -10,10 +12,13 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text("Chat"),
-      ),
+    return Column(
+      children: [
+        CustomTopBar(tabIndex: 1),
+        ChatRoom(),
+        ChatRoom(),
+        ChatRoom(),
+      ],
     );
   }
 }

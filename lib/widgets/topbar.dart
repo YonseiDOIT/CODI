@@ -21,7 +21,9 @@ class _CustomTopBarState extends State<CustomTopBar> {
   @override
   void initState() {
     super.initState();
-    selectedSortOption = displayText[widget.tabIndex][0]["sort"][0];
+    if (widget.tabIndex != 1) {
+      selectedSortOption = displayText[widget.tabIndex][0]["sort"][0];
+    }
   }
 
   void setShowSort(bool value) {
@@ -81,6 +83,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
       height: showSortOptions ? 112 : 72,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             margin: const EdgeInsets.only(
@@ -98,7 +101,16 @@ class _CustomTopBarState extends State<CustomTopBar> {
                   setShowSort: setShowSort,
                   controller: widget.controller,
                 )
-              : Text(displayText[widget.tabIndex][0]["option"]),
+              : Center(
+                  child: Text(
+                    displayText[widget.tabIndex][0]["option"],
+                    style: const TextStyle(
+                      color: globals.Colors.point2,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
           Container(
             margin: const EdgeInsets.only(
               top: 24,
