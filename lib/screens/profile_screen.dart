@@ -11,6 +11,7 @@ import 'package:codi/screens/post_screen.dart';
 
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -136,7 +137,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                               ),
                               itemCount: 8,
                               itemBuilder: (context, index) {
-                                return const TitlesWidget();
+                                return TitlesWidget(
+                                  title: models.Title(
+                                    count: 1,
+                                    image_name: "brain_off",
+                                    title: "data",
+                                    title_id: 1,
+                                    type: "positive",
+                                  ),
+                                );
                               },
                             ),
                           ),
