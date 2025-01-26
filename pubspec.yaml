@@ -47,6 +47,9 @@ dependencies:
   # local save
   shared_preferences: ^2.2.2
 
+  # image picker
+  image_picker: ^1.0.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
