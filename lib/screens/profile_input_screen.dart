@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
+import 'package:image_picker/image_picker.dart';
 
 class ProfileInputScreen extends StatefulWidget {
   const ProfileInputScreen({super.key});
@@ -16,6 +18,20 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
+
+  XFile? _image;
+  final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
+
+  //이미지를 가져오는 함수
+  Future getImage(ImageSource imageSource) async {
+    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+    if (pickedFile != null) {
+      setState(() {
+        _image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +76,9 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                   children: [
                     const SizedBox(height: 52),
                     GestureDetector(
+                      onTap: () {
+                        getImage(ImageSource.gallery);
+                      },
                       child: Container(
                         width: 94,
                         height: 94,
@@ -82,10 +101,19 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                           child: Stack(
                             alignment: AlignmentDirectional.bottomCenter,
                             children: [
-                              Image.asset(
-                                'assets/images/default_profile.png',
-                                fit: BoxFit.cover,
-                              ),
+                              _image == null
+                                  ? Image.asset(
+                                      'assets/images/default_profile.png',
+                                      fit: BoxFit.cover,
+                                      width: 94,
+                                      height: 94,
+                                    )
+                                  : Image.file(
+                                      File(_image!.path),
+                                      fit: BoxFit.cover,
+                                      width: 94,
+                                      height: 94,
+                                    ),
                               Container(
                                 width: 86,
                                 height: 24,
