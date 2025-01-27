@@ -23,7 +23,10 @@ class _TitlesWidgetState extends State<TitlesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 5,
+        vertical: 5,
+      ),
       width: 150,
       height: 203,
       decoration: BoxDecoration(
@@ -39,7 +42,7 @@ class _TitlesWidgetState extends State<TitlesWidget> {
             children: [
               Text(
                 widget.title.title,
-                style: TextStyle(
+                style: const TextStyle(
                   color: globals.Colors.sub3,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -56,7 +59,7 @@ class _TitlesWidgetState extends State<TitlesWidget> {
               ),
               Text(
                 '${widget.title.count}장',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF3906A6),
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
