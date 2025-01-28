@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // data
 import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 
+import 'package:codi/screens/splash_screen.dart';
 import 'package:codi/screens/home_screen.dart';
 import 'package:codi/screens/chat_screen.dart';
 import 'package:codi/screens/contest_screen.dart';
 // import 'package:codi/screens/profile_screen.dart';
 import 'package:codi/screens/_profile_screen.dart';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:codi/data/globals.dart' as globals;
+
+import 'package:codi/screens/login_screen.dart';
+import 'package:codi/models/models.dart' as models;
+
+import 'package:codi/data/api_wrapper.dart' as api;
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
@@ -37,7 +44,7 @@ class MyApp extends StatelessWidget {
       },
       // theme: ThemeData(),
       theme: mainTheme,
-      home: Main(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -109,7 +116,7 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,
+                      color: _currentIndex == index ? globals.Colors.point1 : globals.Colors.point2,
                       size: 24,
                     ),
                   ),
