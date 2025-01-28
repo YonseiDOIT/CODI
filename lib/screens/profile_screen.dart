@@ -20,8 +20,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   double _opacity1 = 1.0;
   double _opacity2 = 0.3;
@@ -118,8 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           controller: ScrollController(),
@@ -128,8 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             width: 4 * 150 + 3 * 10,
                             child: GridView.builder(
                               padding: const EdgeInsets.all(10),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,
@@ -350,8 +347,7 @@ class UserInfoTab extends StatelessWidget {
                   color: const Color(0xFF6055F5),
                 ),
                 image: const DecorationImage(
-                  image: NetworkImage(
-                      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                  image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -400,17 +396,11 @@ class UserInfoTab extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(
-              color: globals.Colors.sub3,
-              fontSize: 14,
-              fontWeight: FontWeight.w700),
+          style: const TextStyle(color: globals.Colors.sub3, fontSize: 14, fontWeight: FontWeight.w700),
         ),
         Text(
           label,
-          style: const TextStyle(
-              color: globals.Colors.sub3,
-              fontSize: 14,
-              fontWeight: FontWeight.w700),
+          style: const TextStyle(color: globals.Colors.sub3, fontSize: 14, fontWeight: FontWeight.w700),
         ),
       ],
     );

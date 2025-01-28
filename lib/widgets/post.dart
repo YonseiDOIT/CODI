@@ -59,8 +59,7 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.vertical(bottom: Radius.circular(5)),
+                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(5)),
                     border: Border.all(
                       color: globals.Colors.point2.withOpacity(0.1),
                       // color: Colors.amberAccent,
@@ -68,7 +67,7 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                   height: 37,
                   padding: const EdgeInsets.only(left: 63, right: 11),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -80,7 +79,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       Row(
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(right: 4),
                             child: Icon(
                               CustomIcons.heart,
@@ -130,9 +129,7 @@ class _PostWidgetState extends State<PostWidget> {
                       margin: const EdgeInsets.symmetric(horizontal: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _current == index
-                            ? globals.Colors.point2
-                            : globals.Colors.sub3,
+                        color: _current == index ? globals.Colors.point2 : globals.Colors.sub3,
                       ),
                     );
                   },
@@ -153,8 +150,7 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                   //set border radius to 50% of square height and width
                   image: const DecorationImage(
-                    image: NetworkImage(
-                        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                    image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
                     fit: BoxFit.cover, //change image fill type
                   ),
                 ),
