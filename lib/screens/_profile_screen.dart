@@ -28,72 +28,94 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return const Stack(
       fit: StackFit.expand,
       alignment: Alignment.center,
       children: [
-        _background(),
-        const Column(
+        _Background(),
+        Column(
           children: [
-            UserInfo(),
-            TitlesInfo(),
+            _UserInfo(),
+            _TitlesInfo(),
           ],
         ),
-        const BottomDraggableSheet(),
+        _BottomDraggableSheet(),
       ],
     );
   }
+}
 
-  Widget _background() {
-    return Container(
-      width: globals.ScreenSize.width,
-      height: globals.ScreenSize.height,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.00, -1.00),
-          end: Alignment(0, 1),
-          colors: [Color(0xFF6923FE), Color(0xFF876EF1)],
+class _Background extends StatelessWidget {
+  const _Background();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(
+          width: globals.ScreenSize.width,
+          height: globals.ScreenSize.height,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(0.00, -1.00),
+              end: Alignment(0, 1),
+              colors: [Color(0xFF6923FE), Color(0xFF876EF1)],
+            ),
+          ),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Positioned(
+                top: globals.ScreenSize.height * 0.08,
+                left: globals.ScreenSize.width * 0.37,
+                child: Container(
+                  width: 274,
+                  height: 188,
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFF8C92FF),
+                    shape: OvalBorder(),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: globals.ScreenSize.height / 2,
+                width: globals.ScreenSize.width,
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 30.0),
+                    child: const Text(" "),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Positioned(
-            top: globals.ScreenSize.height * 0.08,
-            left: globals.ScreenSize.width * 0.37,
-            child: Container(
-              width: 274,
-              height: 188,
-              decoration: const ShapeDecoration(
-                color: Color(0xFF8C92FF),
-                shape: OvalBorder(),
-              ),
+        Positioned(
+          top: globals.ScreenSize.height * 0.19,
+          bottom: globals.ScreenSize.height * 0.1,
+          left: 0,
+          right: 0,
+          child: SizedBox(
+            child: Image.asset(
+              'assets/images/background_splash.png',
+              fit: BoxFit.fill,
             ),
           ),
-          SizedBox(
-            height: globals.ScreenSize.height / 2,
-            width: globals.ScreenSize.width,
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 30.0),
-                child: const Text(" "),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-class UserInfo extends StatefulWidget {
-  const UserInfo({super.key});
+class _UserInfo extends StatefulWidget {
+  const _UserInfo();
 
   @override
-  State<UserInfo> createState() => _UserInfoState();
+  State<_UserInfo> createState() => _UserInfoState();
 }
 
-class _UserInfoState extends State<UserInfo> with SingleTickerProviderStateMixin {
+class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   double _opacity1 = 1.0;
   double _opacity2 = 0.3;
@@ -249,37 +271,36 @@ class _UserInfoState extends State<UserInfo> with SingleTickerProviderStateMixin
                   ),
                 ],
               ),
-              Container(
-                width: 77,
-                height: 77,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 3,
-                    color: const Color(0xFF6055F5),
-                  ),
-                  image: const DecorationImage(
-                    image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const ProfileEditScreen();
-                          },
-                        ),
-                      );
-                    },
-                    child: const Icon(
-                      CustomIcons.edit,
-                      size: 24,
-                      color: globals.Colors.sub3,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const ProfileEditScreen();
+                      },
                     ),
+                  );
+                },
+                child: Container(
+                  width: 77,
+                  height: 77,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      width: 3,
+                      color: const Color(0xFF6055F5),
+                    ),
+                    image: const DecorationImage(
+                      image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    CustomIcons.edit,
+                    size: 24,
+                    color: globals.Colors.sub3,
                   ),
                 ),
               ),
@@ -328,8 +349,8 @@ class _UserInfoState extends State<UserInfo> with SingleTickerProviderStateMixin
   }
 }
 
-class TitlesInfo extends StatelessWidget {
-  const TitlesInfo({super.key});
+class _TitlesInfo extends StatelessWidget {
+  const _TitlesInfo();
 
   @override
   Widget build(BuildContext context) {
@@ -337,7 +358,7 @@ class TitlesInfo extends StatelessWidget {
       child: Container(
         // height: globals.ScreenSize.height - 128 - 75,
         padding: const EdgeInsets.symmetric(vertical: 20),
-        color: globals.Colors.sub3.withOpacity(0.05),
+        // color: globals.Colors.sub3.withOpacity(0.05),
         child: Column(
           children: [
             const Text(
@@ -386,16 +407,16 @@ class TitlesInfo extends StatelessWidget {
   }
 }
 
-class BottomDraggableSheet extends StatefulWidget {
-  const BottomDraggableSheet({super.key});
+class _BottomDraggableSheet extends StatefulWidget {
+  const _BottomDraggableSheet();
 
   @override
-  State<BottomDraggableSheet> createState() => _BottomDraggableSheetState();
+  State<_BottomDraggableSheet> createState() => _BottomDraggableSheetState();
 }
 
-class _BottomDraggableSheetState extends State<BottomDraggableSheet> {
+class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
   final DraggableScrollableController _sheetController = DraggableScrollableController();
-  double _sheetPosition = 0.0;
+  double _sheetPosition = 1 - (128 + globals.ScreenSize.topPadding + 16) / globals.ScreenSize.height;
 
   List<dynamic> items = [];
   bool isLoading = true;
@@ -445,11 +466,13 @@ class _BottomDraggableSheetState extends State<BottomDraggableSheet> {
             alignment: Alignment.center,
             children: [
               Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: globals.Colors.sub3,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(30.0),
-                  ),
+                  borderRadius: _sheetPosition < 1
+                      ? const BorderRadius.vertical(
+                          top: Radius.circular(30.0),
+                        )
+                      : BorderRadius.zero,
                 ),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(
@@ -459,7 +482,7 @@ class _BottomDraggableSheetState extends State<BottomDraggableSheet> {
                     controller: scrollController,
                     slivers: [
                       SliverPersistentHeader(
-                        delegate: _StickyHeaderDelegate(),
+                        delegate: _StickyHeaderDelegate(_sheetPosition),
                         pinned: true, // Keeps the header at the top while scrolling
                       ),
                       if (!isLoading)
@@ -533,6 +556,10 @@ class _BottomDraggableSheetState extends State<BottomDraggableSheet> {
 }
 
 class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double _sheetPosition;
+
+  _StickyHeaderDelegate(this._sheetPosition);
+
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     double topMargin = shrinkOffset.clamp(0, globals.ScreenSize.topPadding); // Adjust as you need
@@ -541,23 +568,18 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
     return Container(
       padding: EdgeInsets.only(top: topMargin), // Adjust the margin dynamically
       height: height,
-      decoration: const BoxDecoration(
-        color: globals.Colors.sub3,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(30.0),
-        ),
-      ),
+      color: globals.Colors.sub3,
 
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            CustomIcons.up,
+            _sheetPosition < 1 ? CustomIcons.up : CustomIcons.down,
             size: 24,
             color: globals.Colors.sub2,
           ),
-          Text(
+          const Text(
             '나의 포트폴리오',
             style: TextStyle(
               fontSize: 14,
