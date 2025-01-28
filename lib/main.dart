@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 
+// screens
 import 'package:codi/screens/splash_screen.dart';
 import 'package:codi/screens/home_screen.dart';
 import 'package:codi/screens/chat_screen.dart';
@@ -14,10 +15,7 @@ import 'package:codi/screens/contest_screen.dart';
 import 'package:codi/screens/_profile_screen.dart';
 
 import 'package:codi/data/globals.dart' as globals;
-
-import 'package:codi/screens/login_screen.dart';
 import 'package:codi/models/models.dart' as models;
-
 import 'package:codi/data/api_wrapper.dart' as api;
 
 Future<void> main() async {
