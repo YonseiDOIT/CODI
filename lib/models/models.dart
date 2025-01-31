@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 library models;
 
+import 'package:codi/data/globals.dart' as globals;
+
 class User {
   int user_id;
   String username;
@@ -13,8 +15,9 @@ class User {
   String? facebook_id;
 
   String? nickname;
-  String? position;
+  String position;
   String? profile_picture;
+  int gender;
   String? career;
   String? portfolio_link;
   DateTime? created_at;
@@ -23,6 +26,9 @@ class User {
   int? participation_id;
   int? skill_score;
   int? skill_id;
+  int? selected_title_id;
+  Title? selected_title;
+  List<Title>? titles;
 
   User({
     required this.user_id,
@@ -33,8 +39,9 @@ class User {
     this.kakao_id,
     this.facebook_id,
     this.nickname,
-    this.position,
+    required this.position,
     this.profile_picture,
+    required this.gender,
     this.career,
     this.portfolio_link,
     this.created_at,
@@ -43,6 +50,9 @@ class User {
     this.participation_id,
     this.skill_score,
     this.skill_id,
+    this.selected_title_id,
+    this.selected_title,
+    this.titles,
   });
 
   Map ToMap() {
@@ -70,9 +80,40 @@ class User {
   }
 
   static User FromJson(Map<String, dynamic> data) {
+    List<Title> titles = [];
+
+    titles.addAll(globals.defaultTitles);
+
+    // for (var defaultTitle in globals.defaultTitles) {
+    //   // titles.add(
+    //   //   Title.fromJson({
+    //   //     ...defaultTitle.toMap(),
+    //   //     "count": data["titles"]?.firstWhere(
+    //   //           (title) => title["title_id"] == defaultTitle.title_id,
+    //   //           orElse: () => {"count": 0},
+    //   //         )["count"] ??
+    //   //         0,
+    //   //   }),
+    //   // );
+    // }
+    data["titles"]?.forEach(
+      (ownedTitle) {
+        // Find the title in the user's titles list by matching the title_id
+        Title? userTitle = titles.firstWhere(
+          (title) => title.title_id == ownedTitle["title_id"],
+        );
+
+        // If a matching title is found, update its count
+        if (userTitle != null) {
+          userTitle.count = ownedTitle["count"];
+        }
+      },
+    );
+
     return User(
       user_id: data["user_id"],
       username: data["username"],
+      // password: data["password"],
       email: data["email"],
       social_type: data["social_type"],
       kakao_id: data["kakao_id"],
@@ -80,6 +121,7 @@ class User {
       nickname: data["nickname"],
       position: data["position"],
       profile_picture: data["profile_picture"],
+      gender: data["gender"],
       career: data["career"],
       portfolio_link: data["portfolio_link"],
       created_at: data["created_at"] != null ? DateTime.parse(data["created_at"]) : null,
@@ -88,6 +130,9 @@ class User {
       participation_id: data["participation_id"],
       skill_score: data["skill_score"],
       skill_id: data["skill_id"],
+      titles: titles.isNotEmpty ? titles : null,
+      selected_title_id: data["selected_title_id"],
+      selected_title: data["selected_title"] != null ? Title.fromJson(data["selected_title"]) : null,
     );
   }
 }
@@ -272,6 +317,7 @@ class TeamRecruitmentPost {
                 nickname: member['user']['nickname'],
                 position: member['user']['position'],
                 profile_picture: member['user']['profile_picture'],
+                gender: member['user']["gender"],
                 career: member['user']['career'],
                 portfolio_link: member['user']['portfolio_link'],
                 created_at: member['user']['created_at'] != null ? DateTime.parse(member['user']['created_at']) : null,
@@ -313,7 +359,7 @@ class Title {
       title: json['title'],
       image_name: json['image_name'],
       type: json['type'],
-      count: json['count'],
+      count: json['count'] ?? 0,
     );
   }
 
