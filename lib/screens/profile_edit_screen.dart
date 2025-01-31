@@ -2,18 +2,34 @@ import 'package:codi/screens/link_edit_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/data/custom_icons.dart';
+import 'package:codi/widgets/profile_circle.dart';
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
 
 class ProfileEditScreen extends StatefulWidget {
-  const ProfileEditScreen({super.key});
+  final models.User user;
+  const ProfileEditScreen({super.key, required this.user});
 
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
 }
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
-  String _selectedRole = "개발자";
-  String _selectedGender = "남성";
+  late String _selectedRole;
+  late int _selectedGender;
+
+  List<String> genderList = ["선택안함", "남자", "여자"];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.user.position == "FE" || widget.user.position == "BE") {
+      _selectedRole = "FE";
+    } else {
+      _selectedRole = widget.user.position;
+    }
+    _selectedGender = widget.user.gender;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,46 +60,39 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 30,
-          ),
-          Container(
-            width: 75,
-            height: 75,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                width: 3,
-                color: const Color(0xFF6055F5),
-              ),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
           GestureDetector(
             onTap: () {
               _showProfileImageSelection(context);
             },
-            child: const Text(
-              "사진 수정",
-              style: TextStyle(
-                color: globals.Colors.point1,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                ProfileCircle(
+                  size: 75,
+                  user: widget.user,
+                  borderWidth: 3,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                const Text(
+                  "사진 수정",
+                  style: TextStyle(
+                    color: globals.Colors.point1,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Radio<String>(
-                value: 'Developer',
+                value: 'FE',
                 groupValue: _selectedRole,
                 onChanged: (value) {
                   setState(() {
@@ -95,7 +104,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 '개발자',
               ),
               Radio<String>(
-                value: 'Designer',
+                value: 'PD',
                 groupValue: _selectedRole,
                 onChanged: (value) {
                   setState(() {
@@ -113,13 +122,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           ),
           Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 50,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 1,
                         child: Text(
                           "이름",
@@ -133,8 +142,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       Expanded(
                         flex: 4,
                         child: Text(
-                          "Jake Lee",
-                          style: TextStyle(
+                          widget.user.username,
+                          style: const TextStyle(
                             color: globals.Colors.point2,
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -176,7 +185,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                _selectedGender,
+                                genderList[_selectedGender],
                                 style: const TextStyle(
                                   color: globals.Colors.point2,
                                   fontSize: 14,
@@ -223,8 +232,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LinkEditScreen()),
+                              MaterialPageRoute(builder: (context) => const LinkEditScreen()),
                             );
                           },
                           child: const Row(
@@ -282,17 +290,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           ),
           child: Column(
             children: [
-              Container(
-                width: 45,
-                height: 45,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              ProfileCircle(
+                size: 45,
+                user: widget.user,
+                showBorder: false,
               ),
               const Divider(
                 color: globals.Colors.sub4,
@@ -398,46 +399,71 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 200,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ListTile(
-                  title: const Text(
-                    "남성",
-                    style: TextStyle(
-                      color: globals.Colors.point2,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+          width: globals.ScreenSize.width,
+          height: globals.ScreenSize.height * 0.3,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ListTile(
+                title: const Text(
+                  "선택안함",
+                  style: TextStyle(
+                    color: globals.Colors.point2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
-                  onTap: () {
-                    setState(() {
-                      _selectedGender = "남성";
-                    });
-                    Navigator.pop(context);
-                  },
                 ),
-                ListTile(
-                  title: const Text(
-                    "여성",
-                    style: TextStyle(
-                      color: globals.Colors.point2,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                onTap: () {
+                  setState(() {
+                    _selectedGender = 0;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              const Divider(
+                height: 0,
+                thickness: 1,
+                color: globals.Colors.sub2,
+              ),
+              ListTile(
+                title: const Text(
+                  "남성",
+                  style: TextStyle(
+                    color: globals.Colors.point2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
-                  onTap: () {
-                    setState(() {
-                      _selectedGender = "여성";
-                    });
-                    Navigator.pop(context);
-                  },
                 ),
-              ],
-            ),
+                onTap: () {
+                  setState(() {
+                    _selectedGender = 1;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              const Divider(
+                height: 0,
+                thickness: 1,
+                color: globals.Colors.sub2,
+              ),
+              ListTile(
+                title: const Text(
+                  "여성",
+                  style: TextStyle(
+                    color: globals.Colors.point2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    _selectedGender = 2;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
         );
       },

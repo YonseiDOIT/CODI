@@ -2,19 +2,23 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:codi/screens/profile_edit_screen.dart';
+import 'package:codi/screens/post_screen.dart';
 
 import 'package:codi/widgets/post.dart';
 import 'package:codi/widgets/title.dart';
-import 'package:codi/screens/profile_edit_screen.dart';
-import 'package:codi/screens/post_screen.dart';
+import 'package:codi/widgets/profile_circle.dart';
 
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/models/models.dart' as models;
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final models.User user;
+  const ProfileScreen({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -28,18 +32,18 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    return Stack(
       fit: StackFit.expand,
       alignment: Alignment.center,
       children: [
-        _Background(),
+        const _Background(),
         Column(
           children: [
-            _UserInfo(),
-            _TitlesInfo(),
+            _UserInfo(widget.user),
+            _TitlesInfo(widget.user),
           ],
         ),
-        _BottomDraggableSheet(),
+        _BottomDraggableSheet(widget.user),
       ],
     );
   }
@@ -109,7 +113,8 @@ class _Background extends StatelessWidget {
 }
 
 class _UserInfo extends StatefulWidget {
-  const _UserInfo();
+  final models.User user;
+  const _UserInfo(this.user);
 
   @override
   State<_UserInfo> createState() => _UserInfoState();
@@ -226,13 +231,13 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "열정적인 중재자",
-                    style: TextStyle(
+                    widget.user.selected_title?.title ?? "",
+                    style: const TextStyle(
                       fontSize: 16,
                       color: globals.Colors.sub3,
                       fontWeight: FontWeight.w400,
@@ -241,17 +246,17 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
                   Row(
                     children: [
                       Text(
-                        "Jake lee",
-                        style: TextStyle(
+                        widget.user.username,
+                        style: const TextStyle(
                           fontSize: 28,
                           color: globals.Colors.sub3,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         CustomIcons.attachment,
@@ -277,31 +282,28 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const ProfileEditScreen();
+                        return ProfileEditScreen(
+                          user: widget.user,
+                        );
                       },
                     ),
                   );
                 },
-                child: Container(
-                  width: 77,
-                  height: 77,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 3,
-                      color: const Color(0xFF6055F5),
-                    ),
-                    image: const DecorationImage(
-                      image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                child: Stack(
                   alignment: Alignment.center,
-                  child: const Icon(
-                    CustomIcons.edit,
-                    size: 24,
-                    color: globals.Colors.sub3,
-                  ),
+                  children: [
+                    ProfileCircle(
+                      size: 77,
+                      user: widget.user,
+                      borderWidth: 3,
+                    ),
+                    if (globals.codiUser.user_id == widget.user.user_id)
+                      const Icon(
+                        CustomIcons.edit,
+                        size: 24,
+                        color: globals.Colors.sub3,
+                      ),
+                  ],
                 ),
               ),
             ],
@@ -350,7 +352,8 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
 }
 
 class _TitlesInfo extends StatelessWidget {
-  const _TitlesInfo();
+  final models.User user;
+  const _TitlesInfo(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -385,16 +388,11 @@ class _TitlesInfo extends StatelessWidget {
                     mainAxisExtent: 150, // Width of each grid item
                     childAspectRatio: 150 / 203,
                   ),
-                  itemCount: 8,
+                  itemCount: user.titles!.length,
                   itemBuilder: (context, index) {
                     return TitlesWidget(
-                      title: models.Title(
-                        count: 1,
-                        image_name: "brain_off",
-                        title: "data",
-                        title_id: 1,
-                        type: "positive",
-                      ),
+                      title: user.titles![index],
+                      user: user,
                     );
                   },
                 ),
@@ -408,7 +406,8 @@ class _TitlesInfo extends StatelessWidget {
 }
 
 class _BottomDraggableSheet extends StatefulWidget {
-  const _BottomDraggableSheet();
+  final models.User user;
+  const _BottomDraggableSheet(this.user);
 
   @override
   State<_BottomDraggableSheet> createState() => _BottomDraggableSheetState();
