@@ -17,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.background,
-      padding: EdgeInsets.only(top: globals.ScreenSize.topPadding),
       child: const Center(
         child: Column(
           children: [
