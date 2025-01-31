@@ -40,9 +40,13 @@ class User {
     };
 
     var uri = Uri.https("api.0john-hong0.com", "/codi/users");
-    var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
+    var response =
+        await http.post(uri, headers: _headers, body: jsonEncode(body));
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+    print("decodeResponse : ${decodedResponse}");
     return decodedResponse;
   }
 
@@ -55,10 +59,12 @@ class User {
       if (kakao_id != null) 'kakao_id': kakao_id,
     };
 
-    var uri = Uri.https("api.0john-hong0.com", "/codi/users/by-id", queryParameters);
+    var uri =
+        Uri.https("api.0john-hong0.com", "/codi/users/by-id", queryParameters);
     var response = await http.get(uri, headers: _headers);
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     return decodedResponse;
   }
 }
@@ -77,12 +83,16 @@ class Contest {
       'offset': offset.toString(),
     };
 
-    var uri = Uri.https("api.0john-hong0.com", "/codi/contests", queryParameters);
+    var uri =
+        Uri.https("api.0john-hong0.com", "/codi/contests", queryParameters);
     var response = await http.get(uri, headers: _headers);
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
 
-    List<models.Contest> contests = decodedResponse.map<models.Contest>((contest) => models.Contest.fromJson(contest)).toList();
+    List<models.Contest> contests = decodedResponse
+        .map<models.Contest>((contest) => models.Contest.fromJson(contest))
+        .toList();
     return contests;
   }
 }
@@ -101,26 +111,34 @@ class RecruitmentPost {
       'offset': offset.toString(),
     };
 
-    var uri = Uri.https("api.0john-hong0.com", "/codi/recruits", queryParameters);
+    var uri =
+        Uri.https("api.0john-hong0.com", "/codi/recruits", queryParameters);
     var response = await http.get(uri, headers: _headers);
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
 
-    List<models.TeamRecruitmentPost> posts =
-        decodedResponse.map<models.TeamRecruitmentPost>((post) => models.TeamRecruitmentPost.fromJson(post)).toList();
+    List<models.TeamRecruitmentPost> posts = decodedResponse
+        .map<models.TeamRecruitmentPost>(
+            (post) => models.TeamRecruitmentPost.fromJson(post))
+        .toList();
     return posts;
   }
 
   static Future<List<models.TeamRecruitmentPost>> getPostsByContest({
     required int contest_id,
   }) async {
-    var uri = Uri.https("api.0john-hong0.com", "/codi/contests/$contest_id/recruits");
+    var uri =
+        Uri.https("api.0john-hong0.com", "/codi/contests/$contest_id/recruits");
     var response = await http.get(uri, headers: _headers);
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
 
-    List<models.TeamRecruitmentPost> posts =
-        decodedResponse.map<models.TeamRecruitmentPost>((post) => models.TeamRecruitmentPost.fromJson(post)).toList();
+    List<models.TeamRecruitmentPost> posts = decodedResponse
+        .map<models.TeamRecruitmentPost>(
+            (post) => models.TeamRecruitmentPost.fromJson(post))
+        .toList();
     return posts;
   }
 
@@ -141,9 +159,11 @@ class RecruitmentPost {
     };
 
     var uri = Uri.https("api.0john-hong0.com", "/codi/recruits");
-    var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
+    var response =
+        await http.post(uri, headers: _headers, body: jsonEncode(body));
 
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    var decodedResponse =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     return decodedResponse;
   }
 }

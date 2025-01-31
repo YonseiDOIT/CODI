@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 // data
 import 'package:codi/data/theme.dart';
@@ -13,15 +14,14 @@ import 'package:codi/screens/contest_screen.dart';
 import 'package:codi/screens/profile_screen.dart';
 
 import 'package:codi/data/globals.dart' as globals;
-
-import 'package:codi/screens/login_screen.dart';
 import 'package:codi/models/models.dart' as models;
-
 import 'package:codi/data/api_wrapper.dart' as api;
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/env/.env');
   globals.backendKey = dotenv.get("backendKey");
+
+  KakaoSdk.init(nativeAppKey: dotenv.get("kakaoNativeKey"));
 
   runApp(const MyApp());
 }
@@ -108,7 +108,9 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index ? globals.Colors.point1 : globals.Colors.point2,
+                      color: _currentIndex == index
+                          ? globals.Colors.point1
+                          : globals.Colors.point2,
                       size: 24,
                     ),
                   ),
