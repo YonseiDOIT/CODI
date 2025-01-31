@@ -5,12 +5,14 @@ import 'package:codi/data/globals.dart' as globals;
 class ProfileCircle extends StatelessWidget {
   final User user;
   final double size;
+  final double borderWidth;
   final bool showBorder;
 
   const ProfileCircle({
     super.key,
     required this.user,
     required this.size,
+    this.borderWidth = 2,
     this.showBorder = true,
   });
 
@@ -37,7 +39,7 @@ class ProfileCircle extends StatelessWidget {
         border: showBorder
             ? Border.all(
                 color: borderColor,
-                width: 2,
+                width: borderWidth,
               )
             : null,
         boxShadow: [
@@ -49,10 +51,9 @@ class ProfileCircle extends StatelessWidget {
           )
         ],
         image: DecorationImage(
-          image: NetworkImage(
-            user.profile_picture ??
-                "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg",
-          ),
+          image: user.profile_picture != null
+              ? NetworkImage(user.profile_picture!)
+              : const AssetImage('assets/images/default_profile.png') as ImageProvider<Object>,
           fit: BoxFit.cover,
         ),
       ),
