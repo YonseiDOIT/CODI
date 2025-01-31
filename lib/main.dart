@@ -62,7 +62,7 @@ class _MainState extends State<Main> {
     const HomeScreen(),
     const ChatScreen(),
     const ContestScreen(),
-    const ProfileScreen(),
+    ProfileScreen(user: globals.codiUser),
   ];
 
   List<IconData> navBarIcons = [

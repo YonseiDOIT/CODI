@@ -140,13 +140,15 @@ class _SplashScreenState extends State<SplashScreen> {
       // Attempt to get user data from local storage
       Map<String, dynamic> userData = await globals.localData.getMap("user") ?? {};
 
-      // userData = await api.User.getUser(user_id: 1);
-      // print(userData);
+      userData = await api.User.getUser(user_id: 1);
+      print(userData);
 
       if (userData.isNotEmpty) {
         // User is logged in
         globals.codiUser = models.User.FromJson(userData); // Assign to global user
         globals.isLoggedIn = true;
+
+        print(globals.codiUser.titles?.length);
 
         // Navigate to the main screen
         _toMain();
