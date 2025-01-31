@@ -1,10 +1,16 @@
+import 'package:codi/screens/profile_input_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/data/custom_icons.dart';
-import 'package:codi/main.dart';
+
+// API
+import 'package:codi/data/api_wrapper.dart' as api;
 import 'package:codi/data/globals.dart' as globals;
 
+import 'package:codi/main.dart';
+import 'package:codi/screens/login_screen.dart';
 import 'package:codi/screens/new_account_screen.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -39,7 +45,8 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: globals.ScreenSize.topPadding + 46),
+                  margin:
+                      EdgeInsets.only(top: globals.ScreenSize.topPadding + 46),
                   child: const Text(
                     "로그인",
                     style: TextStyle(
@@ -55,7 +62,8 @@ class LoginScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: globals.Colors.sub3,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 22, vertical: 14),
                         hintText: "이메일 *",
                         hintStyle: const TextStyle(
                           color: globals.Colors.sub2,
@@ -92,7 +100,8 @@ class LoginScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: globals.Colors.sub3,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 22, vertical: 14),
                           hintText: "비밀번호 *",
                           hintStyle: const TextStyle(
                             color: globals.Colors.sub2,
@@ -215,7 +224,13 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
+                              debugPrint("카카오 로그인");
+
+                              if (!globals.isLoggedIn) {
+                                loginWithKakao(context);
+                              }
+
                               // new의 값이 true면 프로필 입력 화면으로 이동
                               // false 면 홈화면으로 이동
                             },
@@ -251,7 +266,7 @@ class LoginScreen extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Main(),
+                            builder: (context) => const Main(),
                           ),
                         );
                       },
@@ -314,5 +329,79 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void loginWithKakao(BuildContext context) async {
+    if (await isKakaoTalkInstalled()) {
+      try {
+        OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
+        globals.isLoggedIn = true;
+        // kakaoToken = token;
+        debugPrint('카카오톡으로 로그인 성공 ${token.accessToken}');
+      } catch (error) {
+        debugPrint('카카오톡으로 로그인 실패 $error');
+      }
+    } else {
+      try {
+        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+        globals.isLoggedIn = true;
+        // kakaoToken = token;
+        debugPrint('카카오계정으로 로그인 성공');
+      } catch (error) {
+        debugPrint('카카오계정으로 로그인 실패 $error');
+      }
+    }
+
+    try {
+      User user = await UserApi.instance.me();
+      debugPrint("$user");
+      try {
+        Map userApiData;
+        int temp = 0;
+
+        userApiData = await api.User.addUser(
+          // profile_picture: user.kakaoAccount!.profile!.thumbnailImageUrl ??
+          //     "https://t1.kakaocdn.net/account_images/default_profile.jpeg.twg.thumb.R110x110",
+          // username: user.kakaoAccount!.profile!.nickname!,
+          username:
+              "${user.kakaoAccount!.profile!.nickname!}${(user.id).toString().substring(0, 2)}$temp",
+          social_type: "kakao",
+          kakao_id: "${user.id}",
+          // nickname:
+          //     "${user.kakaoAccount!.profile!.nickname!}${(user.id).toString().substring(0, 2)}$temp",
+        );
+        print("userApiData: ${userApiData}");
+
+        temp += 1;
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ProfileInputScreen(),
+          ),
+        );
+
+        // !bool.parse(userApiData["acknowledged"], caseSensitive: false));
+
+        // try {
+        //   globals.localData.saveMap("codi_user", globals.codiUser.ToMap());
+
+        //   globals.isLoggedIn = true;
+
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const NewAccountScreen(),
+        //     ),
+        //   );
+        // } catch (error) {
+        //   debugPrint('로컬 저장 실패 $error');
+        // }
+      } catch (error) {
+        debugPrint('백엔드 오류 $error');
+      }
+    } catch (error) {
+      debugPrint('사용자 정보 요청 실패 $error');
+    }
   }
 }
