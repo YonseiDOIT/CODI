@@ -7,6 +7,7 @@ class ProfileCircle extends StatelessWidget {
   final double size;
   final double borderWidth;
   final bool showBorder;
+  final bool showShadow;
 
   const ProfileCircle({
     super.key,
@@ -14,6 +15,7 @@ class ProfileCircle extends StatelessWidget {
     required this.size,
     this.borderWidth = 2,
     this.showBorder = true,
+    this.showShadow = true,
   });
 
   @override
@@ -42,14 +44,16 @@ class ProfileCircle extends StatelessWidget {
                 width: borderWidth,
               )
             : null,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.30),
-            spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          )
-        ],
+        boxShadow: showShadow
+            ? [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.30),
+                  spreadRadius: 0,
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                )
+              ]
+            : [],
         image: DecorationImage(
           image: user.profile_picture != null
               ? NetworkImage(user.profile_picture!)

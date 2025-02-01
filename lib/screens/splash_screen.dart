@@ -148,8 +148,6 @@ class _SplashScreenState extends State<SplashScreen> {
         globals.codiUser = models.User.FromJson(userData); // Assign to global user
         globals.isLoggedIn = true;
 
-        print(globals.codiUser.titles?.length);
-
         // Navigate to the main screen
         _toMain();
       } else {
