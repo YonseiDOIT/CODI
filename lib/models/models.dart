@@ -7,7 +7,7 @@ class User {
   int user_id;
   String username;
   String? password;
-  String email;
+  String? email;
 
   // Social login
   String? social_type;
@@ -34,7 +34,7 @@ class User {
     required this.user_id,
     required this.username,
     this.password,
-    required this.email,
+    this.email,
     this.social_type,
     this.kakao_id,
     this.facebook_id,
