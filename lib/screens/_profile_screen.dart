@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:codi/providers/codi_user_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/screens/profile_edit_screen.dart';
 import 'package:codi/screens/post_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:codi/widgets/post.dart';
 import 'package:codi/widgets/title.dart';
@@ -112,15 +114,15 @@ class _Background extends StatelessWidget {
   }
 }
 
-class _UserInfo extends StatefulWidget {
+class _UserInfo extends ConsumerStatefulWidget {
   final models.User user;
   const _UserInfo(this.user);
 
   @override
-  State<_UserInfo> createState() => _UserInfoState();
+  _UserInfoState createState() => _UserInfoState();
 }
 
-class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixin {
+class _UserInfoState extends ConsumerState<_UserInfo> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   double _opacity1 = 1.0;
   double _opacity2 = 0.3;
@@ -166,7 +168,7 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
                 physics: const BouncingScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  _buildProfileInfo(context),
+                  _buildProfileInfo(context, ref),
                   _buildStatistics(),
                 ],
               ),
@@ -217,7 +219,10 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
     );
   }
 
-  Widget _buildProfileInfo(BuildContext context) {
+  Widget _buildProfileInfo(BuildContext context, WidgetRef ref) {
+    final selectedTitle = ref.watch(selectedTitleProvider); // Watch for changes
+    final codiUser = ref.watch(codiUserProvider);
+
     return Container(
       padding: const EdgeInsets.only(
         left: 22,
@@ -236,7 +241,7 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.user.selected_title?.title ?? "",
+                    selectedTitle?.title ?? "",
                     style: const TextStyle(
                       fontSize: 16,
                       color: globals.Colors.sub3,
@@ -278,25 +283,32 @@ class _UserInfoState extends State<_UserInfo> with SingleTickerProviderStateMixi
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ProfileEditScreen(
-                          user: widget.user,
-                        );
-                      },
-                    ),
-                  );
+                  if (globals.codiUser.user_id == widget.user.user_id) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const ProfileEditScreen();
+                        },
+                      ),
+                    );
+                  }
                 },
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    ProfileCircle(
-                      size: 77,
-                      user: widget.user,
-                      borderWidth: 3,
-                    ),
+                    if (globals.codiUser.user_id == widget.user.user_id)
+                      ProfileCircle(
+                        size: 77,
+                        user: codiUser,
+                        borderWidth: 3,
+                      )
+                    else
+                      ProfileCircle(
+                        size: 77,
+                        user: widget.user,
+                        borderWidth: 3,
+                      ),
                     if (globals.codiUser.user_id == widget.user.user_id)
                       const Icon(
                         CustomIcons.edit,
