@@ -1,38 +1,64 @@
-import 'package:codi/screens/link_edit_screen.dart';
+import 'dart:io';
+
+import 'package:codi/providers/codi_user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:codi/screens/link_edit_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:image_picker/image_picker.dart';
 
 import 'package:codi/data/custom_icons.dart';
 import 'package:codi/widgets/profile_circle.dart';
 import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/models/models.dart' as models;
+import 'package:codi/data/api_wrapper.dart' as api;
 
-class ProfileEditScreen extends StatefulWidget {
-  final models.User user;
-  const ProfileEditScreen({super.key, required this.user});
+class ProfileEditScreen extends ConsumerStatefulWidget {
+  const ProfileEditScreen({super.key});
 
   @override
-  State<ProfileEditScreen> createState() => _ProfileEditScreenState();
+  _ProfileEditScreenState createState() => _ProfileEditScreenState();
 }
 
-class _ProfileEditScreenState extends State<ProfileEditScreen> {
+class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   late String _selectedRole;
   late int _selectedGender;
 
-  List<String> genderList = ["선택안함", "남자", "여자"];
+  XFile? _image; //이미지를 담을 변수 선언
+  final ImagePicker picker = ImagePicker(); //ImagePicker 초기화
 
+  List<String> genderList = ["선택안함", "남자", "여자"];
   @override
   void initState() {
+    final codiUser = ref.read(codiUserProvider);
     super.initState();
-    if (widget.user.position == "FE" || widget.user.position == "BE") {
+    if (codiUser.position == "FE" || codiUser.position == "BE") {
       _selectedRole = "FE";
     } else {
-      _selectedRole = widget.user.position;
+      _selectedRole = codiUser.position;
     }
-    _selectedGender = widget.user.gender;
+    _selectedGender = codiUser.gender;
   }
 
   @override
   Widget build(BuildContext context) {
+    final codiUser = ref.watch(codiUserProvider);
+
+    Future<void> updateUserPosition(String position) async {
+      var result = await api.User.updateUser(
+        user_id: codiUser.user_id,
+        position: position,
+      );
+
+      print(result["user"]);
+
+      if (result["message"] == "User updated successfully") {
+        // ref.read(codiUserProvider.notifier).state.profile_picture = result["user"]["profile_picture"];
+        ref.read(codiUserProvider.notifier).state = models.User.FromJson(result["user"]);
+        globals.codiUser = ref.read(codiUserProvider.notifier).state;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -71,7 +97,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 ),
                 ProfileCircle(
                   size: 75,
-                  user: widget.user,
+                  user: codiUser,
                   borderWidth: 3,
                 ),
                 const SizedBox(
@@ -97,6 +123,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 onChanged: (value) {
                   setState(() {
                     _selectedRole = value!;
+                    updateUserPosition(_selectedRole);
                   });
                 },
               ),
@@ -109,6 +136,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 onChanged: (value) {
                   setState(() {
                     _selectedRole = value!;
+                    updateUserPosition(_selectedRole);
                   });
                 },
               ),
@@ -142,7 +170,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       Expanded(
                         flex: 4,
                         child: Text(
-                          widget.user.username,
+                          codiUser.username,
                           style: const TextStyle(
                             color: globals.Colors.point2,
                             fontSize: 14,
@@ -272,6 +300,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   }
 
   Future<void> _showProfileImageSelection(BuildContext context) {
+    final codiUser = ref.watch(codiUserProvider);
+
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -292,16 +322,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             children: [
               ProfileCircle(
                 size: 45,
-                user: widget.user,
+                user: codiUser,
                 showBorder: false,
+                showShadow: false,
               ),
               const Divider(
                 color: globals.Colors.sub4,
                 thickness: 1,
               ),
-              const Expanded(
+              Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -309,65 +340,86 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  CustomIcons.image,
-                                  color: globals.Colors.point2,
-                                  size: 24,
+                            GestureDetector(
+                              onTap: () {
+                                getImage(ImageSource.gallery, context, codiUser);
+                              },
+                              child: Container(
+                                color: Colors.transparent,
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      CustomIcons.image,
+                                      color: globals.Colors.point2,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      "라이브러리에서 선택",
+                                      style: TextStyle(
+                                        color: globals.Colors.point2,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "라이브러리에서 선택",
-                                  style: TextStyle(
-                                    color: globals.Colors.point2,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  CustomIcons.camera,
-                                  color: globals.Colors.point2,
-                                  size: 24,
+                            GestureDetector(
+                              onTap: () {
+                                getImage(ImageSource.camera, context, codiUser);
+                              },
+                              child: Container(
+                                color: Colors.transparent,
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      CustomIcons.camera,
+                                      color: globals.Colors.point2,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      "사진 찍기",
+                                      style: TextStyle(
+                                        color: globals.Colors.point2,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "사진 찍기",
-                                  style: TextStyle(
-                                    color: globals.Colors.point2,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  CustomIcons.delete,
-                                  color: globals.Colors.point3,
-                                  size: 24,
+                            GestureDetector(
+                              child: Container(
+                                color: Colors.transparent,
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      CustomIcons.delete,
+                                      color: globals.Colors.point3,
+                                      size: 24,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      "현재 사진 삭제",
+                                      style: TextStyle(
+                                        color: globals.Colors.point3,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "현재 사진 삭제",
-                                  style: TextStyle(
-                                    color: globals.Colors.point3,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
                           ],
                         ),
@@ -395,6 +447,21 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   }
 
   void _showGenderSelection() {
+    final codiUser = ref.watch(codiUserProvider);
+
+    Future<void> updateUser(int gender) async {
+      var result = await api.User.updateUser(
+        user_id: codiUser.user_id,
+        gender: gender,
+      );
+
+      if (result["message"] == "User updated successfully") {
+        // ref.read(codiUserProvider.notifier).state.profile_picture = result["user"]["profile_picture"];
+        ref.read(codiUserProvider.notifier).state = models.User.FromJson(result["user"]);
+        globals.codiUser = ref.read(codiUserProvider.notifier).state;
+      }
+    }
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -417,7 +484,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 onTap: () {
                   setState(() {
                     _selectedGender = 0;
+                    updateUser(_selectedGender);
                   });
+
                   Navigator.pop(context);
                 },
               ),
@@ -438,6 +507,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 onTap: () {
                   setState(() {
                     _selectedGender = 1;
+                    updateUser(_selectedGender);
                   });
                   Navigator.pop(context);
                 },
@@ -459,6 +529,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 onTap: () {
                   setState(() {
                     _selectedGender = 2;
+                    updateUser(_selectedGender);
                   });
                   Navigator.pop(context);
                 },
@@ -468,5 +539,38 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         );
       },
     );
+  }
+
+  //이미지를 가져오는 함수
+  Future getImage(ImageSource imageSource, BuildContext context, codiUser) async {
+    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+      });
+
+      var result = await api.User.updateUser(
+        user_id: codiUser.user_id,
+        profile_picture: File(XFile(pickedFile.path).path),
+      );
+
+      // print(result);
+      if (result["message"] == "User updated successfully") {
+        // ref.read(codiUserProvider.notifier).state.profile_picture = result["user"]["profile_picture"];
+        ref.read(codiUserProvider.notifier).state = models.User.FromJson(result["user"]);
+        globals.codiUser = ref.read(codiUserProvider.notifier).state;
+
+        // Close the modal after successful update
+        Navigator.pop(context); // Close the modal
+
+        // print(result["user"]["profile_picture"]);
+        // print(ref.read(codiUserProvider.notifier).state.profile_picture);
+        // print(globals.codiUser.profile_picture);
+
+        // print(globals.codiUser.profile_picture);
+      }
+    }
   }
 }
