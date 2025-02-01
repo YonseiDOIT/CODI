@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'globals.dart' as globals;
+import 'package:http_parser/http_parser.dart';
 import 'package:codi/models/models.dart' as models;
 
 Map<String, String> _headers = {
@@ -59,6 +61,48 @@ class User {
     var response = await http.get(uri, headers: _headers);
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    return decodedResponse;
+  }
+
+  static Future<Map<String, dynamic>> updateUser({
+    required int user_id,
+    String? username,
+    String? email,
+    String? position,
+    int? gender,
+    int? selected_title_id,
+    File? profile_picture,
+  }) async {
+    var uri = Uri.https("api.0john-hong0.com", "/codi/users/$user_id");
+    var request = http.MultipartRequest("PUT", uri);
+
+    // Add form fields
+    request.fields.addAll({
+      if (username != null) "username": username,
+      if (email != null) "email": email,
+      if (position != null) "position": position,
+      if (gender != null) "gender": gender.toString(),
+      if (selected_title_id != null) "selected_title_id": selected_title_id.toString(),
+    });
+
+    // print(request.fields);
+
+    // Attach profile picture if provided
+    if (profile_picture != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          "profile_picture", profile_picture.path,
+          contentType: MediaType("image", "jpeg"), // Adjust if using PNG
+        ),
+      );
+    }
+
+    request.headers.addAll(_headers); // Add authentication headers if needed
+
+    // Send request
+    var response = await request.send();
+
+    var decodedResponse = jsonDecode(await response.stream.bytesToString());
     return decodedResponse;
   }
 }
