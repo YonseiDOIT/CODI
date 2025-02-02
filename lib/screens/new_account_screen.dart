@@ -331,7 +331,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            "로그인",
+                            "이전",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: globals.Colors.point1,

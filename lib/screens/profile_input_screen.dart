@@ -1,9 +1,13 @@
+import 'package:codi/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:codi/data/custom_icons.dart';
-import 'package:codi/data/globals.dart' as globals;
 import 'package:image_picker/image_picker.dart';
+
+import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
+import 'package:codi/data/api_wrapper.dart' as api;
 
 class ProfileInputScreen extends StatefulWidget {
   const ProfileInputScreen({super.key});
@@ -13,8 +17,8 @@ class ProfileInputScreen extends StatefulWidget {
 }
 
 class _ProfileInputScreenState extends State<ProfileInputScreen> {
-  String _selectedjob = 'programmer';
-  String _selectedgender = 'none';
+  String _selectedjob = 'FE';
+  int _selectedgender = 0;
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
@@ -85,7 +89,7 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(
-                            color: _selectedjob == "programmer" ? globals.Colors.point1 : globals.Colors.sub3,
+                            color: _selectedjob == "FE" ? globals.Colors.point1 : globals.Colors.sub3,
                             width: 4,
                           ),
                           boxShadow: const [
@@ -135,7 +139,7 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                         mainAxisAlignment: MainAxisAlignment.center, // 가로 중앙 정렬
                         children: [
                           Radio(
-                            value: 'programmer',
+                            value: 'FE',
                             groupValue: _selectedjob,
                             activeColor: globals.Colors.point1,
                             onChanged: (String? value) {
@@ -153,7 +157,7 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                           ),
                           const SizedBox(width: 20),
                           Radio(
-                            value: 'designer',
+                            value: 'PD',
                             groupValue: _selectedjob,
                             activeColor: globals.Colors.point1,
                             onChanged: (String? value) {
@@ -216,10 +220,10 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                           Row(
                             children: [
                               Radio(
-                                value: 'none',
+                                value: 0,
                                 groupValue: _selectedgender,
                                 activeColor: globals.Colors.point1,
-                                onChanged: (String? value) {
+                                onChanged: (int? value) {
                                   setState(() {
                                     _selectedgender = value!;
                                   });
@@ -234,10 +238,10 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                               ),
                               const SizedBox(width: 10),
                               Radio(
-                                value: 'male',
+                                value: 1,
                                 groupValue: _selectedgender,
                                 activeColor: globals.Colors.point1,
-                                onChanged: (String? value) {
+                                onChanged: (int? value) {
                                   setState(() {
                                     _selectedgender = value!;
                                   });
@@ -251,10 +255,10 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                               ),
                               const SizedBox(width: 10),
                               Radio(
-                                value: 'female',
+                                value: 2,
                                 groupValue: _selectedgender,
                                 activeColor: globals.Colors.point1,
-                                onChanged: (String? value) {
+                                onChanged: (int? value) {
                                   setState(() {
                                     _selectedgender = value!;
                                   });
@@ -288,13 +292,26 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProfileInputScreen(),
-                          ),
-                        );
+                      onTap: () async {
+                        try {
+                          var result = await api.User.updateUser(
+                            user_id: globals.codiUser.user_id,
+                            profile_picture: _image != null ? File(_image!.path) : null,
+                            gender: _selectedgender,
+                            position: _selectedjob,
+                            username: usernameController.text,
+                          );
+
+                          try {
+                            await globals.localData.saveMap("codi_user", result["user"]);
+                            globals.codiUser = models.User.FromJson(result["user"]);
+                            _toMain();
+                          } catch (error) {
+                            debugPrint('로컬 저장 실패 $error');
+                          }
+                        } catch (error) {
+                          debugPrint('유저 업데이트 실패 $error');
+                        }
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -304,7 +321,7 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            "다음",
+                            "CODI 시작하기",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: globals.Colors.sub3,
@@ -356,6 +373,15 @@ class _ProfileInputScreenState extends State<ProfileInputScreen> {
           color: globals.Colors.point2,
           width: 1.5,
         ),
+      ),
+    );
+  }
+
+  void _toMain() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Main(),
       ),
     );
   }

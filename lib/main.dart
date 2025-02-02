@@ -22,7 +22,7 @@ Future<void> main() async {
   globals.backendKey = dotenv.get("backendKey");
 
   KakaoSdk.init(nativeAppKey: dotenv.get("kakaoNativeKey"));
-
+  print("keyHash:${await KakaoSdk.origin}");
   runApp(const MyApp());
 }
 
@@ -108,9 +108,7 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index
-                          ? globals.Colors.point1
-                          : globals.Colors.point2,
+                      color: _currentIndex == index ? globals.Colors.point1 : globals.Colors.point2,
                       size: 24,
                     ),
                   ),
