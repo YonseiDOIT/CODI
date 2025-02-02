@@ -112,21 +112,6 @@ class ChatRoom extends StatelessWidget {
         color: Colors.transparent,
         child: Row(
           children: [
-            // Container(
-            //   height: 60,
-            //   width: 60,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(50),
-            //     border: Border.all(
-            //       color: Theme.of(context).colorScheme.primary,
-            //       width: 3,
-            //     ),
-            //     image: const DecorationImage(
-            //       image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"),
-            //       fit: BoxFit.cover, //change image fill type
-            //     ),
-            //   ),
-            // ),
             ChatProfiles(
               users: [
                 globals.codiUser,
@@ -199,7 +184,7 @@ class ChatRoom extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: 60,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -207,7 +192,7 @@ class ChatRoom extends StatelessWidget {
                   Text(
                     "Time Data",
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                      color: globals.Colors.point2.withOpacity(0.5),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),

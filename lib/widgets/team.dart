@@ -35,7 +35,7 @@ class TeamWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              color: globals.Colors.point2.withOpacity(0.1),
             ),
           ),
         ),
@@ -43,7 +43,7 @@ class TeamWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (showContest)
-              Container(
+              SizedBox(
                 height: 75,
                 width: 75,
                 child: Stack(
@@ -140,7 +140,7 @@ class TeamWidget extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(32),
-                    color: Theme.of(context).colorScheme.primary,
+                    color: globals.Colors.point1,
                   ),
                   child: Text(
                     "${item.members.length}/${item.max_members}",
@@ -158,7 +158,7 @@ class TeamWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+                      color: globals.Colors.point2.withOpacity(0.5),
                     ),
                   ),
                 ),

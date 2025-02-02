@@ -25,8 +25,8 @@ Future<void> main() async {
   globals.backendKey = dotenv.get("backendKey");
 
   KakaoSdk.init(nativeAppKey: dotenv.get("kakaoNativeKey"));
-  print("keyHash:${await KakaoSdk.origin}");
-  runApp(const MyApp());
+//   print("keyHash:${await KakaoSdk.origin}");
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -80,8 +80,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      //   backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0),
+      backgroundColor: globals.Colors.sub3,
       body: screens.elementAt(_currentIndex),
       bottomNavigationBar: _buildBottomNavBar(context),
     );
@@ -99,7 +98,7 @@ class _MainState extends State<Main> {
             offset: const Offset(0, -20),
           ),
         ],
-        color: Theme.of(context).colorScheme.background,
+        color: globals.Colors.sub3,
       ),
       child: Stack(
         children: [
@@ -135,7 +134,7 @@ class _MainState extends State<Main> {
               width: 5,
               height: 5,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
+                color: globals.Colors.point1,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
