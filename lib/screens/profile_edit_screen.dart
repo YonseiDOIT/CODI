@@ -21,7 +21,7 @@ class ProfileEditScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
-  late String _selectedRole;
+  String _selectedRole = "none";
   late int _selectedGender;
 
   XFile? _image; //이미지를 담을 변수 선언
@@ -35,7 +35,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     if (codiUser.position == "FE" || codiUser.position == "BE") {
       _selectedRole = "FE";
     } else {
-      _selectedRole = codiUser.position;
+      _selectedRole = codiUser.position!;
     }
     _selectedGender = codiUser.gender;
   }
