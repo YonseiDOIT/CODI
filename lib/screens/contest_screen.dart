@@ -3,8 +3,9 @@ import 'package:codi/widgets/team.dart';
 import 'package:codi/widgets/topbar.dart';
 import 'package:flutter/material.dart';
 
+import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/data/api_wrapper.dart' as api;
-import 'package:codi/models/models.dart';
+import 'package:codi/models/models.dart' as models;
 
 class ContestScreen extends StatefulWidget {
   const ContestScreen({super.key});

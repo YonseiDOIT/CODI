@@ -73,7 +73,8 @@ class _PostWidgetState extends State<PostWidget> {
                       Text(
                         "username",
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       Row(
@@ -86,15 +87,13 @@ class _PostWidgetState extends State<PostWidget> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 10),
+                            padding: EdgeInsets.only(right: 10),
                             child: Text(
                               "123",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                              style: TextStyle(fontSize: 12),
                             ),
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(right: 4),
                             child: Icon(
                               CustomIcons.show,
@@ -102,12 +101,10 @@ class _PostWidgetState extends State<PostWidget> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 11),
+                            padding: EdgeInsets.only(right: 11),
                             child: Text(
                               "456",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+                              style: TextStyle(fontSize: 12),
                             ),
                           ),
                         ],

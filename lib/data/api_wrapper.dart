@@ -66,26 +66,6 @@ class User {
     return decodedResponse;
   }
 
-  static Future<Map<String, dynamic>> userLogin({
-    required String email,
-    required String password,
-  }) async {
-    Map<String, String> queryParameters = {
-      'email': email,
-      'password': password,
-    };
-
-    var uri = Uri.https("api.0john-hong0.com", "/codi/users/login", queryParameters);
-    var response = await http.get(uri, headers: _headers);
-
-    if (response.statusCode == 404) {
-      throw Exception("User not found (404)");
-    }
-
-    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
-    return decodedResponse;
-  }
-
   static Future<Map<String, dynamic>> updateUser({
     required int user_id,
     String? username,
@@ -125,6 +105,26 @@ class User {
     var response = await request.send();
 
     var decodedResponse = jsonDecode(await response.stream.bytesToString());
+    return decodedResponse;
+  }
+
+  static Future<Map<String, dynamic>> userLogin({
+    required String email,
+    required String password,
+  }) async {
+    Map<String, String> queryParameters = {
+      'email': email,
+      'password': password,
+    };
+
+    var uri = Uri.https("api.0john-hong0.com", "/codi/users/login", queryParameters);
+    var response = await http.get(uri, headers: _headers);
+
+    if (response.statusCode == 404) {
+      throw Exception("User not found (404)");
+    }
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     return decodedResponse;
   }
 }

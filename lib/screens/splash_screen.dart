@@ -140,8 +140,8 @@ class _SplashScreenState extends State<SplashScreen> {
       // Attempt to get user data from local storage
       Map<String, dynamic> userData = await globals.localData.getMap("user") ?? {};
 
-      // userData = await api.User.getUser(user_id: 1);
-      // print(userData);
+      userData = await api.User.getUser(user_id: 1);
+      print(userData);
 
       if (userData.isNotEmpty) {
         // User is logged in

@@ -78,6 +78,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+      margin: EdgeInsets.only(top: globals.ScreenSize.topPadding),
       duration: const Duration(milliseconds: animateDuration),
       // height: 72,
       height: showSortOptions ? 112 : 72,
@@ -117,9 +118,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
               right: 20,
             ),
             child: Icon(
-              widget.tabIndex != 0
-                  ? displayIcon[widget.tabIndex]["right"]
-                  : displayIcon[widget.tabIndex]["right"][0],
+              widget.tabIndex != 0 ? displayIcon[widget.tabIndex]["right"] : displayIcon[widget.tabIndex]["right"][0],
               size: 24,
             ),
           ),
@@ -180,18 +179,13 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                       },
                       child: Container(
                         color: Colors.transparent,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                         margin: const EdgeInsets.symmetric(horizontal: 2),
                         child: Text(
                           widget.entries[selectedIndex]["sort"][index],
                           style: selectedSortIndex == index
-                              ? const TextStyle(
-                                  color: globals.Colors.point1,
-                                  fontWeight: FontWeight.w700)
-                              : TextStyle(
-                                  color: globals.Colors.point2.withOpacity(0.3),
-                                  fontWeight: FontWeight.w400),
+                              ? const TextStyle(color: globals.Colors.point1, fontWeight: FontWeight.w700)
+                              : TextStyle(color: globals.Colors.point2.withOpacity(0.3), fontWeight: FontWeight.w400),
                         ),
                       ),
                     );
@@ -200,8 +194,7 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
               ),
             ),
           ),
-          LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
+          LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
             return Container(
               color: globals.Colors.sub3,
               child: Container(
@@ -217,16 +210,12 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                 child: Stack(
                   children: [
                     AnimatedPositioned(
-                      left: selectedIndex *
-                          ((constraints.maxWidth - 72) / widget.entries.length),
+                      left: selectedIndex * ((constraints.maxWidth - 72) / widget.entries.length),
                       duration: const Duration(milliseconds: animateDuration),
                       curve: Curves.decelerate,
                       child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 6, horizontal: 6),
-                        width: (constraints.maxWidth - 72) /
-                                widget.entries.length -
-                            12,
+                        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                        width: (constraints.maxWidth - 72) / widget.entries.length - 12,
                         height: 34,
                         decoration: BoxDecoration(
                           color: globals.Colors.point2,
@@ -255,33 +244,23 @@ class _ToggleDropdownState extends State<ToggleDropdown> {
                               }
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: const BoxDecoration(
-                                  color: Colors.transparent),
-                              width: (constraints.maxWidth - 72) /
-                                      widget.entries.length -
-                                  1,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: const BoxDecoration(color: Colors.transparent),
+                              width: (constraints.maxWidth - 72) / widget.entries.length - 1,
                               child: Row(
                                 children: [
                                   Container(
                                     // margin: EdgeInsets.only(left: constraints.maxWidth / entries.length / 4),
-                                    width: (constraints.maxWidth - 72) /
-                                        widget.entries.length /
-                                        2,
+                                    width: (constraints.maxWidth - 72) / widget.entries.length / 2,
                                     alignment: Alignment.centerRight,
                                     child: Text(
                                       widget.entries[index]["option"],
-                                      style: selectedIndex == index
-                                          ? const TextStyle(
-                                              color: globals.Colors.sub3)
-                                          : null,
+                                      style: selectedIndex == index ? const TextStyle(color: globals.Colors.sub3) : null,
                                     ),
                                   ),
                                   selectedIndex == index
                                       ? Container(
-                                          margin:
-                                              const EdgeInsets.only(left: 5),
+                                          margin: const EdgeInsets.only(left: 5),
                                           child: const Icon(
                                             CustomIcons.chevronDown,
                                             size: 10,
