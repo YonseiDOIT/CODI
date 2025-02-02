@@ -15,7 +15,7 @@ class User {
   String? facebook_id;
 
   String? nickname;
-  String position;
+  String? position;
   String? profile_picture;
   int gender;
   String? career;
