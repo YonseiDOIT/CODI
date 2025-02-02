@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 library models;
 
+import 'package:codi/data/globals.dart' as globals;
+
 class User {
   int user_id;
   String username;
@@ -13,13 +15,16 @@ class User {
   String? facebook_id;
 
   String? nickname;
-  String? position;
+  String position;
   String? profile_picture;
+  int gender;
   String? career;
   String? portfolio_link;
   DateTime? created_at;
   DateTime? deleted_at;
   int? selected_title_id;
+  Title? selected_title;
+  List<Title>? titles;
 
   User({
     required this.user_id,
@@ -30,13 +35,16 @@ class User {
     this.kakao_id,
     this.facebook_id,
     this.nickname,
-    this.position,
+    required this.position,
     this.profile_picture,
+    required this.gender,
     this.career,
     this.portfolio_link,
     this.created_at,
     this.deleted_at,
     this.selected_title_id,
+    this.selected_title,
+    this.titles,
   });
 
   Map<String, dynamic> ToMap() {
@@ -61,21 +69,56 @@ class User {
   }
 
   static User FromJson(Map<String, dynamic> data) {
+    List<Title> titles = [];
+
+    titles.addAll(globals.defaultTitles);
+
+    // for (var defaultTitle in globals.defaultTitles) {
+    //   // titles.add(
+    //   //   Title.fromJson({
+    //   //     ...defaultTitle.toMap(),
+    //   //     "count": data["titles"]?.firstWhere(
+    //   //           (title) => title["title_id"] == defaultTitle.title_id,
+    //   //           orElse: () => {"count": 0},
+    //   //         )["count"] ??
+    //   //         0,
+    //   //   }),
+    //   // );
+    // }
+    data["titles"]?.forEach(
+      (ownedTitle) {
+        // Find the title in the user's titles list by matching the title_id
+        Title? userTitle = titles.firstWhere(
+          (title) => title.title_id == ownedTitle["title_id"],
+        );
+
+        // If a matching title is found, update its count
+        if (userTitle != null) {
+          userTitle.count = ownedTitle["count"];
+        }
+      },
+    );
+
     return User(
-        user_id: data["user_id"],
-        username: data["username"],
-        email: data["email"],
-        social_type: data["social_type"],
-        kakao_id: data["kakao_id"],
-        facebook_id: data["facebook_id"],
-        nickname: data["nickname"],
-        position: data["position"],
-        profile_picture: data["profile_picture"],
-        career: data["career"],
-        portfolio_link: data["portfolio_link"],
-        created_at: data["created_at"] != null ? DateTime.parse(data["created_at"]) : null,
-        deleted_at: data["deleted_at"] != null ? DateTime.parse(data["deleted_at"]) : null,
-        selected_title_id: data["selected_title_id"]);
+      user_id: data["user_id"],
+      username: data["username"],
+      // password: data["password"],
+      email: data["email"],
+      social_type: data["social_type"],
+      kakao_id: data["kakao_id"],
+      facebook_id: data["facebook_id"],
+      nickname: data["nickname"],
+      position: data["position"],
+      profile_picture: data["profile_picture"],
+      gender: data["gender"],
+      career: data["career"],
+      portfolio_link: data["portfolio_link"],
+      created_at: data["created_at"] != null ? DateTime.parse(data["created_at"]) : null,
+      deleted_at: data["deleted_at"] != null ? DateTime.parse(data["deleted_at"]) : null,
+      titles: titles.isNotEmpty ? titles : null,
+      selected_title_id: data["selected_title_id"],
+      selected_title: data["selected_title"] != null ? Title.fromJson(data["selected_title"]) : null,
+    );
   }
 }
 
@@ -301,7 +344,7 @@ class Title {
       title: json['title'],
       image_name: json['image_name'],
       type: json['type'],
-      count: json['count'],
+      count: json['count'] ?? 0,
     );
   }
 

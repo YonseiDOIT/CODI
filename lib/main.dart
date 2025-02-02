@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
@@ -7,11 +8,13 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:codi/data/theme.dart';
 import 'package:codi/data/custom_icons.dart';
 
+// screens
 import 'package:codi/screens/splash_screen.dart';
 import 'package:codi/screens/home_screen.dart';
 import 'package:codi/screens/chat_screen.dart';
 import 'package:codi/screens/contest_screen.dart';
-import 'package:codi/screens/profile_screen.dart';
+// import 'package:codi/screens/profile_screen.dart';
+import 'package:codi/screens/_profile_screen.dart';
 
 import 'package:codi/data/globals.dart' as globals;
 import 'package:codi/models/models.dart' as models;
@@ -33,6 +36,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: const TextScaler.linear(1.0),
+          ),
+          child: child!,
+        );
+      },
       // theme: ThemeData(),
       theme: mainTheme,
       home: const SplashScreen(),
@@ -55,7 +66,7 @@ class _MainState extends State<Main> {
     const HomeScreen(),
     const ChatScreen(),
     const ContestScreen(),
-    const ProfileScreen(),
+    ProfileScreen(user: globals.codiUser),
   ];
 
   List<IconData> navBarIcons = [
@@ -70,9 +81,8 @@ class _MainState extends State<Main> {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: screens.elementAt(_currentIndex),
-      ),
+      //   backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0),
+      body: screens.elementAt(_currentIndex),
       bottomNavigationBar: _buildBottomNavBar(context),
     );
   }

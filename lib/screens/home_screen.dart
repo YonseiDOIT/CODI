@@ -1,8 +1,8 @@
-import 'package:codi/widgets/topbar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/data/globals.dart' as globals;
 
+import 'package:codi/widgets/topbar.dart';
 import 'package:codi/widgets/post.dart';
 
 class HomeScreen extends StatefulWidget {

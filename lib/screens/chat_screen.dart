@@ -1,6 +1,7 @@
 import 'package:codi/widgets/chat_room.dart';
 import 'package:flutter/material.dart';
 import 'package:codi/widgets/topbar.dart';
+import 'package:codi/data/globals.dart' as globals;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
