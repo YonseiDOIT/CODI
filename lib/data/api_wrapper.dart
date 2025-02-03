@@ -45,6 +45,8 @@ class User {
     var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+    // print("decodeResponse : ${decodedResponse}");
     return decodedResponse;
   }
 
@@ -107,6 +109,26 @@ class User {
     var response = await request.send();
 
     var decodedResponse = jsonDecode(await response.stream.bytesToString());
+    return decodedResponse;
+  }
+
+  static Future<Map<String, dynamic>> userLogin({
+    required String email,
+    required String password,
+  }) async {
+    Map<String, String> queryParameters = {
+      'email': email,
+      'password': password,
+    };
+
+    var uri = Uri.https("api.0john-hong0.com", "/codi/users/login", queryParameters);
+    var response = await http.get(uri, headers: _headers);
+
+    if (response.statusCode == 404) {
+      throw Exception("User not found (404)");
+    }
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     return decodedResponse;
   }
 }

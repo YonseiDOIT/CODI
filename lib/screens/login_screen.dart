@@ -1,13 +1,28 @@
+import 'package:codi/screens/profile_input_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:codi/data/custom_icons.dart';
-import 'package:codi/main.dart';
+
+// API
 import 'package:codi/data/globals.dart' as globals;
+import 'package:codi/models/models.dart' as models;
+import 'package:codi/data/api_wrapper.dart' as api;
 
+import 'package:codi/main.dart';
+import 'package:codi/screens/login_screen.dart';
 import 'package:codi/screens/new_account_screen.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +67,7 @@ class LoginScreen extends StatelessWidget {
                 Column(
                   children: [
                     TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: globals.Colors.sub3,
@@ -88,6 +104,7 @@ class LoginScreen extends StatelessWidget {
                     Container(
                       margin: const EdgeInsets.only(top: 14),
                       child: TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -215,7 +232,12 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
+                              debugPrint("카카오 로그인");
+
+                              loginWithKakao(context);
+                              if (!globals.isLoggedIn) {}
+
                               // new의 값이 true면 프로필 입력 화면으로 이동
                               // false 면 홈화면으로 이동
                             },
@@ -248,12 +270,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Main(),
-                          ),
-                        );
+                        loginWithEmail();
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -312,6 +329,112 @@ class LoginScreen extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  void loginWithKakao(BuildContext context) async {
+    OAuthToken token;
+    if (await isKakaoTalkInstalled()) {
+      try {
+        token = await UserApi.instance.loginWithKakaoTalk();
+        debugPrint('카카오톡으로 로그인 성공 ${token.accessToken}');
+      } catch (error) {
+        debugPrint('카카오톡으로 로그인 실패 $error');
+
+        try {
+          token = await UserApi.instance.loginWithKakaoAccount();
+          debugPrint('카카오계정으로 로그인 성공 ${token.accessToken}');
+        } catch (error) {
+          debugPrint('카카오계정으로 로그인 실패 $error');
+        }
+      }
+    } else {
+      try {
+        token = await UserApi.instance.loginWithKakaoAccount();
+        debugPrint('카카오계정으로 로그인 성공 ${token.accessToken}');
+      } catch (error) {
+        debugPrint('카카오계정으로 로그인 실패 $error');
+      }
+    }
+
+    try {
+      User user = await UserApi.instance.me();
+      debugPrint("$user");
+      try {
+        Map userApiData;
+
+        userApiData = await api.User.addUser(
+          // profile_picture: user.kakaoAccount!.profile!.thumbnailImageUrl ??
+          //     "https://t1.kakaocdn.net/account_images/default_profile.jpeg.twg.thumb.R110x110",
+          // username: user.kakaoAccount!.profile!.nickname!,
+          username: "${user.kakaoAccount!.profile!.nickname!}${(user.id).toString().substring(0, 4)}",
+          social_type: "kakao",
+          kakao_id: "${user.id}",
+          // nickname:
+          //     "${user.kakaoAccount!.profile!.nickname!}${(user.id).toString().substring(0, 2)}$temp",
+        );
+        print("userApiData: $userApiData");
+
+        globals.codiUser = models.User.FromJson(userApiData["User"]);
+        // globals.isLoggedIn = true;
+
+        // !bool.parse(userApiData["acknowledged"], caseSensitive: false));
+
+        try {
+          await globals.localData.saveMap("codi_user", globals.codiUser.ToMap());
+          globals.isLoggedIn = true;
+        } catch (error) {
+          debugPrint('로컬 저장 실패 $error');
+        }
+
+        if (globals.isLoggedIn) {
+          if (!userApiData["new"]) {
+            _toProfileInput();
+          } else {
+            _toMain();
+          }
+        } else {
+          // TODO: show error message.
+        }
+      } catch (error) {
+        debugPrint('백엔드 오류 $error');
+      }
+    } catch (error) {
+      debugPrint('사용자 정보 요청 실패 $error');
+    }
+  }
+
+  Future<void> loginWithEmail() async {
+    try {
+      Map userApiData = await api.User.userLogin(email: emailController.text, password: passwordController.text);
+
+      try {
+        globals.codiUser = models.User.FromJson(userApiData.cast<String, dynamic>());
+        await globals.localData.saveMap("codi_user", globals.codiUser.ToMap());
+        globals.isLoggedIn = true;
+      } catch (error) {
+        debugPrint('로컬 저장 실패 $error');
+      }
+    } catch (error) {
+      debugPrint('이메일로 로그인 실패 $error');
+    }
+  }
+
+  void _toMain() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Main(),
+      ),
+    );
+  }
+
+  void _toProfileInput() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfileInputScreen(),
       ),
     );
   }

@@ -132,7 +132,12 @@ class ToggleDropdown extends StatefulWidget {
   final List<Map> entries;
   Function setShowSort;
   final TabController? controller;
-  ToggleDropdown({super.key, required this.entries, required this.setShowSort, this.controller});
+  ToggleDropdown({
+    super.key,
+    required this.entries,
+    required this.setShowSort,
+    this.controller,
+  });
 
   @override
   State<ToggleDropdown> createState() => _ToggleDropdownState();
