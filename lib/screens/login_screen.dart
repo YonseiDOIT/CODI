@@ -389,7 +389,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
 
         if (globals.isLoggedIn) {
-          if (!userApiData["new"]) {
+          if (userApiData["new"]) {
             _toProfileInput();
           } else {
             _toMain();
