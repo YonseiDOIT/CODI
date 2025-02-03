@@ -44,9 +44,10 @@ dependencies:
   # dotenv
   flutter_dotenv: ^5.2.1
 
+  kakao_flutter_sdk: ^1.2.0
+
   # post images
   carousel_slider: ^5.0.0
-
 
   # local save
   shared_preferences: ^2.2.2
@@ -56,10 +57,10 @@ dependencies:
 
   # toast messages
   fluttertoast: ^8.2.5
+  http_parser: ^4.0.2
 
   flutter_svg: ^2.0.10
   flutter_riverpod: ^2.6.1
-  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

@@ -70,7 +70,7 @@ class _AddTeamState extends State<AddTeam> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Container(
+                        SizedBox(
                           height: 91,
                           child: Row(
                             children: [
@@ -117,9 +117,9 @@ class _AddTeamState extends State<AddTeam> {
                                               ),
                                               child: Text(
                                                 tags[index],
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontWeight: FontWeight.w400,
-                                                  color: Theme.of(context).colorScheme.secondary,
+                                                  color: globals.Colors.point2,
                                                   fontSize: 10,
                                                 ),
                                               ),

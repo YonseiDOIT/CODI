@@ -16,8 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.background,
-      child: const Center(
+      child: Center(
         child: Column(
           children: [
             CustomTopBar(tabIndex: 0),

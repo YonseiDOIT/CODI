@@ -119,10 +119,13 @@ class _ContestListState extends State<ContestList> with AutomaticKeepAliveClient
     super.build(context);
     return RefreshIndicator(
       onRefresh: _refreshItems,
+      // displacement: 100,
+
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         controller: _scrollController,
         itemCount: items.length + 1,
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           if (index == items.length) {
             if (end) return Container();
@@ -229,6 +232,7 @@ class _TeamListState extends State<TeamList> with AutomaticKeepAliveClientMixin 
             physics: const BouncingScrollPhysics(),
             controller: _scrollController,
             itemCount: items.length,
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               return TeamWidget(
                 item: items[index],

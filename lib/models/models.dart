@@ -15,17 +15,13 @@ class User {
   String? facebook_id;
 
   String? nickname;
-  String position;
+  String? position;
   String? profile_picture;
   int gender;
   String? career;
   String? portfolio_link;
   DateTime? created_at;
   DateTime? deleted_at;
-  int? participation_score;
-  int? participation_id;
-  int? skill_score;
-  int? skill_id;
   int? selected_title_id;
   Title? selected_title;
   List<Title>? titles;
@@ -46,16 +42,12 @@ class User {
     this.portfolio_link,
     this.created_at,
     this.deleted_at,
-    this.participation_score,
-    this.participation_id,
-    this.skill_score,
-    this.skill_id,
     this.selected_title_id,
     this.selected_title,
     this.titles,
   });
 
-  Map ToMap() {
+  Map<String, dynamic> ToMap() {
     Map<String, dynamic> data = {
       "user_id": user_id,
       "username": username,
@@ -68,12 +60,9 @@ class User {
       "profile_picture": profile_picture,
       "career": career,
       "portfolio_link": portfolio_link,
-      "created_at": created_at,
-      "deleted_at": deleted_at,
-      "participation_score": participation_score,
-      "participation_id": participation_id,
-      "skill_score": skill_score,
-      "skill_id": skill_id,
+      "created_at": created_at?.toIso8601String(),
+      "deleted_at": deleted_at?.toIso8601String(),
+      "selected_title_id": selected_title_id
     };
 
     return data;
@@ -126,10 +115,6 @@ class User {
       portfolio_link: data["portfolio_link"],
       created_at: data["created_at"] != null ? DateTime.parse(data["created_at"]) : null,
       deleted_at: data["deleted_at"] != null ? DateTime.parse(data["deleted_at"]) : null,
-      participation_score: data["participation_score"],
-      participation_id: data["participation_id"],
-      skill_score: data["skill_score"],
-      skill_id: data["skill_id"],
       titles: titles.isNotEmpty ? titles : null,
       selected_title_id: data["selected_title_id"],
       selected_title: data["selected_title"] != null ? Title.fromJson(data["selected_title"]) : null,
@@ -307,26 +292,26 @@ class TeamRecruitmentPost {
               member_id: member['member_id'],
               user_id: member['user_id'],
               team_id: member['team_id'],
-              user: User(
-                user_id: member['user']['user_id'],
-                username: member['user']['username'],
-                email: member['user']['email'],
-                social_type: member['user']['social_type'],
-                kakao_id: member['user']['kakao_id'],
-                facebook_id: member['user']['facebook_id'],
-                nickname: member['user']['nickname'],
-                position: member['user']['position'],
-                profile_picture: member['user']['profile_picture'],
-                gender: member['user']["gender"],
-                career: member['user']['career'],
-                portfolio_link: member['user']['portfolio_link'],
-                created_at: member['user']['created_at'] != null ? DateTime.parse(member['user']['created_at']) : null,
-                deleted_at: member['user']['deleted_at'] != null ? DateTime.parse(member['user']['deleted_at']) : null,
-                participation_score: member['user']['participation_score'],
-                participation_id: member['user']['participation_id'],
-                skill_score: member['user']['skill_score'],
-                skill_id: member['user']['skill_id'],
-              ),
+              user: User.FromJson(member['user']),
+              // User(
+              //   user_id: member['user']['user_id'],
+              //   username: member['user']['username'],
+              //   email: member['user']['email'],
+              //   social_type: member['user']['social_type'],
+              //   kakao_id: member['user']['kakao_id'],
+              //   facebook_id: member['user']['facebook_id'],
+              //   nickname: member['user']['nickname'],
+              //   position: member['user']['position'],
+              //   profile_picture: member['user']['profile_picture'],
+              //   career: member['user']['career'],
+              //   portfolio_link: member['user']['portfolio_link'],
+              //   created_at: member['user']['created_at'] != null ? DateTime.parse(member['user']['created_at']) : null,
+              //   deleted_at: member['user']['deleted_at'] != null ? DateTime.parse(member['user']['deleted_at']) : null,
+              //   participation_score: member['user']['participation_score'],
+              //   participation_id: member['user']['participation_id'],
+              //   skill_score: member['user']['skill_score'],
+              //   skill_id: member['user']['skill_id'],
+              // ),
               role: member['role'],
               state: member['state'],
               join_date: member['join_date'] != null ? DateTime.parse(member['join_date']) : null,
