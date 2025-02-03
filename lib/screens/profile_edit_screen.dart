@@ -553,7 +553,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
 
       var result = await api.User.updateUser(
         user_id: codiUser.user_id,
-        profile_picture: File(XFile(pickedFile.path).path),
+        profile_picture: File(pickedFile.path),
       );
 
       // print(result);

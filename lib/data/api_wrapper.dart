@@ -92,12 +92,16 @@ class User {
       request.files.add(
         await http.MultipartFile.fromPath(
           "profile_picture", profile_picture.path,
-          contentType: MediaType("image", "jpeg"), // Adjust if using PNG
+          // contentType: MediaType("image", "jpeg"), // Adjust if using PNG
         ),
       );
     }
 
-    request.headers.addAll(_headers); // Add authentication headers if needed
+    Map<String, String> customHeaders = Map.from(_headers);
+    customHeaders.remove("Content-Type"); // Remove application/json
+    customHeaders["Content-Type"] = "multipart/form-data"; // Set correct content type
+
+    request.headers.addAll(customHeaders); // Add updated headers
 
     // Send request
     var response = await request.send();
