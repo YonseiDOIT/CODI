@@ -501,7 +501,9 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
                               final item = items[index];
-                              return const PostWidget();
+                              return PostWidget(
+                                postData: models.Post(post_id: 1, uploader_id: 1),
+                              );
                             },
                             childCount: items.length,
                           ),

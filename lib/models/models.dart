@@ -438,3 +438,94 @@ class ChatMessage {
     };
   }
 }
+
+class Post {
+  int post_id;
+  int uploader_id;
+  User? uploader;
+  String? content;
+  int? like_count;
+  int? view_count;
+  DateTime? created_at;
+  DateTime? updated_at;
+  List<User>? members;
+  List<PostImage>? images;
+
+  Post({
+    required this.post_id,
+    required this.uploader_id,
+    this.uploader,
+    this.content,
+    this.like_count,
+    this.view_count,
+    this.created_at,
+    this.updated_at,
+    this.members,
+    this.images,
+  });
+
+  static Post fromJson(Map<String, dynamic> json) {
+    List<PostImage> images = (json['images'] as List?)?.map((image) => PostImage.fromJson(image)).toList() ?? [];
+    images.sort((a, b) => a.index.compareTo(b.index));
+
+    return Post(
+      post_id: json['post_id'],
+      uploader_id: json['uploader_id'],
+      uploader: json['uploader'] != null ? User.FromJson(json['uploader']) : null,
+      content: json['content'],
+      like_count: json['like_count'],
+      view_count: json['view_count'],
+      created_at: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
+      updated_at: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null,
+      members: (json['members'] as List?)?.map((member) => User.FromJson(member)).toList(),
+      images: images,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'post_id': post_id,
+      'uploader_id': uploader_id,
+      'uploader': uploader?.ToMap(),
+      'content': content,
+      'like_count': like_count,
+      'view_count': view_count,
+      'created_at': created_at?.toIso8601String(),
+      'updated_at': updated_at?.toIso8601String(),
+      'members': members?.map((member) => member.ToMap()).toList(),
+      'images': images?.map((image) => image.toMap()).toList(),
+    };
+  }
+}
+
+class PostImage {
+  int image_id;
+  int post_id;
+  String image_url;
+  int index;
+
+  PostImage({
+    required this.image_id,
+    required this.post_id,
+    required this.image_url,
+    required this.index,
+  });
+
+  static PostImage fromJson(Map<String, dynamic> json) {
+    return PostImage(
+      image_id: json['image_id'],
+      post_id: json['post_id'],
+      image_url: json['image_url'],
+      index: json['index'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'image_id': image_id,
+      'post_id': post_id,
+      'image_url': image_url,
+      'index': index,
+    };
+  }
+}

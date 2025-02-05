@@ -217,3 +217,27 @@ class RecruitmentPost {
     return decodedResponse;
   }
 }
+
+class Post {
+  static Future<List<dynamic>> getPosts({
+    String? keyword,
+    String sort = "recent",
+    int limit = 20,
+    int offset = 0,
+  }) async {
+    Map<String, String> queryParameters = {
+      if (keyword != null) 'keyword': keyword,
+      'sort': sort,
+      'limit': limit.toString(),
+      'offset': offset.toString(),
+    };
+
+    var uri = Uri.https("api.0john-hong0.com", "/codi/posts", queryParameters);
+    var response = await http.get(uri, headers: _headers);
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+
+    List<models.Post> contests = decodedResponse.map<models.Post>((contest) => models.Post.fromJson(contest)).toList();
+    return contests;
+  }
+}
