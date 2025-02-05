@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:codi/screens/peer_review_screen.dart';
 import 'package:codi/widgets/chat_bubble.dart';
 import 'package:codi/widgets/sub_topbar.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                             user_id: 2,
                             username: "username",
                             email: "email",
-                            profile_picture: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
+                            profile_picture:
+                                "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
                             position: "FE",
                             gender: 0,
                           ),
@@ -74,7 +76,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                             user_id: 3,
                             username: "username2",
                             email: "email",
-                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
+                            profile_picture:
+                                "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
                             position: "FE",
                             gender: 0,
                           ),
@@ -82,7 +85,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                             user_id: 3,
                             username: "username2",
                             email: "email",
-                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
+                            profile_picture:
+                                "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
                             position: "FE",
                             gender: 0,
                           ),
@@ -90,7 +94,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                             user_id: 3,
                             username: "username2",
                             email: "email",
-                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
+                            profile_picture:
+                                "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
                             position: "FE",
                             gender: 0,
                           ),
@@ -112,7 +117,16 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   ),
                 ),
                 const Icon(CustomIcons.award_1, size: 24),
-                const Icon(CustomIcons.calender, size: 24),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PeerReviewScreen(),
+                        ),
+                      );
+                    },
+                    child: const Icon(CustomIcons.calender, size: 24)),
                 const Icon(CustomIcons.filter, size: 24),
               ],
             ),
@@ -127,7 +141,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     itemBuilder: (context, index) {
                       return ChatBubble(
                         message: widget.chatRoom.messages[index],
-                        previousMessage: index < widget.chatRoom.messages.length - 1 ? widget.chatRoom.messages[index + 1] : null,
+                        previousMessage:
+                            index < widget.chatRoom.messages.length - 1
+                                ? widget.chatRoom.messages[index + 1]
+                                : null,
                         // previousMessage: index > 0 ? widget.chatRoom.messages[index - 1] : null,
                       );
                     },
@@ -155,7 +172,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     child: TextField(
                       controller: _messageController,
                       minLines: 1, // Start with a single line
-                      maxLines: null, // Allow the TextField to expand vertically
+                      maxLines:
+                          null, // Allow the TextField to expand vertically
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
