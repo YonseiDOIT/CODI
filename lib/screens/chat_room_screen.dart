@@ -122,7 +122,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PeerReviewScreen(),
+                          builder: (context) => PeerReviewScreen(
+                              chatRoomUsers: widget.chatRoomUsers),
                         ),
                       );
                     },
