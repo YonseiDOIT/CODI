@@ -12,11 +12,13 @@ import 'package:codi/data/api_wrapper.dart' as api;
 class TitlesWidget extends ConsumerStatefulWidget {
   final models.Title title;
   final models.User user;
+  bool isprofile = true;
 
-  const TitlesWidget({
+  TitlesWidget({
     super.key,
     required this.title,
     required this.user,
+    required this.isprofile,
   });
 
   @override
@@ -26,7 +28,8 @@ class TitlesWidget extends ConsumerStatefulWidget {
 class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
   bool isSelected = false;
   Future<void> _onTap() async {
-    if (widget.user.user_id == globals.codiUser.user_id && widget.title.count > 0) {
+    if (widget.user.user_id == globals.codiUser.user_id &&
+        widget.title.count > 0) {
       setState(() {
         isSelected = true;
       });
@@ -38,7 +41,8 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
       // print(result["message"]);
       if (result["message"] == "User updated successfully") {
         ref.read(selectedTitleProvider.notifier).state = widget.title;
-        globals.codiUser.selected_title = widget.title; // Update global state if needed
+        globals.codiUser.selected_title =
+            widget.title; // Update global state if needed
       }
 
       setState(() {
@@ -56,8 +60,8 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
       onTap: _onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        width: 150,
-        height: 203,
+        width: widget.isprofile ? 150 : 130,
+        height: widget.isprofile ? 203 : 150,
         decoration: BoxDecoration(
           color: globals.Colors.point1,
           borderRadius: BorderRadius.circular(6),
@@ -84,18 +88,21 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
                         : 'assets/vectors/${widget.title.image_name}_off.svg',
                     alignment: Alignment.center,
                     fit: BoxFit.cover,
-                    width: 90,
-                    height: 90,
+                    width: widget.isprofile ? 90 : 70,
+                    height: widget.isprofile ? 90 : 70,
                   ),
                 ),
-                Text(
-                  '${widget.title.count}장',
-                  style: TextStyle(
-                    color: widget.title.count >= 5 ? globals.Colors.sub3 : const Color(0xFF3906A6),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                if (widget.isprofile)
+                  Text(
+                    '${widget.title.count}장',
+                    style: TextStyle(
+                      color: widget.title.count >= 5
+                          ? globals.Colors.sub3
+                          : const Color(0xFF3906A6),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
               ],
             ),
             if (isSelected)
