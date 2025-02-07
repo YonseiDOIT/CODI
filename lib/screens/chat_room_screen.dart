@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:codi/widgets/chat_bubble.dart';
@@ -28,6 +29,7 @@ class ChatRoomScreen extends StatefulWidget {
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final ScrollController _chatBubbleListController = ScrollController();
   final TextEditingController _messageController = TextEditingController();
+  List<models.ChatMessage> messages = [];
 
   void _scrollDown() {
     _chatBubbleListController.animateTo(
@@ -37,9 +39,40 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   globals.channel.stream.listen((message) {
+  //     print(message);
+  //     setState(() {
+  //       messages.insert(
+  //         0,
+  //         models.ChatMessage(
+  //           message_id: -1,
+  //           room_id: widget.chatRoom.chatroom_id,
+  //           user_id: message["sender_id"],
+  //           user: message["sneder"],
+  //           content: message["content"],
+  //           sent_at: message["sent_at"],
+  //         ),
+  //       );
+  //     });
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
+    api.Chat.getMessages(roomId: widget.chatRoom.chatroom_id).then((fetchedMessages) {
+      setState(() {
+        for (Map<String, dynamic> message in fetchedMessages) {
+          messages.insert(0, models.ChatMessage.FromJson(message));
+        }
+      });
+    }).catchError((error) {
+      // Handle error
+      print("Failed to load messages: $error");
+    });
   }
 
   @override
@@ -60,41 +93,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   child: Row(
                     children: [
                       ChatProfiles(
-                        users: [
-                          globals.codiUser,
-                          models.User(
-                            user_id: 2,
-                            username: "username",
-                            email: "email",
-                            profile_picture: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
-                            position: "FE",
-                            gender: 0,
-                          ),
-                          models.User(
-                            user_id: 3,
-                            username: "username2",
-                            email: "email",
-                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
-                            position: "FE",
-                            gender: 0,
-                          ),
-                          models.User(
-                            user_id: 3,
-                            username: "username2",
-                            email: "email",
-                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
-                            position: "FE",
-                            gender: 0,
-                          ),
-                          models.User(
-                            user_id: 3,
-                            username: "username2",
-                            email: "email",
-                            profile_picture: "https://i.pinimg.com/236x/a8/4a/a3/a84aa310f33862e53c30f55bdf94b013.jpg",
-                            position: "FE",
-                            gender: 0,
-                          ),
-                        ],
+                        users: widget.chatRoomUsers,
                         maxSize: 40,
                       ),
                       Container(
@@ -123,11 +122,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     reverse: true,
                     controller: _chatBubbleListController,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: widget.chatRoom.messages.length,
+                    itemCount: messages.length,
                     itemBuilder: (context, index) {
                       return ChatBubble(
-                        message: widget.chatRoom.messages[index],
-                        previousMessage: index < widget.chatRoom.messages.length - 1 ? widget.chatRoom.messages[index + 1] : null,
+                        message: messages[index],
+                        previousMessage: index < messages.length - 1 ? messages[index + 1] : null,
                         // previousMessage: index > 0 ? widget.chatRoom.messages[index - 1] : null,
                       );
                     },
@@ -188,15 +187,30 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       String message = _messageController.text;
+                      _messageController.clear();
                       if (message.isNotEmpty) {
                         // api.sendMessage(
                         //   widget.chatRoom.chatroom_id,
                         //   message,
                         // );
+                        await Future.delayed(const Duration(milliseconds: 500));
                         setState(() {
-                          widget.chatRoom.messages.insert(
+                          // globals.channel.sink.add({
+                          //   "sender_id": globals.codiUser.user_id,
+                          //   "room_id": widget.chatRoom.chatroom_id,
+                          //   "content": message,
+                          //   "sent_at": DateTime.now().toIso8601String(),
+                          // });
+                          // globals.channel.sink.add(jsonEncode({
+                          //   "sender_id": globals.codiUser.user_id,
+                          //   "room_id": widget.chatRoom.chatroom_id,
+                          //   "content": message,
+                          //   "sent_at": DateTime.now().toIso8601String(),
+                          // }));
+
+                          messages.insert(
                             0,
                             models.ChatMessage(
                               message_id: Random().nextInt(100000),
@@ -207,9 +221,18 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                               sent_at: DateTime.now(),
                             ),
                           );
+                          // messages.insert(
+                          //   0,
+                          //   models.ChatMessage(
+                          //     message_id: Random().nextInt(100000),
+                          //     room_id: widget.chatRoom.chatroom_id,
+                          //     user_id: globals.codiUser.user_id,
+                          //     user: globals.codiUser,
+                          //     content: message,
+                          //     sent_at: DateTime.now(),
+                          //   ),
+                          // );
                         });
-
-                        _messageController.clear();
                       }
                     },
                     child: Container(

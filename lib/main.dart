@@ -77,6 +77,12 @@ class _MainState extends State<Main> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    api.Chat.connectToWebSocket(globals.codiUser.user_id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
