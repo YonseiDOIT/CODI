@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:codi/screens/peer_review_screen.dart';
 import 'package:codi/widgets/chat_bubble.dart';
 import 'package:codi/widgets/sub_topbar.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,16 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   ),
                 ),
                 const Icon(CustomIcons.award_1, size: 24),
-                const Icon(CustomIcons.calender, size: 24),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PeerReviewScreen(chatRoomUsers: widget.chatRoomUsers),
+                        ),
+                      );
+                    },
+                    child: const Icon(CustomIcons.calender, size: 24)),
                 const Icon(CustomIcons.filter, size: 24),
               ],
             ),
