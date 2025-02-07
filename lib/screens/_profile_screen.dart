@@ -26,8 +26,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -123,8 +122,7 @@ class _UserInfo extends ConsumerStatefulWidget {
   _UserInfoState createState() => _UserInfoState();
 }
 
-class _UserInfoState extends ConsumerState<_UserInfo>
-    with SingleTickerProviderStateMixin {
+class _UserInfoState extends ConsumerState<_UserInfo> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   double _opacity1 = 1.0;
   double _opacity2 = 0.3;
@@ -429,10 +427,8 @@ class _BottomDraggableSheet extends StatefulWidget {
 }
 
 class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
-  final DraggableScrollableController _sheetController =
-      DraggableScrollableController();
-  double _sheetPosition = 1 -
-      (128 + globals.ScreenSize.topPadding + 16) / globals.ScreenSize.height;
+  final DraggableScrollableController _sheetController = DraggableScrollableController();
+  double _sheetPosition = 1 - (128 + globals.ScreenSize.topPadding + 16) / globals.ScreenSize.height;
 
   List<dynamic> items = [];
   bool isLoading = true;
@@ -456,8 +452,7 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
   Future<void> _fetchData() async {
     await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
     setState(() {
-      items = List.generate(
-          20, (index) => 'Item ${index + 1}'); // Generate sample data
+      items = List.generate(20, (index) => 'Item ${index + 1}'); // Generate sample data
       isLoading = false;
     });
   }
@@ -468,16 +463,12 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
       width: globals.ScreenSize.width,
       height: globals.ScreenSize.height,
       child: DraggableScrollableSheet(
-        initialChildSize: 1 -
-            (128 + globals.ScreenSize.topPadding + 16) /
-                globals.ScreenSize.height,
+        initialChildSize: 1 - (128 + globals.ScreenSize.topPadding + 16) / globals.ScreenSize.height,
         maxChildSize: 1,
         minChildSize: 0.09,
         snapSizes: [
           0.09,
-          1 -
-              (128 + globals.ScreenSize.topPadding + 16) /
-                  globals.ScreenSize.height,
+          1 - (128 + globals.ScreenSize.topPadding + 16) / globals.ScreenSize.height,
           1,
         ],
         // snap: true,
@@ -504,8 +495,7 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
                     slivers: [
                       SliverPersistentHeader(
                         delegate: _StickyHeaderDelegate(_sheetPosition),
-                        pinned:
-                            true, // Keeps the header at the top while scrolling
+                        pinned: true, // Keeps the header at the top while scrolling
                       ),
                       if (!isLoading)
                         SliverList(
@@ -585,10 +575,8 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   _StickyHeaderDelegate(this._sheetPosition);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    double topMargin = shrinkOffset.clamp(
-        0, globals.ScreenSize.topPadding); // Adjust as you need
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    double topMargin = shrinkOffset.clamp(0, globals.ScreenSize.topPadding); // Adjust as you need
     double height = 66 + globals.ScreenSize.topPadding / 2;
 
     return Container(
@@ -619,11 +607,9 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent =>
-      66 + globals.ScreenSize.topPadding / 2; // Maximum size
+  double get maxExtent => 66 + globals.ScreenSize.topPadding / 2; // Maximum size
   @override
-  double get minExtent =>
-      66 + globals.ScreenSize.topPadding / 2; // Minimum size
+  double get minExtent => 66 + globals.ScreenSize.topPadding / 2; // Minimum size
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

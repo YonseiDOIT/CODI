@@ -12,9 +12,10 @@ class ChatScreen extends StatefulWidget {
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
     return const Column(
       children: [
         CustomTopBar(tabIndex: 1),
@@ -22,6 +23,9 @@ class _ChatScreenState extends State<ChatScreen> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class ChatRoomList extends StatelessWidget {
