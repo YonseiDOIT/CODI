@@ -365,7 +365,6 @@ class ChatRoom {
   int message_count;
   DateTime? created_at;
   DateTime? deleted_at;
-  List<ChatMessage> messages;
 
   ChatRoom({
     required this.chatroom_id,
@@ -373,17 +372,15 @@ class ChatRoom {
     this.message_count = 0,
     this.created_at,
     this.deleted_at,
-    required this.messages,
   });
 
   static ChatRoom FromJson(Map<String, dynamic> json) {
     return ChatRoom(
-      chatroom_id: json['chatroom_id'],
-      name: json['name'],
+      chatroom_id: json['room_id'],
+      name: json['room_name'],
       message_count: json['message_count'],
       created_at: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
       deleted_at: json['deleted_at'] != null ? DateTime.parse(json['deleted_at']) : null,
-      messages: (json['messages'] as List).map((message) => ChatMessage.FromJson(message)).toList(),
     );
   }
 
@@ -394,7 +391,6 @@ class ChatRoom {
       'message_count': message_count,
       'created_at': created_at?.toIso8601String(),
       'deleted_at': deleted_at?.toIso8601String(),
-      'messages': messages.map((message) => message.toMap()).toList(),
     };
   }
 }
