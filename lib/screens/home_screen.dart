@@ -129,6 +129,7 @@ class _PostListState extends State<PostList> with AutomaticKeepAliveClientMixin 
         padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           if (index < items.length) {
+            globals.post = items[0];
             return PostWidget(
               postData: items[index],
             );

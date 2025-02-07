@@ -12,6 +12,7 @@ bool isLoggedIn = false;
 Preferences localData = Preferences();
 late models.User codiUser;
 late WebSocketChannel channel;
+late models.Post post;
 
 final List<models.Title> defaultTitles = [
   models.Title(title_id: 1, title: "지혜로운 해결사", image_name: "wise_troubleshooter", type: "positive", count: 0),
