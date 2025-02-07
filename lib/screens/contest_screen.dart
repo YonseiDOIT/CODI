@@ -14,7 +14,9 @@ class ContestScreen extends StatefulWidget {
   State<ContestScreen> createState() => _ContestScreenState();
 }
 
-class _ContestScreenState extends State<ContestScreen> with TickerProviderStateMixin {
+class _ContestScreenState extends State<ContestScreen> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   late TabController _tabController;
 
   @override
