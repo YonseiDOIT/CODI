@@ -61,6 +61,7 @@ dependencies:
 
   flutter_svg: ^2.0.10
   flutter_riverpod: ^2.6.1
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'package:codi/screens/peer_review_screen.dart';
+import 'package:codi/widgets/chat_profiles.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,6 +79,12 @@ class _MainState extends State<Main> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    api.Chat.connectToWebSocket(globals.codiUser.user_id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     globals.ScreenSize().initSizes(context);
     return Scaffold(
@@ -117,7 +125,9 @@ class _MainState extends State<Main> {
                     alignment: Alignment.topCenter,
                     child: Icon(
                       navBarIcons[index],
-                      color: _currentIndex == index ? globals.Colors.point1 : globals.Colors.point2,
+                      color: _currentIndex == index
+                          ? globals.Colors.point1
+                          : globals.Colors.point2,
                       size: 24,
                     ),
                   ),
