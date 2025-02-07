@@ -270,7 +270,7 @@ class _UserInfoState extends ConsumerState<_UserInfo> with SingleTickerProviderS
                       ),
                       SizedBox(width: 4),
                       Text(
-                        "behance.com 외 2개",
+                        "behance.com",
                         style: TextStyle(
                           fontSize: 14,
                           color: globals.Colors.sub3,
@@ -430,7 +430,7 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
   final DraggableScrollableController _sheetController = DraggableScrollableController();
   double _sheetPosition = 1 - (128 + globals.ScreenSize.topPadding + 16) / globals.ScreenSize.height;
 
-  List<dynamic> items = [];
+  List<models.Post> items = [];
   bool isLoading = true;
 
   @override
@@ -452,7 +452,7 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
   Future<void> _fetchData() async {
     await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
     setState(() {
-      items = List.generate(20, (index) => 'Item ${index + 1}'); // Generate sample data
+      items = [globals.post]; // Generate sample data
       isLoading = false;
     });
   }
@@ -503,7 +503,7 @@ class _BottomDraggableSheetState extends State<_BottomDraggableSheet> {
                             (context, index) {
                               final item = items[index];
                               return PostWidget(
-                                postData: models.Post(post_id: 1, uploader_id: 1),
+                                postData: item,
                               );
                             },
                             childCount: items.length,

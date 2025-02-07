@@ -29,8 +29,7 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
   bool isSelected = false;
   Future<void> _onTap() async {
     if (widget.isprofile) {
-      if (widget.user.user_id == globals.codiUser.user_id &&
-          widget.title.count > 0) {
+      if (widget.user.user_id == globals.codiUser.user_id && widget.title.count > 0) {
         setState(() {
           isSelected = true;
         });
@@ -42,8 +41,7 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
         // print(result["message"]);
         if (result["message"] == "User updated successfully") {
           ref.read(selectedTitleProvider.notifier).state = widget.title;
-          globals.codiUser.selected_title =
-              widget.title; // Update global state if needed
+          globals.codiUser.selected_title = widget.title; // Update global state if needed
         }
 
         setState(() {
@@ -102,24 +100,23 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
                     Text(
                       '${widget.title.count}장',
                       style: TextStyle(
-                        color: widget.title.count >= 5
-                            ? globals.Colors.sub3
-                            : const Color(0xFF3906A6),
+                        color: widget.title.count >= 5 ? globals.Colors.sub3 : const Color(0xFF3906A6),
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                 ],
               ),
-              Positioned(
-                bottom: 10,
-                right: 10,
-                child: Icon(
-                  CustomIcons.checkCircle,
-                  color: globals.Colors.sub3.withOpacity(0.5),
-                  size: 24,
+              if (isSelected)
+                Positioned(
+                  bottom: 10,
+                  right: 10,
+                  child: Icon(
+                    CustomIcons.checkCircle,
+                    color: globals.Colors.sub3.withOpacity(0.5),
+                    size: 24,
+                  ),
                 ),
-              ),
               if (selectedTitle?.title_id == widget.title.title_id)
                 const Positioned(
                   bottom: 10,
@@ -162,9 +159,7 @@ class _TitlesWidgetState extends ConsumerState<TitlesWidget> {
                   ),
                   Flexible(
                     child: SvgPicture.asset(
-                      isSelected
-                          ? 'assets/vectors/${widget.title.image_name}_on.svg'
-                          : 'assets/vectors/${widget.title.image_name}_off.svg',
+                      isSelected ? 'assets/vectors/${widget.title.image_name}_on.svg' : 'assets/vectors/${widget.title.image_name}_off.svg',
                       alignment: Alignment.center,
                       fit: BoxFit.cover,
                       width: 70,

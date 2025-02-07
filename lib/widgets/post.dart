@@ -255,9 +255,13 @@ class _PostDetailsState extends ConsumerState<PostDetails> {
                   SingleChildScrollView(
                     child: Column(
                       children: List.generate(
-                        widget.postData.images!.length * 10,
+                        widget.postData.images!.length,
                         (index) {
-                          return Image.network(widget.postData.images![index % widget.postData.images!.length].image_url);
+                          return Image.network(
+                            widget.postData.images![index % widget.postData.images!.length].image_url,
+                            width: globals.ScreenSize.width,
+                            fit: BoxFit.fitWidth,
+                          );
                         },
                       ),
                     ),
@@ -284,7 +288,7 @@ class _PostDetailsState extends ConsumerState<PostDetails> {
                       ),
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
-                        itemCount: widget.postData.members!.length * 10,
+                        itemCount: widget.postData.members!.length,
                         separatorBuilder: (BuildContext context, int index) {
                           return const Divider(
                             thickness: 1,
@@ -295,7 +299,7 @@ class _PostDetailsState extends ConsumerState<PostDetails> {
                           );
                         },
                         itemBuilder: (context, index) {
-                          final member = widget.postData.members![index % 2];
+                          final member = widget.postData.members![index % widget.postData.members!.length];
                           bool isMe = false;
                           if (member.user_id == globals.codiUser.user_id) {
                             isMe = true;

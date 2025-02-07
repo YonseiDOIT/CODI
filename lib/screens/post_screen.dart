@@ -52,33 +52,33 @@ class PostScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(
-                      "kimmingu",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: globals.Colors.point1,
-                      ),
-                    ),
-                    Text(
-                      " 님 외 ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: globals.Colors.point1,
-                      ),
-                    ),
-                    Text(
-                      "3명",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: globals.Colors.point1,
-                      ),
-                    ),
+                    // Text(
+                    //   "kimmingu",
+                    //   style: TextStyle(
+                    //     decoration: TextDecoration.none,
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w700,
+                    //     color: globals.Colors.point1,
+                    //   ),
+                    // ),
+                    // Text(
+                    //   " 님 외 ",
+                    //   style: TextStyle(
+                    //     decoration: TextDecoration.none,
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w400,
+                    //     color: globals.Colors.point1,
+                    //   ),
+                    // ),
+                    // Text(
+                    //   "3명",
+                    //   style: TextStyle(
+                    //     decoration: TextDecoration.none,
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w700,
+                    //     color: globals.Colors.point1,
+                    //   ),
+                    // ),
                     Icon(
                       CustomIcons.right,
                       color: globals.Colors.point1,
@@ -110,8 +110,7 @@ class PostScreen extends StatelessWidget {
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(25),
                   ],
-                  buildCounter: (BuildContext context,
-                      {int? currentLength, int? maxLength, bool? isFocused}) {
+                  buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) {
                     return null;
                   },
                 ),
@@ -147,8 +146,7 @@ class PostScreen extends StatelessWidget {
         ],
       ),
       bottomSheet: Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
           height: 70,
           width: globals.ScreenSize.width,
@@ -194,10 +192,7 @@ class PostScreen extends StatelessWidget {
                   onTap: () {},
                   child: const Text(
                     "저장",
-                    style: TextStyle(
-                        color: globals.Colors.point1,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
+                    style: TextStyle(color: globals.Colors.point1, fontWeight: FontWeight.w700, fontSize: 16),
                   ),
                 )
               ],
