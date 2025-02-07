@@ -3,12 +3,15 @@ library globals;
 import 'package:flutter/material.dart';
 import 'package:codi/data/shared_pref.dart';
 import 'package:codi/models/models.dart' as models;
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/status.dart' as status;
 
 late String backendKey;
 
 bool isLoggedIn = false;
 Preferences localData = Preferences();
 late models.User codiUser;
+late WebSocketChannel channel;
 
 final List<models.Title> defaultTitles = [
   models.Title(title_id: 1, title: "지혜로운 해결사", image_name: "wise_troubleshooter", type: "positive", count: 0),

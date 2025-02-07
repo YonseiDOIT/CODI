@@ -7,6 +7,9 @@ import 'globals.dart' as globals;
 import 'package:http_parser/http_parser.dart';
 import 'package:codi/models/models.dart' as models;
 
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/status.dart' as status;
+
 Map<String, String> _headers = {
   'accept': 'application/json',
   'Content-Type': 'application/json',
@@ -214,6 +217,98 @@ class RecruitmentPost {
     var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
 
     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    return decodedResponse;
+  }
+}
+
+class Chat {
+//   globals.socket socket;
+
+  static void connectToWebSocket(int user_id) {
+    globals.channel = WebSocketChannel.connect(
+      Uri.parse('ws://api.0john-hong0.com/codi/ws/$user_id'),
+    );
+
+    // globals.channel.stream.listen(
+    //   (message) {
+    //     print("Received: $message");
+    //   },
+    //   onDone: () {
+    //     print("WebSocket closed");
+    //   },
+    //   onError: (error) {
+    //     print("Error: $error");
+    //   },
+    // );
+  }
+//   static socket_io.Socket? socket;
+
+//   static void connectToSocket(String userId) {
+// 	socket_io.OptionBuilder().setPath('/codi/ws/1');
+//     socket = socket_io.io('https://api.0john-hong0.com', <String, dynamic>{
+//       'transports': ['websocket'],
+//       'autoConnect': false,
+//       'query': {'userId': userId},
+//     });
+
+//     socket?.on('connect', (_) {
+//       print('Connected to socket server');
+//     });
+
+//     socket?.on('disconnect', (_) {
+//       print('Disconnected from socket server');
+//     });
+
+//     socket?.on('error', (data) {
+//       print('Socket error: $data');
+//     });
+
+//     socket?.connect();
+//   }
+
+//   static void disconnectSocket() {
+//     socket?.disconnect();
+//   }
+
+  static Future<List<dynamic>> getChatRooms({
+    required int userId,
+  }) async {
+    var uri = Uri.http("api.0john-hong0.com", "/codi/chats/$userId");
+    var response = await http.get(uri, headers: _headers);
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+    return decodedResponse;
+  }
+
+  static Future<Map<String, dynamic>> makeChatRoom({
+    required int userId,
+    required String roomName,
+    required List<int> memberIds,
+    DateTime? createdAt,
+  }) async {
+    Map<String, dynamic> body = {
+      "chat_room": {
+        "room_name": roomName,
+        "message_count": 0,
+        "created_at": createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+      },
+      "member_ids": memberIds,
+    };
+
+    var uri = Uri.http("api.0john-hong0.com", "/codi/chats/make-room/$userId");
+    var response = await http.post(uri, headers: _headers, body: jsonEncode(body));
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    return decodedResponse;
+  }
+
+  static Future<List<dynamic>> getMessages({
+    required int roomId,
+  }) async {
+    var uri = Uri.http("api.0john-hong0.com", "/codi/chats/$roomId/messages");
+    var response = await http.get(uri, headers: _headers);
+
+    var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
     return decodedResponse;
   }
 }
